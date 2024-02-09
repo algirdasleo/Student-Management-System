@@ -1,60 +1,73 @@
 #include <iostream>
 #include <algorithm>
 #include <iomanip>
+#include <string>
 using namespace std;
 
-
-struct studentaiStruct{
+struct studentaiStruct {
     string vardas, pavarde;
-    int n;
-    int T[10];
+    int n; // namu darbu kiekis
+    int T[10]; // namu darbu rezultatai
     double ndSuma, egzas, galutinisVid, mediana, galutinisMed;
-}Studentai[100];
+} st[100]; // studentu struct masyvas
 
-
-int main()
-{
+int main() {
     int mokSk;
     cout << "Iveskite mokiniu skaiciu:" << endl;
     cin >> mokSk;
 
-    for (int i = 0; i < mokSk; i++){
-        Studentai[i].ndSuma = 0;
+    int maxVardoIlgis = 5; 
+    int maxPavardesIlgis = 6; 
+
+    for (int i = 0; i < mokSk; i++) {
+        st[i].ndSuma = 0;
 
         cout << "Iveskite savo varda:" << endl;
-        cin >> Studentai[i].vardas;
+        cin >> st[i].vardas;
         cout << "Iveskite savo pavarde:" << endl;
-        cin >> Studentai[i].pavarde;
+        cin >> st[i].pavarde;
+        int vardoIlgis = st[i].vardas.length();
+        int pavardesIlgis = st[i].pavarde.length();
+        maxVardoIlgis = max(maxVardoIlgis, vardoIlgis);
+        maxPavardesIlgis = max(maxPavardesIlgis, pavardesIlgis);
+
         cout << "Iveskite namu darbu kieki: (max: 10 nd.)" << endl;
-        cin >> Studentai[i].n;
+        cin >> st[i].n;
 
-        int pazymys;
-        for (int j = 0; j < Studentai[i].n; j++){
-            cout << "Iveskite " << j+1 << " namu darbo rezultata:" << endl;
-            cin >> pazymys;
-            Studentai[i].ndSuma += pazymys;
-            Studentai[i].T[j] = pazymys;
+        for (int j = 0; j < st[i].n; j++) {
+            cout << "Iveskite " << j + 1 << " namu darbo rezultata:" << endl;
+            cin >> st[i].T[j];
+            st[i].ndSuma += st[i].T[j];
         }
-        sort(begin(Studentai[i].T), begin(Studentai[i].T) + Studentai[i].n);
+        sort(st[i].T, st[i].T + st[i].n);
 
-        if (Studentai[i].n%2 == 0)
-            Studentai[i].mediana = (Studentai[i].T[(Studentai[i].n / 2)] + Studentai[i].T[(Studentai[i].n / 2) -1]) / 2;
+        if (st[i].n % 2 == 0)
+            st[i].mediana = (st[i].T[(st[i].n / 2)] + st[i].T[(st[i].n / 2) - 1]) / 2.0;
         else
-            Studentai[i].mediana = Studentai[i].T[Studentai[i].n / 2];
+            st[i].mediana = st[i].T[st[i].n / 2];
 
         cout << "Iveskite egzamino rezultata:" << endl;
-        cin >> Studentai[i].egzas;
+        cin >> st[i].egzas;
 
-        Studentai[i].galutinisVid = 0.4 * (Studentai[i].ndSuma / Studentai[i].n) + 0.6* Studentai[i].egzas;
-        Studentai[i].galutinisMed = 0.4 * Studentai[i].mediana + 0.6 * Studentai[i].egzas;
+        st[i].galutinisVid = 0.4 * (st[i].ndSuma / st[i].n) + 0.6 * st[i].egzas;
+        st[i].galutinisMed = 0.4 * st[i].mediana + 0.6 * st[i].egzas;
     }
 
-    cout << "Pavarde" << setw(15) << "Vardas" << setw(20) << "Galutinis(Vid.)" << setw(20) << "Galutinis(Med.)" << endl;
-    cout << "-----------------------------------------------------------" << endl;
-    for (int i = 0; i < mokSk; i++){
-        cout << Studentai[i].pavarde << setw(18) << Studentai[i].vardas << setw(20) << Studentai[i].galutinisVid << setw(20) << Studentai[i].galutinisMed << endl;
+    cout << left 
+         << setw(maxPavardesIlgis + 2) << "Pavarde" 
+         << setw(maxVardoIlgis + 2) << "Vardas" 
+         << setw(17) << "Galutinis(Vid.)" 
+         << setw(15) << "Galutinis(Med.)" << endl; 
+
+    cout << setfill('-') << setw(maxPavardesIlgis + maxVardoIlgis + 34) << "-" << endl; 
+    cout << setfill(' ');
+
+    for (int i = 0; i < mokSk; i++) {
+        cout << left 
+             << setw(maxPavardesIlgis + 2) << st[i].pavarde
+             << setw(maxVardoIlgis + 2) << st[i].vardas
+             << setw(17) << fixed << setprecision(2) << st[i].galutinisVid
+             << setw(15) << fixed << setprecision(2) << st[i].galutinisMed << endl;
     }
-
-
     return 0;
 }
