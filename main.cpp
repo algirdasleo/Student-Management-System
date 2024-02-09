@@ -13,19 +13,19 @@ struct studentaiStruct {
 
 int main() {
     int mokSk;
-    cout << "Iveskite mokiniu skaiciu:" << endl;
-    cin >> mokSk;
 
-    int maxVardoIlgis = 5; 
-    int maxPavardesIlgis = 6; 
+    int maxVardoIlgis = 6, maxPavardesIlgis = 7; 
 
-    for (int i = 0; i < mokSk; i++) {
+    char pasirinkimas = 'y';
+    int i = 0;
+    while (pasirinkimas == 'y') {
         st[i].ndSuma = 0;
 
         cout << "Iveskite savo varda:" << endl;
         cin >> st[i].vardas;
         cout << "Iveskite savo pavarde:" << endl;
         cin >> st[i].pavarde;
+
         int vardoIlgis = st[i].vardas.length();
         int pavardesIlgis = st[i].pavarde.length();
         maxVardoIlgis = max(maxVardoIlgis, vardoIlgis);
@@ -51,6 +51,12 @@ int main() {
 
         st[i].galutinisVid = 0.4 * (st[i].ndSuma / st[i].n) + 0.6 * st[i].egzas;
         st[i].galutinisMed = 0.4 * st[i].mediana + 0.6 * st[i].egzas;
+
+        cout << "Ar norite ivesti dar vieno mokinio duomenis? (y/n)" << endl;
+        cin >> pasirinkimas;
+        pasirinkimas = tolower(pasirinkimas);
+        mokSk++;
+        i++;
     }
 
     cout << left 
