@@ -19,7 +19,7 @@ int main() {
     int maxVardoIlgis = 5; // minimalus vardo ilgis
     int maxPavardesIlgis = 6; // minimalus pavardes ilgis
 
-    for (int i = 0; i < mokSk; i++) {
+    for (int i = 0; i < mokSk; i++) { // ciklas, kuris kartojasi mokSk kartu, kur mokSk - mokiniu skaicius
         st[i].ndSuma = 0; // namu darbu pazymiu suma pradzioje lygi 0
 
         cout << "Iveskite savo varda:" << endl;
