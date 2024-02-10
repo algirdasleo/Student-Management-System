@@ -69,9 +69,7 @@ int main() {
         if (meniuPasirinkimas == 4)
             break;
         if (meniuPasirinkimas == 1){
-
             vardoIvedimas(studentas);
-
             maxVardoIlgis = max(maxVardoIlgis, int(studentas.vardas.length()));
             maxPavardesIlgis = max(maxPavardesIlgis, int(studentas.pavarde.length()));
 
@@ -100,6 +98,7 @@ int main() {
             pasirinkimas = tolower(pasirinkimas);
             if (pasirinkimas == 'n')
                 break;
+
         } else if (meniuPasirinkimas == 2) {
             vardoIvedimas(studentas);
             maxVardoIlgis = max(maxVardoIlgis, int(studentas.vardas.length()));
@@ -112,6 +111,7 @@ int main() {
             studentas.egzas = rand() % 10 + 1;
             skaiciavimai(studentas);
             stud.push_back(studentas);
+            cout << "Studento pazymiai sugeneruoti atsitiktinai.\n \n";
     
         } else if (meniuPasirinkimas == 3) {
             studentas.vardas = "Vardas" + to_string(stud.size() + 1);
@@ -126,6 +126,7 @@ int main() {
             studentas.egzas = rand() % 10 + 1;
             skaiciavimai(studentas);
             stud.push_back(studentas);
+            cout << "Studento duomenys sugeneruoti atsitiktinai. \n \n";
         }
     }
 
