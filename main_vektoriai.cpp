@@ -15,6 +15,7 @@ struct studentaiStruct {
 vector<studentaiStruct> stud;
 
 int main() {
+    srand(time(nullptr));
     int maxVardoIlgis = 6, maxPavardesIlgis = 7; 
 
     while (true) {

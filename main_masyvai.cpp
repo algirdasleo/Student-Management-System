@@ -14,6 +14,7 @@ struct studentaiStruct {
 } st[100]; // studentu struct masyvas
 
 int main() {
+    srand(time(nullptr));
     int mokSk, maxVardoIlgis = 6, maxPavardesIlgis = 7; 
     char pasirinkimas;
     int i = 0;
@@ -60,7 +61,8 @@ int main() {
             cout << "Generuojami atsitiktiniai namu darbu rezultatai..." << endl;
             st[i].n = 10; 
             for (int j = 0; j < st[i].n; j++) {
-                st[i].T[j] = rand() % 10 + 1; 
+                st[i].T[j] = rand() % 10 + 1;  
+                // rand sugeneruoja dideli skaiciu, % 10 grazina skaiciu nuo 0 iki 9, + 1 padaro ji nuo 1 iki 10
                 st[i].ndSuma += st[i].T[j];
             }
         }
@@ -76,13 +78,13 @@ int main() {
 
         st[i].galutinisVid = 0.4 * (st[i].ndSuma / st[i].n) + 0.6 * st[i].egzas;
         st[i].galutinisMed = 0.4 * st[i].mediana + 0.6 * st[i].egzas;
-
+        mokSk++;
+        
         cout << "Ar norite ivesti dar vieno mokinio duomenis? (y/n)" << endl;
         cin >> pasirinkimas;
         pasirinkimas = tolower(pasirinkimas);
         if (pasirinkimas == 'n')
             break;
-        mokSk++;
         i++;
     }
 
