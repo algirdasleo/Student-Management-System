@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <iomanip>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 struct studentaiStruct {
@@ -12,14 +14,12 @@ struct studentaiStruct {
 } st[100]; // studentu struct masyvas
 
 int main() {
-    int mokSk;
-
-    int maxVardoIlgis = 6, maxPavardesIlgis = 7; 
-
-    char pasirinkimas = 'y';
+    int mokSk, maxVardoIlgis = 6, maxPavardesIlgis = 7; 
+    char pasirinkimas;
     int i = 0;
-    while (pasirinkimas == 'y') {
+    while (true) {
         st[i].ndSuma = 0;
+        st[i].n = 0;
 
         cout << "Iveskite savo varda:" << endl;
         cin >> st[i].vardas;
@@ -31,13 +31,38 @@ int main() {
         maxVardoIlgis = max(maxVardoIlgis, vardoIlgis);
         maxPavardesIlgis = max(maxPavardesIlgis, pavardesIlgis);
 
-        cout << "Iveskite namu darbu kieki: (max: 10 nd.)" << endl;
-        cin >> st[i].n;
+        cout << "Ar norite ivesti namu darbu rezultatus rankiniu budu? (y/n)" << endl;
+        cin >> pasirinkimas;
+        pasirinkimas = tolower(pasirinkimas);
+        if (pasirinkimas == 'y') {
+            int j = 0;
+            while (true) {
+                if (j < 10) {
+                    cout << "Iveskite " << j + 1 << " namu darbo rezultata: " << endl;
+                    cin >> st[i].T[j];
+                } else {
+                    cout << "Pasiektas namu darbu limitas. (max. 10)" << endl;
+                    break;
+                }
+                
+                st[i].ndSuma += st[i].T[j];
+                st[i].n++;
 
-        for (int j = 0; j < st[i].n; j++) {
-            cout << "Iveskite " << j + 1 << " namu darbo rezultata:" << endl;
-            cin >> st[i].T[j];
-            st[i].ndSuma += st[i].T[j];
+                if (j < 9) {
+                    cout << "Ar norite ivesti dar viena namu darbo rezultata? (y/n)" << endl;
+                    cin >> pasirinkimas;
+                    if (pasirinkimas == 'n')
+                        break;
+                }
+                j++;
+            }
+        } else {
+            cout << "Generuojami atsitiktiniai namu darbu rezultatai..." << endl;
+            st[i].n = 10; 
+            for (int j = 0; j < st[i].n; j++) {
+                st[i].T[j] = rand() % 10 + 1; 
+                st[i].ndSuma += st[i].T[j];
+            }
         }
         sort(st[i].T, st[i].T + st[i].n);
 
@@ -55,6 +80,8 @@ int main() {
         cout << "Ar norite ivesti dar vieno mokinio duomenis? (y/n)" << endl;
         cin >> pasirinkimas;
         pasirinkimas = tolower(pasirinkimas);
+        if (pasirinkimas == 'n')
+            break;
         mokSk++;
         i++;
     }
