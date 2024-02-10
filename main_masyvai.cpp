@@ -22,9 +22,9 @@ int main() {
         st[i].ndSuma = 0;
         st[i].n = 0;
 
-        cout << "Iveskite savo varda:" << endl;
+        cout << "Iveskite studento varda:" << endl;
         cin >> st[i].vardas;
-        cout << "Iveskite savo pavarde:" << endl;
+        cout << "Iveskite studento pavarde:" << endl;
         cin >> st[i].pavarde;
 
         int vardoIlgis = st[i].vardas.length();
