@@ -7,13 +7,15 @@
 #include <ctime>
 using namespace std;
 
-struct studentaiStruct {
+struct studentaiStruct
+{
     string vardas, pavarde;
     vector<int> nd;
     double ndSuma, egzas, galutinisVid, mediana, galutinisMed;
 };
 
-void skaiciavimai (studentaiStruct &studentas) {
+void skaiciavimai(studentaiStruct &studentas)
+{
     int ndKiekis = studentas.nd.size();
     sort(studentas.nd.begin(), studentas.nd.end());
     if (ndKiekis % 2 == 0)
@@ -24,24 +26,27 @@ void skaiciavimai (studentaiStruct &studentas) {
     studentas.galutinisMed = 0.4 * studentas.mediana + 0.6 * studentas.egzas;
 }
 
-void vardoIvedimas (studentaiStruct &studentas) {
+void vardoIvedimas(studentaiStruct &studentas)
+{
     cout << "Iveskite studento varda:" << endl;
     cin >> studentas.vardas;
     cout << "Iveskite studento pavarde:" << endl;
     cin >> studentas.pavarde;
-} 
+}
 
-void isvedimas (vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis) {
-    cout << left 
-         << setw(maxPavardesIlgis + 2) << "Pavarde" 
-         << setw(maxVardoIlgis + 2) << "Vardas" 
-         << setw(17) << "Galutinis(Vid.)" 
-         << setw(15) << "Galutinis(Med.)" << endl; 
+void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis)
+{
+    cout << left
+         << setw(maxPavardesIlgis + 2) << "Pavarde"
+         << setw(maxVardoIlgis + 2) << "Vardas"
+         << setw(17) << "Galutinis(Vid.)"
+         << setw(15) << "Galutinis(Med.)" << endl;
 
-    cout << setfill('-') << setw(maxPavardesIlgis + maxVardoIlgis + 34) << "-" << endl; 
+    cout << setfill('-') << setw(maxPavardesIlgis + maxVardoIlgis + 34) << "-" << endl;
     cout << setfill(' ');
 
-    for (const auto& student : stud) {
+    for (const auto &student : stud)
+    {
         cout << setw(maxPavardesIlgis + 2) << student.pavarde
              << setw(maxVardoIlgis + 2) << student.vardas
              << setw(17) << fixed << setprecision(2) << student.galutinisVid
@@ -49,12 +54,14 @@ void isvedimas (vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavarde
     }
 }
 
-int main() {
+int main()
+{
     vector<studentaiStruct> stud;
     srand(time(nullptr));
-    int maxVardoIlgis = 6, maxPavardesIlgis = 7; 
+    int maxVardoIlgis = 6, maxPavardesIlgis = 7;
     int meniuPasirinkimas;
-    while (true) {
+    while (true)
+    {
         studentaiStruct studentas;
         studentas.ndSuma = 0;
 
@@ -68,14 +75,13 @@ int main() {
 
         if (meniuPasirinkimas == 4)
             break;
-        if (meniuPasirinkimas == 1){
+        if (meniuPasirinkimas == 1)
+        {
             vardoIvedimas(studentas);
-            maxVardoIlgis = max(maxVardoIlgis, int(studentas.vardas.length()));
-            maxPavardesIlgis = max(maxPavardesIlgis, int(studentas.pavarde.length()));
-
             char pasirinkimas;
             int i = 0;
-            while (true) {
+            while (true)
+            {
                 int ndRezultatas;
                 cout << "Iveskite " << i + 1 << " namu darbo rezultata:" << endl;
                 cin >> ndRezultatas;
@@ -92,19 +98,13 @@ int main() {
             cin >> studentas.egzas;
             skaiciavimai(studentas);
             stud.push_back(studentas);
-
-            cout << "Ar norite ivesti dar vieno mokinio duomenis? (y/n)" << endl;
-            cin >> pasirinkimas;
-            pasirinkimas = tolower(pasirinkimas);
-            if (pasirinkimas == 'n')
-                break;
-
-        } else if (meniuPasirinkimas == 2) {
+        }
+        else if (meniuPasirinkimas == 2)
+        {
             vardoIvedimas(studentas);
-            maxVardoIlgis = max(maxVardoIlgis, int(studentas.vardas.length()));
-            maxPavardesIlgis = max(maxPavardesIlgis, int(studentas.pavarde.length()));
             studentas.nd.resize(10);
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++)
+            {
                 studentas.nd[i] = rand() % 10 + 1;
                 studentas.ndSuma += studentas.nd[i];
             }
@@ -112,14 +112,14 @@ int main() {
             skaiciavimai(studentas);
             stud.push_back(studentas);
             cout << "Studento pazymiai sugeneruoti atsitiktinai.\n \n";
-    
-        } else if (meniuPasirinkimas == 3) {
+        }
+        else if (meniuPasirinkimas == 3)
+        {
             studentas.vardas = "Vardas" + to_string(stud.size() + 1);
             studentas.pavarde = "Pavarde" + to_string(stud.size() + 1);
-            maxVardoIlgis = max(maxVardoIlgis, int(studentas.vardas.length()));
-            maxPavardesIlgis = max(maxPavardesIlgis, int(studentas.pavarde.length()));
             studentas.nd.resize(10);
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++)
+            {
                 studentas.nd[i] = rand() % 10 + 1;
                 studentas.ndSuma += studentas.nd[i];
             }
@@ -128,6 +128,8 @@ int main() {
             stud.push_back(studentas);
             cout << "Studento duomenys sugeneruoti atsitiktinai. \n \n";
         }
+        maxVardoIlgis = max(maxVardoIlgis, int(studentas.vardas.length()));
+        maxPavardesIlgis = max(maxPavardesIlgis, int(studentas.pavarde.length()));
     }
 
     isvedimas(stud, maxVardoIlgis, maxPavardesIlgis);
