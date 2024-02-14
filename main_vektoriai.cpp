@@ -14,6 +14,21 @@ struct studentaiStruct
     double ndSuma, egzas, galutinisVid, mediana, galutinisMed;
 };
 
+bool isNumber(string &str)
+{
+    for (char c : str)
+        if (!isdigit(c))
+            return false;
+    return true;
+}
+
+bool isString(string &str)
+{
+    for (char c : str)
+        if (!isalpha(c))
+            return false;
+    return true;
+}
 void skaiciavimai(studentaiStruct &studentas)
 {
     int ndKiekis = studentas.nd.size();
@@ -28,10 +43,41 @@ void skaiciavimai(studentaiStruct &studentas)
 
 void vardoIvedimas(studentaiStruct &studentas)
 {
+    string input;
     cout << "Iveskite studento varda:" << endl;
-    cin >> studentas.vardas;
+    cin >> input;
+    while (!isString(input))
+    {
+        cout << "Ivestas ne vardas. Iveskite varda:" << endl;
+        cin >> input;
+    }
+    studentas.vardas = input;
     cout << "Iveskite studento pavarde:" << endl;
-    cin >> studentas.pavarde;
+    cin >> input;
+    while (!isString(input))
+    {
+        cout << "Ivesta ne pavarde. Iveskite pavarde:" << endl;
+        cin >> input;
+    }
+    studentas.pavarde = input;
+}
+
+void numberInputProtection(string &input)
+{
+    while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 10)
+    {
+        cout << "Iveskite skaiciu nuo 1 - 10:" << endl;
+        cin >> input;
+    }
+}
+
+void charInputProtection(string &input)
+{
+    while (input.length() > 1 && input != "n" && input != "y")
+    {
+        cout << "Neteisingas pasirinkimas. Iveskite 'y' arba 'n':" << endl;
+        cin >> input;
+    }
 }
 
 void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis)
@@ -59,6 +105,7 @@ int main()
     vector<studentaiStruct> stud;
     srand(time(nullptr));
     int maxVardoIlgis = 6, maxPavardesIlgis = 7;
+    string input;
     int meniuPasirinkimas;
     while (true)
     {
@@ -71,37 +118,46 @@ int main()
              << "3. Studento varda, pavarde, pazymius sugeneruoti atsitiktiniu budu\n"
              << "4. Baigti darba, rodyti rezultatus.\n"
              << "Iveskite pasirinkima: \n";
-        cin >> meniuPasirinkimas;
+        cin >> input;
 
+        while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 4)
+        {
+            cout << "Neteisingas pasirinkimas. Iveskite skaiciu nuo 1 iki 4:" << endl;
+            cin >> input;
+        }
+        meniuPasirinkimas = stoi(input);
         if (meniuPasirinkimas == 4)
             break;
+
+        if (meniuPasirinkimas == 1 || meniuPasirinkimas == 2)
+            vardoIvedimas(studentas);
+
         if (meniuPasirinkimas == 1)
         {
-            vardoIvedimas(studentas);
-            char pasirinkimas;
             int i = 0;
             while (true)
             {
-                int ndRezultatas;
-                cout << "Iveskite " << i + 1 << " namu darbo rezultata:" << endl;
-                cin >> ndRezultatas;
-                studentas.nd.push_back(ndRezultatas);
-                studentas.ndSuma += ndRezultatas;
-                cout << "Ar norite ivesti dar viena namu darbo rezultata? (y/n)" << endl;
-                cin >> pasirinkimas;
-                pasirinkimas = tolower(pasirinkimas);
-                if (pasirinkimas == 'n')
+                cout << "Iveskite " << i + 1 << " namu darbo rezultata (1 - 10):" << endl;
+                cin >> input;
+                numberInputProtection(input);
+                studentas.nd.push_back(stoi(input));
+                studentas.ndSuma += stoi(input);
+                cout << "Ar norite ivesti dar viena namu darbo rezultata? (y / n)" << endl;
+                cin >> input;
+                charInputProtection(input);
+                if (input == "n")
                     break;
                 i++;
             }
-            cout << "Iveskite egzamino rezultata:" << endl;
-            cin >> studentas.egzas;
+            cout << "Iveskite egzamino rezultata (1 - 10):" << endl;
+            cin >> input;
+            numberInputProtection(input);
+            studentas.egzas = stoi(input);
             skaiciavimai(studentas);
             stud.push_back(studentas);
         }
         else if (meniuPasirinkimas == 2)
         {
-            vardoIvedimas(studentas);
             studentas.nd.resize(10);
             for (int i = 0; i < 10; i++)
             {

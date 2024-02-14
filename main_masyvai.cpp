@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <string>
+#include <cctype>
 #include <cstdlib>
 #include <ctime>
 using namespace std;
@@ -14,12 +15,59 @@ struct studentaiStruct
     double ndSuma, egzas, galutinisVid, mediana, galutinisMed;
 } st[100]; // studentu struct masyvas
 
+bool isNumber(string &str)
+{
+    for (char c : str)
+        if (!isdigit(c))
+            return false;
+    return true;
+}
+
+bool isString(string &str)
+{
+    for (char c : str)
+        if (!isalpha(c))
+            return false;
+    return true;
+}
+
 void ivedimas(studentaiStruct &studentas)
 {
+    string input;
     cout << "Iveskite studento varda:" << endl;
-    cin >> studentas.vardas;
+    cin >> input;
+    while (!isString(input))
+    {
+        cout << "Ivestas ne vardas. Iveskite varda:" << endl;
+        cin >> input;
+    }
+    studentas.vardas = input;
     cout << "Iveskite studento pavarde:" << endl;
-    cin >> studentas.pavarde;
+    cin >> input;
+    while (!isString(input))
+    {
+        cout << "Ivesta ne pavarde. Iveskite pavarde:" << endl;
+        cin >> input;
+    }
+    studentas.pavarde = input;
+}
+
+void numberInputProtection(string &input)
+{
+    while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 10)
+    {
+        cout << "Iveskite skaiciu nuo 1 - 10:" << endl;
+        cin >> input;
+    }
+}
+
+void charInputProtection(string &input)
+{
+    while (input.length() > 1 && input != "n" && input != "y")
+    {
+        cout << "Neteisingas pasirinkimas. Iveskite 'y' arba 'n':" << endl;
+        cin >> input;
+    }
 }
 
 void skaiciavimai(studentaiStruct &studentas)
@@ -70,6 +118,7 @@ int main()
 {
     srand(time(nullptr));
     int mokSk = 0, maxVardoIlgis = 6, maxPavardesIlgis = 7;
+    string input;
     int meniuPasirinkimas;
     while (true)
     {
@@ -79,8 +128,14 @@ int main()
              << "3. Studento varda, pavarde, pazymius sugeneruoti atsitiktiniu budu\n"
              << "4. Baigti darba, rodyti rezultatus.\n"
              << "Iveskite pasirinkima: \n";
-        cin >> meniuPasirinkimas;
+        cin >> input;
 
+        while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 4)
+        {
+            cout << "Neteisingas pasirinkimas. Iveskite skaiciu nuo 1 iki 4:" << endl;
+            cin >> input;
+        }
+        meniuPasirinkimas = stoi(input);
         if (meniuPasirinkimas == 4)
             break;
 
@@ -95,27 +150,31 @@ int main()
         {
             while (true && studentas.n < 10)
             {
-                cout << "Iveskite " << studentas.n + 1 << " namu darbo rezultata: " << endl;
-                cin >> studentas.T[studentas.n];
+                cout << "Iveskite " << studentas.n + 1 << " namu darbo rezultata (1 - 10): " << endl;
+                cin >> input;
+                numberInputProtection(input);
+
+                studentas.T[studentas.n] = stoi(input);
                 studentas.ndSuma += studentas.T[studentas.n];
                 studentas.n++;
 
-                char pasirinkimas;
                 if (studentas.n < 10)
                 {
-                    cout << "Ar norite ivesti dar viena namu darbo rezultata? (y/n) (max 10)" << endl;
-                    cin >> pasirinkimas;
-                    pasirinkimas = tolower(pasirinkimas);
-                    if (pasirinkimas == 'n')
+                    cout << "Ar norite ivesti dar viena namu darbo rezultata? (max 10) (y/n) " << endl;
+                    cin >> input;
+                    charInputProtection(input);
+                    if (input == "n")
                         break;
                 }
             }
-            cout << "Iveskite egzamino rezultata:" << endl;
-            cin >> studentas.egzas;
+            cout << "Iveskite egzamino rezultata (1-10):" << endl;
+            cin >> input;
+            numberInputProtection(input);
+
+            studentas.egzas = stoi(input);
         }
         if (meniuPasirinkimas == 2)
         {
-
             generavimas(studentas);
             cout << "Studento pazymiai sugeneruoti atsitiktinai.\n \n";
         }
