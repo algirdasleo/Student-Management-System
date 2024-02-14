@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <string>
+#include <cctype>
 using namespace std;
 
 struct studentaiStruct
@@ -12,11 +13,34 @@ struct studentaiStruct
     double ndSuma, egzas, mediana, galutinisVid, galutinisMed;
 } st[100]; // studentu struct masyvas
 
-int main()
+bool isNumber(string &str)
 {
+    for (char c : str)
+        if (!isdigit(c))
+            return false;
+    return true;
+}
+
+bool isString(string &str)
+{
+    for (char c : str)
+        if (!isalpha(c))
+            return false;
+    return true;
+}
+
+main()
+{
+    string input;
     int mokSk; // mokiniu skaicius
     cout << "Iveskite mokiniu skaiciu:" << endl;
-    cin >> mokSk;
+    cin >> input;
+    while (!isNumber(input))
+    {
+        cout << "Iveskite mokiniu skaiciu nuo 1 iki 100:" << endl;
+        cin >> input;
+    }
+    mokSk = stoi(input);
 
     int maxVardoIlgis = 5;    // minimalus vardo ilgis
     int maxPavardesIlgis = 6; // minimalus pavardes ilgis
@@ -26,21 +50,46 @@ int main()
         st[i].ndSuma = 0; // namu darbu pazymiu suma pradzioje lygi 0
 
         cout << "Iveskite mokinio varda:" << endl;
-        cin >> st[i].vardas;
+        cin >> input;
+        while (!isString(input))
+        {
+            cout << "Ivestas ne vardas. Iveskite varda:" << endl;
+            cin >> input;
+        }
+        st[i].vardas = input;
         cout << "Iveskite mokinio pavarde:" << endl;
-        cin >> st[i].pavarde;
+        cin >> input;
+        while (!isString(input))
+        {
+            cout << "Ivesta ne pavarde. Iveskite pavarde:" << endl;
+            cin >> input;
+        }
+        st[i].pavarde = input;
         int vardoIlgis = st[i].vardas.length();
         int pavardesIlgis = st[i].pavarde.length();
         maxVardoIlgis = max(maxVardoIlgis, vardoIlgis);          // nustatomas maksimalus vardo ilgis
         maxPavardesIlgis = max(maxPavardesIlgis, pavardesIlgis); // nustatomas maksimalus pavardes ilgis
 
         cout << "Iveskite namu darbu kieki: (max: 10 nd.)" << endl;
-        cin >> st[i].n;
+        cin >> input;
+
+        while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 10)
+        {
+            cout << "Iveskite skaiciu nuo 1 - 10:" << endl;
+            cin >> input;
+        }
+        st[i].n = stoi(input);
 
         for (int j = 0; j < st[i].n; j++)
         { // ciklas, kuris kartojasi n kartu, kur n - namu darbu kiekis
             cout << "Iveskite " << j + 1 << " namu darbo rezultata:" << endl;
-            cin >> st[i].T[j];
+            cin >> input;
+            while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 10)
+            {
+                cout << "Iveskite skaiciu nuo 1 - 10:" << endl;
+                cin >> input;
+            }
+            st[i].T[j] = stoi(input);
             st[i].ndSuma += st[i].T[j]; // pridedamas namu darbo rezultatas prie namu darbu pazymiu sumos
         }
         sort(st[i].T, st[i].T + st[i].n); // norint rasti mediana - reikia sortinti namu darbu rezultatus.
@@ -52,7 +101,13 @@ int main()
             st[i].mediana = st[i].T[st[i].n / 2];
 
         cout << "Iveskite egzamino rezultata:" << endl;
-        cin >> st[i].egzas;
+        cin >> input;
+        while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 10)
+        {
+            cout << "Iveskite skaiciu nuo 1 - 10:" << endl;
+            cin >> input;
+        }
+        st[i].egzas = stoi(input);
 
         st[i].galutinisVid = 0.4 * (st[i].ndSuma / st[i].n) + 0.6 * st[i].egzas; // galutinio pazymio skaiciavimas pagal vidurki
         st[i].galutinisMed = 0.4 * st[i].mediana + 0.6 * st[i].egzas;            // galutinio pazymio skaiciavimas pagal mediana
