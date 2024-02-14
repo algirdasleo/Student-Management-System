@@ -5,6 +5,8 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 struct studentaiStruct
@@ -116,17 +118,18 @@ int main()
              << "1. Studento duomenis ivesti rankiniu budu.\n"
              << "2. Ivesti studento varda/pavarde rankiniu budu, o pazymius sugeneruoti atsitiktiniu budu.\n"
              << "3. Studento varda, pavarde, pazymius sugeneruoti atsitiktiniu budu\n"
-             << "4. Baigti darba, rodyti rezultatus.\n"
+             << "4. Nuskaityti studentu duomenis is failo.\n"
+             << "5. Baigti darba, rodyti rezultatus.\n"
              << "Iveskite pasirinkima: \n";
         cin >> input;
 
-        while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 4)
+        while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 5)
         {
-            cout << "Neteisingas pasirinkimas. Iveskite skaiciu nuo 1 iki 4:" << endl;
+            cout << "Neteisingas pasirinkimas. Iveskite skaiciu nuo 1 iki 5:" << endl;
             cin >> input;
         }
         meniuPasirinkimas = stoi(input);
-        if (meniuPasirinkimas == 4)
+        if (meniuPasirinkimas == 5)
             break;
 
         if (meniuPasirinkimas == 1 || meniuPasirinkimas == 2)
@@ -184,8 +187,49 @@ int main()
             stud.push_back(studentas);
             cout << "Studento duomenys sugeneruoti atsitiktinai. \n \n";
         }
-        maxVardoIlgis = max(maxVardoIlgis, int(studentas.vardas.length()));
-        maxPavardesIlgis = max(maxPavardesIlgis, int(studentas.pavarde.length()));
+        else if (meniuPasirinkimas == 4)
+        {
+            cout << "Nuskaitomi studentu duomenys is failo...\n";
+
+            ifstream in("kursiokai.txt");
+            if (!in)
+            {
+                cerr << "Failas 'kursiokai.txt' nerastas. \n";
+                continue;
+            }
+
+            string line;
+            getline(in, line); // Praleidziamas pirma eilute su stulpeliu pavadinimais
+            vector<int> visiPazymiai;
+            while (getline(in, line))
+            {
+                istringstream iss(line);
+                studentas.ndSuma = 0;
+                iss >> studentas.vardas >> studentas.pavarde;
+                int pazymys;
+                while (iss >> pazymys)
+                {
+                    studentas.nd.push_back(pazymys);
+                    studentas.ndSuma += pazymys;
+                }
+                studentas.egzas = studentas.nd.back();
+                studentas.nd.pop_back();
+
+                skaiciavimai(studentas);
+                stud.push_back(studentas);
+                maxVardoIlgis = max(maxVardoIlgis, int(studentas.vardas.length()));
+                maxPavardesIlgis = max(maxPavardesIlgis, int(studentas.pavarde.length()));
+            }
+
+            in.close();
+            cout << "Studentu duomenys nuskaityti is failo. \n \n";
+        }
+
+        if (meniuPasirinkimas > 1 && meniuPasirinkimas < 4)
+        {
+            maxVardoIlgis = max(maxVardoIlgis, int(studentas.vardas.length()));
+            maxPavardesIlgis = max(maxPavardesIlgis, int(studentas.pavarde.length()));
+        }
     }
 
     isvedimas(stud, maxVardoIlgis, maxPavardesIlgis);
