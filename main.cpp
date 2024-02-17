@@ -75,7 +75,7 @@ void numberInputProtection(string &input)
 
 void charInputProtection(string &input)
 {
-    while (input.length() > 1 && input != "n" && input != "y")
+    while (input.length() > 1 || (input != "n" && input != "y"))
     {
         cout << "Neteisingas pasirinkimas. Iveskite 'y' arba 'n':" << endl;
         cin >> input;
@@ -84,6 +84,53 @@ void charInputProtection(string &input)
 
 void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis)
 {
+    char pasirinkimas;
+    cout << "Kaip noretumete surusiuoti studentus? (pagal: v - varda, p - pavarde, g - galutini bala(vidurkis), m - galutini bala(mediana)):" << endl;
+    cin >> pasirinkimas;
+    while (pasirinkimas != 'v' && pasirinkimas != 'p' && pasirinkimas != 'g' && pasirinkimas != 'm')
+    {
+        cout << "Neteisingas pasirinkimas. Iveskite 'v', 'p', 'g' arba 'm':" << endl;
+        cin >> pasirinkimas;
+    }
+    cout << "Surusiuoti didejancia ar mazejancia tvarka? (d - didejancia, m - mazejancia)" << endl;
+    
+    char input;
+    cin >> input;
+    while (input != 'd' && input != 'm')
+    {
+        cout << "Neteisingas pasirinkimas. Iveskite 'd' arba 'm':" << endl;
+        cin >> input;
+    }
+
+    if (pasirinkimas == 'v')
+    {
+        if (input == 'd')
+            sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.vardas < b.vardas; });
+        else
+            sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.vardas > b.vardas; });
+    }
+    else if (pasirinkimas == 'p')
+    {
+        if (input == 'd')
+            sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.pavarde < b.pavarde; });
+        else
+            sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.pavarde > b.pavarde; });
+    }
+    else if (pasirinkimas == 'g')
+    {
+        if (input == 'd')
+            sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.galutinisVid < b.galutinisVid; });
+        else
+            sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.galutinisVid > b.galutinisVid; });
+    }
+    else if (pasirinkimas == 'm')
+    {
+        if (input == 'd')
+            sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.galutinisMed < b.galutinisMed; });
+        else
+            sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.galutinisMed > b.galutinisMed; });
+    }
+    
     ofstream out ("rezultatas.txt");
     out << left
          << setw(maxPavardesIlgis + 2) << "Pavarde"
@@ -101,10 +148,13 @@ void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardes
              << setw(17) << fixed << setprecision(2) << student.galutinisVid
              << setw(15) << fixed << setprecision(2) << student.galutinisMed << endl;
     }
+    out.close();
+    cout << "\nRezultatai isvesti i faila 'rezultatas.txt'.\n";
 }
 
 int main()
 {
+    clock_t start = clock();
     vector<studentaiStruct> stud;
     srand(time(nullptr));
     int maxVardoIlgis = 6, maxPavardesIlgis = 7;
@@ -191,6 +241,7 @@ int main()
         else if (meniuPasirinkimas == 4)
         {
             cout << "Nuskaitomi studentu duomenys is failo...\n";
+            clock_t start2 = clock();
 
             ifstream in("kursiokai.txt");
             if (!in)
@@ -200,7 +251,7 @@ int main()
             }
 
             string vardas, pavarde, line;
-            getline(in, line); // Praleidziama pirma eilute su stulpeliu pavadinimais
+            getline(in, line);
             while (in.peek() != EOF)
             {
                 studentaiStruct studentas;
@@ -226,16 +277,21 @@ int main()
             }
 
             in.close();
-            cout << "Studentu duomenys nuskaityti is failo. \n \n";
+            clock_t end2 = clock();
+            double laikas2 = double(end2 - start2) / CLOCKS_PER_SEC;
+            cout << "Studentu duomenys nuskaityti is failo per" << laikas2 << " sekundziu.\n\n";
         }
 
-        if (meniuPasirinkimas > 1 && meniuPasirinkimas < 4)
+        if (meniuPasirinkimas > 0 && meniuPasirinkimas < 5)
         {
             maxVardoIlgis = max(maxVardoIlgis, int(studentas.vardas.length()));
             maxPavardesIlgis = max(maxPavardesIlgis, int(studentas.pavarde.length()));
         }
     }
 
+    clock_t end = clock();
+    double laikas = double(end - start) / CLOCKS_PER_SEC;
     isvedimas(stud, maxVardoIlgis, maxPavardesIlgis);
+    cout << "Programa uztruko: " << laikas << " sekundziu." << endl;
     return 0;
 }
