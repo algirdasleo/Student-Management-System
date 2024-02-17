@@ -6,7 +6,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
-#include <sstream>
 using namespace std;
 
 struct studentaiStruct
@@ -46,6 +45,7 @@ void skaiciavimai(studentaiStruct &studentas)
 void vardoIvedimas(studentaiStruct &studentas)
 {
     string input;
+
     cout << "Iveskite studento varda:" << endl;
     cin >> input;
     while (!isString(input))
@@ -84,18 +84,19 @@ void charInputProtection(string &input)
 
 void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis)
 {
-    cout << left
+    ofstream out ("rezultatas.txt");
+    out << left
          << setw(maxPavardesIlgis + 2) << "Pavarde"
          << setw(maxVardoIlgis + 2) << "Vardas"
          << setw(17) << "Galutinis(Vid.)"
          << setw(15) << "Galutinis(Med.)" << endl;
 
-    cout << setfill('-') << setw(maxPavardesIlgis + maxVardoIlgis + 34) << "-" << endl;
-    cout << setfill(' ');
+    out << setfill('-') << setw(maxPavardesIlgis + maxVardoIlgis + 34) << "-" << endl;
+    out << setfill(' ');
 
     for (const auto &student : stud)
     {
-        cout << setw(maxPavardesIlgis + 2) << student.pavarde
+        out << setw(maxPavardesIlgis + 2) << student.pavarde
              << setw(maxVardoIlgis + 2) << student.vardas
              << setw(17) << fixed << setprecision(2) << student.galutinisVid
              << setw(15) << fixed << setprecision(2) << student.galutinisMed << endl;
@@ -198,24 +199,27 @@ int main()
                 continue;
             }
 
-            string line;
-            getline(in, line); // Praleidziamas pirma eilute su stulpeliu pavadinimais
-            vector<int> visiPazymiai;
-            while (getline(in, line))
+            string vardas, pavarde, line;
+            getline(in, line); // Praleidziama pirma eilute su stulpeliu pavadinimais
+            while (in.peek() != EOF)
             {
-                istringstream iss(line);
+                studentaiStruct studentas;
+                in >> studentas.vardas >> studentas.pavarde;
                 studentas.ndSuma = 0;
-                iss >> studentas.vardas >> studentas.pavarde;
                 int pazymys;
-                while (iss >> pazymys)
+                while (in >> pazymys)
                 {
                     studentas.nd.push_back(pazymys);
                     studentas.ndSuma += pazymys;
+                    if (in.peek() == '\n')
+                        break;
                 }
-                studentas.egzas = studentas.nd.back();
-                studentas.nd.pop_back();
-
-                skaiciavimai(studentas);
+                if (!studentas.nd.empty()){
+                    studentas.egzas = studentas.nd.back();
+                    studentas.ndSuma -= studentas.egzas;
+                    studentas.nd.pop_back();
+                    skaiciavimai(studentas);
+                }
                 stud.push_back(studentas);
                 maxVardoIlgis = max(maxVardoIlgis, int(studentas.vardas.length()));
                 maxPavardesIlgis = max(maxPavardesIlgis, int(studentas.pavarde.length()));
