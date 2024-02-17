@@ -279,7 +279,7 @@ int main()
             in.close();
             clock_t end2 = clock();
             double laikas2 = double(end2 - start2) / CLOCKS_PER_SEC;
-            cout << "Studentu duomenys nuskaityti is failo per" << laikas2 << " sekundziu.\n\n";
+            cout << "Studentu duomenys nuskaityti is failo per " << laikas2 << " sekundziu.\n\n";
         }
 
         if (meniuPasirinkimas > 0 && meniuPasirinkimas < 5)
