@@ -96,7 +96,7 @@ int main() {
                 cout << e.what() << endl;
                 continue;
             }
-            
+
             string vardas, pavarde, line;
             getline(in, line);
             while (in.peek() != EOF) {
