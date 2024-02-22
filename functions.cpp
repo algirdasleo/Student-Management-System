@@ -37,51 +37,86 @@ void skaiciavimai(studentaiStruct &studentas) {
 void vardoIvedimas(studentaiStruct &studentas) {
     string input;
 
-    cout << "Iveskite studento varda:" << endl;
-    cin >> input;
-    while (!isString(input)) {
-        cout << "Ivestas ne vardas. Iveskite varda:" << endl;
+    while (true) {
+        cout << "Įveskite studento vardą:" << endl;
         cin >> input;
+        try {
+            if (!isString(input)) {
+                throw invalid_argument("Įvestas ne vardas. Įveskite vardą:");
+            }
+            studentas.vardas = input;
+            break;
+        } catch (const invalid_argument &e) {
+            cout << e.what() << endl;
+        }
     }
-    studentas.vardas = input;
-    cout << "Iveskite studento pavarde:" << endl;
-    cin >> input;
-    while (!isString(input)) {
-        cout << "Ivesta ne pavarde. Iveskite pavarde:" << endl;
+
+    while (true) {
+        cout << "Įveskite studento pavardę:" << endl;
         cin >> input;
+        try {
+            if (!isString(input)) {
+                throw invalid_argument("Ivesta ne pavarde. Iveskite pavarde:");
+            }
+            studentas.pavarde = input;
+            break;
+        } catch (const invalid_argument &e) {
+            cout << e.what() << endl;
+        }
     }
-    studentas.pavarde = input;
 }
 
 void numberInputProtection(string &input) {
-    while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 10) {
-        cout << "Iveskite skaiciu nuo 1 - 10:" << endl;
+    try {
+        if (!isNumber(input) || stoi(input) < 1 || stoi(input) > 10) {
+            throw invalid_argument("Iveskite skaiciu nuo 1 iki 10:");
+        }
+    } catch (const invalid_argument &e) {
+        cout << e.what() << endl;
         cin >> input;
+        numberInputProtection(input);
     }
 }
 
 void charInputProtection(string &input) {
-    while (input.length() > 1 || (input != "n" && input != "y")) {
-        cout << "Neteisingas pasirinkimas. Iveskite 'y' arba 'n':" << endl;
+    try {
+        if (input.length() > 1 || (input != "n" && input != "y")) {
+            throw invalid_argument("Neteisingas pasirinkimas. Iveskite 'y' arba 'n':");
+        }
+    } catch (const invalid_argument &e) {
+        cout << e.what() << endl;
         cin >> input;
+        charInputProtection(input);
     }
 }
 
 void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis) {
     char pasirinkimas;
-    cout << "Kaip noretumete surusiuoti studentus? (pagal: v - varda, p - pavarde, g - galutini bala(vidurkis), m - galutini bala(mediana)):" << endl;
-    cin >> pasirinkimas;
-    while (pasirinkimas != 'v' && pasirinkimas != 'p' && pasirinkimas != 'g' && pasirinkimas != 'm') {
-        cout << "Neteisingas pasirinkimas. Iveskite 'v', 'p', 'g' arba 'm':" << endl;
+    while (true) {
+        cout << "Kaip noretumete surusiuoti studentus? (pagal: v - varda, p - pavarde, g - galutini bala(vidurkis), m - galutini bala(mediana)):" << endl;
         cin >> pasirinkimas;
+        try {
+            if (pasirinkimas != 'v' && pasirinkimas != 'p' && pasirinkimas != 'g' && pasirinkimas != 'm') {
+                throw invalid_argument("Neteisingas pasirinkimas. Iveskite 'v', 'p', 'g' arba 'm':");
+            }
+            break;
+        } catch (const invalid_argument &e) {
+            cout << e.what() << endl;
+        }
     }
-    cout << "Surusiuoti didejancia ar mazejancia tvarka? (d - didejancia, m - mazejancia)" << endl;
 
     char input;
-    cin >> input;
-    while (input != 'd' && input != 'm') {
-        cout << "Neteisingas pasirinkimas. Iveskite 'd' arba 'm':" << endl;
+    while (true) {
+        cout << "Surusiuoti didejancia ar mazejancia tvarka? (d - didejancia, m - mažejancia)" << endl;
         cin >> input;
+        try {
+            if (input != 'd' && input != 'm') {
+                throw invalid_argument("Neteisingas pasirinkimas. Iveskite 'd' arba 'm':");
+            }
+            break;
+        } catch (const invalid_argument &e) {
+            cout << e.what() << endl;
+        }
     }
 
     if (pasirinkimas == 'v') {
