@@ -91,11 +91,12 @@ int main() {
             ifstream in("kursiokai.txt");
             try {
                 if (!in)
-                    throw "Failas 'kursiokai.txt' nerastas.";
-            } catch (const std::runtime_error &e) {
+                    throw runtime_error("Failas 'kursiokai.txt' nerastas.");
+            } catch (const runtime_error &e) {
                 cout << e.what() << endl;
                 continue;
             }
+            
             string vardas, pavarde, line;
             getline(in, line);
             while (in.peek() != EOF) {
