@@ -89,11 +89,13 @@ int main() {
             clock_t start2 = clock();
 
             ifstream in("kursiokai.txt");
-            if (!in) {
-                cerr << "Failas 'kursiokai.txt' nerastas. \n";
+            try {
+                if (!in)
+                    throw "Failas 'kursiokai.txt' nerastas.";
+            } catch (const std::runtime_error &e) {
+                cout << e.what() << endl;
                 continue;
             }
-
             string vardas, pavarde, line;
             getline(in, line);
             while (in.peek() != EOF) {
