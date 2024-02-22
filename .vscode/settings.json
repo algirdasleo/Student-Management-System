@@ -5,6 +5,10 @@
     "vector": "cpp",
     "ostream": "cpp",
     "xstring": "cpp",
-    "algorithm": "cpp"
+    "algorithm": "cpp",
+    "xiosbase": "cpp",
+    "xlocale": "cpp",
+    "xutility": "cpp",
+    "stdexcept": "cpp"
   }
 }
