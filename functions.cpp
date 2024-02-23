@@ -38,11 +38,11 @@ void vardoIvedimas(studentaiStruct &studentas) {
     string input;
 
     while (true) {
-        cout << "Įveskite studento vardą:" << endl;
+        cout << "Iveskite studento varda:" << endl;
         cin >> input;
         try {
             if (!isString(input)) {
-                throw invalid_argument("Įvestas ne vardas. Įveskite vardą:");
+                throw invalid_argument("Ivestas ne vardas. Iveskite varda:");
             }
             studentas.vardas = input;
             break;
@@ -52,7 +52,7 @@ void vardoIvedimas(studentaiStruct &studentas) {
     }
 
     while (true) {
-        cout << "Įveskite studento pavardę:" << endl;
+        cout << "Iveskite studento pavarde:" << endl;
         cin >> input;
         try {
             if (!isString(input)) {
@@ -107,7 +107,7 @@ void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardes
 
     char input;
     while (true) {
-        cout << "Surusiuoti didejancia ar mazejancia tvarka? (d - didejancia, m - mažejancia)" << endl;
+        cout << "Surusiuoti didejancia ar mazejancia tvarka? (d - didejancia, m - mazejancia)" << endl;
         cin >> input;
         try {
             if (input != 'd' && input != 'm') {
