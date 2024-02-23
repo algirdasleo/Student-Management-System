@@ -1,77 +1,67 @@
-#include <iostream>
 #include <algorithm>
-#include <iomanip>
-#include <string>
 #include <cctype>
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
+#include <iostream>
+#include <string>
 using namespace std;
 
-struct studentaiStruct
-{
+struct studentaiStruct {
     string vardas, pavarde;
-    int n;     // namu darbu kiekis
-    int T[10]; // namu darbu rezultatai
+    int n;   // namu darbu kiekis
+    int *T;  // namu darbu rezultatai
     double ndSuma, egzas, galutinisVid, mediana, galutinisMed;
-} st[100]; // studentu struct masyvas
+    studentaiStruct() : n(0), T(new int[1]), ndSuma(0), egzas(0), galutinisVid(0), mediana(0), galutinisMed(0) {}
+};
 
-bool isNumber(string &str)
-{
+bool isNumber(string &str) {
     for (char c : str)
         if (!isdigit(c))
             return false;
     return true;
 }
 
-bool isString(string &str)
-{
+bool isString(string &str) {
     for (char c : str)
         if (!isalpha(c))
             return false;
     return true;
 }
 
-void ivedimas(studentaiStruct &studentas)
-{
+void ivedimas(studentaiStruct &studentas) {
     string input;
     cout << "Iveskite studento varda:" << endl;
     cin >> input;
-    while (!isString(input))
-    {
+    while (!isString(input)) {
         cout << "Ivestas ne vardas. Iveskite varda:" << endl;
         cin >> input;
     }
     studentas.vardas = input;
     cout << "Iveskite studento pavarde:" << endl;
     cin >> input;
-    while (!isString(input))
-    {
+    while (!isString(input)) {
         cout << "Ivesta ne pavarde. Iveskite pavarde:" << endl;
         cin >> input;
     }
     studentas.pavarde = input;
 }
 
-void numberInputProtection(string &input)
-{
-    while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 10)
-    {
+void numberInputProtection(string &input) {
+    while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 10) {
         cout << "Iveskite skaiciu nuo 1 - 10:" << endl;
         cin >> input;
     }
 }
 
-void charInputProtection(string &input)
-{
-    while (input.length() > 1 && input != "n" && input != "y")
-    {
+void charInputProtection(string &input) {
+    while (input.length() > 1 && input != "n" && input != "y") {
         cout << "Neteisingas pasirinkimas. Iveskite 'y' arba 'n':" << endl;
         cin >> input;
     }
 }
 
-void skaiciavimai(studentaiStruct &studentas)
-{
+void skaiciavimai(studentaiStruct &studentas) {
     sort(studentas.T, studentas.T + studentas.n);
     if (studentas.n % 2 == 0)
         studentas.mediana = (studentas.T[studentas.n / 2] + studentas.T[(studentas.n / 2) - 1]) / 2.0;
@@ -82,19 +72,18 @@ void skaiciavimai(studentaiStruct &studentas)
     studentas.galutinisMed = 0.4 * studentas.mediana + 0.6 * studentas.egzas;
 }
 
-void generavimas(studentaiStruct &studentas)
-{
+void generavimas(studentaiStruct &studentas) {
     studentas.n = 10;
-    for (int i = 0; i < studentas.n; i++)
-    {
+    studentas.T = new int[studentas.n];
+    studentas.ndSuma = 0;
+    for (int i = 0; i < studentas.n; i++) {
         studentas.T[i] = rand() % 10 + 1;
         studentas.ndSuma += studentas.T[i];
     }
     studentas.egzas = rand() % 10 + 1;
 }
 
-void isvedimas(studentaiStruct &studentas, int mokSk, int maxVardoIlgis, int maxPavardesIlgis)
-{
+void isvedimas(studentaiStruct *students, int mokSk, int maxVardoIlgis, int maxPavardesIlgis) {
     cout << left
          << setw(maxPavardesIlgis + 2) << "Pavarde"
          << setw(maxVardoIlgis + 2) << "Vardas"
@@ -104,95 +93,95 @@ void isvedimas(studentaiStruct &studentas, int mokSk, int maxVardoIlgis, int max
     cout << setfill('-') << setw(maxPavardesIlgis + maxVardoIlgis + 34) << "-" << endl;
     cout << setfill(' ');
 
-    for (int i = 0; i < mokSk; i++)
-    {
+    for (int i = 0; i < mokSk; i++) {
         cout << left
-             << setw(maxPavardesIlgis + 2) << st[i].pavarde
-             << setw(maxVardoIlgis + 2) << st[i].vardas
-             << setw(17) << fixed << setprecision(2) << st[i].galutinisVid
-             << setw(15) << fixed << setprecision(2) << st[i].galutinisMed << endl;
+             << setw(maxPavardesIlgis + 2) << students[i].pavarde
+             << setw(maxVardoIlgis + 2) << students[i].vardas
+             << setw(17) << fixed << setprecision(2) << students[i].galutinisVid
+             << setw(15) << fixed << setprecision(2) << students[i].galutinisMed << endl;
     }
 }
 
-int main()
-{
+int main() {
     srand(time(nullptr));
-    int mokSk = 0, maxVardoIlgis = 6, maxPavardesIlgis = 7;
+    int mokSk = 0;
+    studentaiStruct *students = nullptr;
     string input;
     int meniuPasirinkimas;
-    while (true)
-    {
+    int maxVardoIlgis = 5, maxPavardesIlgis = 7;
+
+    while (true) {
         cout << "Meniu. Pasirinkite viena is galimu variantu:\n"
              << "1. Studento duomenis ivesti rankiniu budu.\n"
              << "2. Ivesti studento varda/pavarde rankiniu budu, o pazymius sugeneruoti atsitiktiniu budu.\n"
              << "3. Studento varda, pavarde, pazymius sugeneruoti atsitiktiniu budu\n"
              << "4. Baigti darba, rodyti rezultatus.\n"
-             << "Iveskite pasirinkima: \n";
+             << "Iveskite pasirinkima: ";
         cin >> input;
 
-        while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 4)
-        {
-            cout << "Neteisingas pasirinkimas. Iveskite skaiciu nuo 1 iki 4:" << endl;
+        while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 4) {
+            cout << "Neteisingas pasirinkimas. Iveskite skaiciu nuo 1 iki 4: ";
             cin >> input;
         }
         meniuPasirinkimas = stoi(input);
-        if (meniuPasirinkimas == 4)
-            break;
 
-        studentaiStruct &studentas = st[mokSk];
-        studentas.ndSuma = 0;
-        studentas.n = 0;
+        if (meniuPasirinkimas == 4) break;
 
-        if (meniuPasirinkimas == 1 || meniuPasirinkimas == 2)
-            ivedimas(studentas);
+        studentaiStruct studentas;
 
-        if (meniuPasirinkimas == 1)
-        {
-            while (true && studentas.n < 10)
-            {
-                cout << "Iveskite " << studentas.n + 1 << " namu darbo rezultata (1 - 10): " << endl;
-                cin >> input;
-                numberInputProtection(input);
+        if (meniuPasirinkimas == 1 || meniuPasirinkimas == 2) ivedimas(studentas);
 
-                studentas.T[studentas.n] = stoi(input);
-                studentas.ndSuma += studentas.T[studentas.n];
-                studentas.n++;
-
-                if (studentas.n < 10)
-                {
-                    cout << "Ar norite ivesti dar viena namu darbo rezultata? (max 10) (y/n) " << endl;
-                    cin >> input;
-                    charInputProtection(input);
-                    if (input == "n")
-                        break;
+        if (meniuPasirinkimas == 1) {
+            studentas.T = new int[10];
+            int allocatedSize = 10;
+            cout << "Iveskite namu darbu rezultatus (-1, kad sustabdyti ivedima):" << endl;
+            while (true) {
+                int score;
+                cin >> score;
+                if (score == -1) break;
+                if (studentas.n == allocatedSize) {
+                    int *temp = new int[allocatedSize * 2];
+                    for (int i = 0; i < allocatedSize; i++) {
+                        temp[i] = studentas.T[i];
+                    }
+                    delete[] studentas.T;
+                    studentas.T = temp;
+                    allocatedSize *= 2;
                 }
+                studentas.T[studentas.n++] = score;
+                studentas.ndSuma += score;
             }
-            cout << "Iveskite egzamino rezultata (1-10):" << endl;
-            cin >> input;
+            cout << "Iveskite egzamino rezultata: ";
+            cin >> studentas.egzas;
+        } else if (meniuPasirinkimas == 2) {
+            generavimas(studentas);
+        } else if (meniuPasirinkimas == 3) {
             numberInputProtection(input);
-
-            studentas.egzas = stoi(input);
-        }
-        if (meniuPasirinkimas == 2)
-        {
+            int randomNum = rand() % 100 + 1;
+            studentas.vardas = "Vardas" + to_string(randomNum);
+            studentas.pavarde = "Pavarde" + to_string(randomNum);
             generavimas(studentas);
-            cout << "Studento pazymiai sugeneruoti atsitiktinai.\n \n";
-        }
-        else if (meniuPasirinkimas == 3)
-        {
-            studentas.vardas = "Vardas" + to_string(mokSk + 1);
-            studentas.pavarde = "Pavarde" + to_string(mokSk + 1);
-
-            generavimas(studentas);
-            cout << "Studento duomenys sugeneruoti atsitiktinai. \n \n";
         }
 
-        maxVardoIlgis = max(maxVardoIlgis, int(studentas.vardas.length()));
-        maxPavardesIlgis = max(maxPavardesIlgis, int(studentas.pavarde.length()));
+        maxVardoIlgis = max(maxVardoIlgis, (int)studentas.vardas.length());
+        maxPavardesIlgis = max(maxPavardesIlgis, (int)studentas.pavarde.length());
         skaiciavimai(studentas);
-        mokSk++;
+
+        studentaiStruct *newArray = new studentaiStruct[mokSk + 1];
+        for (int i = 0; i < mokSk; i++) {
+            newArray[i] = students[i];
+        }
+        newArray[mokSk++] = studentas;
+        delete[] students;
+        students = newArray;
     }
 
-    isvedimas(st[0], mokSk, maxVardoIlgis, maxPavardesIlgis);
+    isvedimas(students, mokSk, maxVardoIlgis, maxPavardesIlgis);
+
+    for (int i = 0; i < mokSk; i++) {
+        delete[] students[i].T;
+    }
+    delete[] students;
+
     return 0;
 }
