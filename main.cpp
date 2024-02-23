@@ -73,16 +73,26 @@ int main() {
             stud.push_back(studentas);
             cout << "Studento pazymiai sugeneruoti atsitiktinai.\n \n";
         } else if (meniuPasirinkimas == 3) {
-            studentas.vardas = "Vardas" + to_string(stud.size() + 1);
-            studentas.pavarde = "Pavarde" + to_string(stud.size() + 1);
-            studentas.nd.resize(10);
-            for (int i = 0; i < 10; i++) {
-                studentas.nd[i] = rand() % 10 + 1;
-                studentas.ndSuma += studentas.nd[i];
+            cout << "Kiek studentu sugeneruoti?" << endl;
+            cin >> input;
+            while (!isNumber(input) || stoi(input) < 1) {
+                cout << "Neteisingas pasirinkimas. Iveskite skaiciu didesni uz 0:" << endl;
+                cin >> input;
             }
-            studentas.egzas = rand() % 10 + 1;
-            skaiciavimai(studentas);
-            stud.push_back(studentas);
+
+            int kiek = stoi(input);
+            for (int i = 0; i < kiek; i++) {
+                studentas.vardas = "Vardas" + to_string(stud.size() + 1);
+                studentas.pavarde = "Pavarde" + to_string(stud.size() + 1);
+                studentas.nd.resize(10);
+                for (int i = 0; i < 10; i++) {
+                    studentas.nd[i] = rand() % 10 + 1;
+                    studentas.ndSuma += studentas.nd[i];
+                }
+                studentas.egzas = rand() % 10 + 1;
+                skaiciavimai(studentas);
+                stud.push_back(studentas);
+            }
             cout << "Studento duomenys sugeneruoti atsitiktinai. \n \n";
         } else if (meniuPasirinkimas == 4) {
             cout << "Nuskaitomi studentu duomenys is failo...\n";
