@@ -18,12 +18,14 @@ struct studentaiStruct {
     double ndSuma, egzas, galutinisVid, mediana, galutinisMed;
 };
 
-bool isNumber(std::string &str);
-bool isString(std::string &str);
+bool isNumber(string &str);
+bool isString(string &str);
 void skaiciavimai(studentaiStruct &studentas);
 void vardoIvedimas(studentaiStruct &studentas);
-void numberInputProtection(std::string &input);
-void charInputProtection(std::string &input);
-void isvedimas(std::vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis);
+void numberInputProtection(string &input);
+void charInputProtection(string &input);
+void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis);
+int countDigits(int number, int count);
+void generuotiFaila(int kiekis, int pazymiuKiekis);
 
 #endif
