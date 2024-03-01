@@ -9,6 +9,8 @@
     "xiosbase": "cpp",
     "xlocale": "cpp",
     "xutility": "cpp",
-    "stdexcept": "cpp"
+    "stdexcept": "cpp",
+    "iomanip": "cpp",
+    "ios": "cpp"
   }
 }
