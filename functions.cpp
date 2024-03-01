@@ -23,6 +23,7 @@ bool isString(string &str) {
             return false;
     return true;
 }
+
 void skaiciavimai(studentaiStruct &studentas) {
     int ndKiekis = studentas.nd.size();
     sort(studentas.nd.begin(), studentas.nd.end());
@@ -159,4 +160,33 @@ void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardes
     }
     out.close();
     cout << "\nRezultatai isvesti i faila 'rezultatas.txt'.\n";
+}
+
+int countDigits(int number, int count) {
+    while (number != 0) {
+        number /= 10;
+        count++;
+    }
+    return count;
+}
+
+void generuotiFaila(int kiekis, int pazymiuKiekis) {
+    int tarpuIlgis = countDigits(kiekis, 0);
+    int maxVardoIlgis = 6 + tarpuIlgis, maxPavardesIlgis = 7 + tarpuIlgis;
+    string input;
+    cout << "Generuojamas failas su " << kiekis << " studentu duomenimis...\n";
+    clock_t start3 = clock();
+    ofstream out("kursiokai" + to_string(kiekis) + ".txt");
+    out << "Vardas" << setw(maxVardoIlgis + 1)
+        << "Pavarde" << setw(maxPavardesIlgis + 1);
+    for (int i = 1; i <= pazymiuKiekis; i++) out << "ND" << i << setw(3);
+    out << "Egzaminas" << setw(3) << "\n";
+    for (int i = 1; i <= kiekis; i++) {
+        out << "Vardas" << i << setw(maxVardoIlgis + 1)
+            << "Pavarde" << i << setw(maxPavardesIlgis + 1);
+        for (int j = 1; j <= pazymiuKiekis; j++) out << rand() % 10 + 1 << setw(3);
+        out << rand() % 10 + 1 << setw(3) << "\n";
+    }
+    out.close();
+    cout << "Failas 'kursiokai" << kiekis << ".txt' sugeneruotas per " << (clock() - start3) / (double)CLOCKS_PER_SEC << " s.\n";
 }
