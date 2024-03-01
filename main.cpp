@@ -97,17 +97,23 @@ int main() {
             }
             cout << "Studento duomenys sugeneruoti atsitiktinai. \n \n";
         } else if (meniuPasirinkimas == 4) {
+            ifstream in;
+
+            while (true) {
+                cout << "Iveskite tikslu file pavadinima (pvz. 'kursiokai.txt'):" << endl;
+                cin >> input;
+
+                in.open(input);
+
+                if (!in) {
+                    cout << "Failas '" << input << "' nerastas. Bandykite dar karta." << endl;
+                    in.clear();
+                } else {
+                    break;
+                }
+            }
             cout << "Nuskaitomi studentu duomenys is failo...\n";
             clock_t start2 = clock();
-
-            ifstream in("kursiokai.txt");
-            try {
-                if (!in)
-                    throw runtime_error("Failas 'kursiokai.txt' nerastas.");
-            } catch (const runtime_error &e) {
-                cout << e.what() << endl;
-                continue;
-            }
 
             string vardas, pavarde, line;
             getline(in, line);
