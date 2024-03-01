@@ -25,7 +25,7 @@ void vardoIvedimas(studentaiStruct &studentas);
 void numberInputProtection(string &input);
 void charInputProtection(string &input);
 void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis);
-int countDigits(int number, int count);
+
 void generuotiFaila(int kiekis, int pazymiuKiekis);
 
 #endif
