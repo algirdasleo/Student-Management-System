@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 using namespace std;
 
 bool isNumber(string &str) {
@@ -91,13 +92,12 @@ void charInputProtection(string &input) {
     }
 }
 
-void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis) {
-    char pasirinkimas;
+void kaipRusiuoti(char &p1, char &p2){
     while (true) {
         cout << "Kaip noretumete surusiuoti studentus? (pagal: v - varda, p - pavarde, g - galutini bala(vidurkis), m - galutini bala(mediana)):" << endl;
-        cin >> pasirinkimas;
+        cin >> p1;
         try {
-            if (pasirinkimas != 'v' && pasirinkimas != 'p' && pasirinkimas != 'g' && pasirinkimas != 'm') {
+            if (p1 != 'v' && p1 != 'p' && p1 != 'g' && p1 != 'm') {
                 throw invalid_argument("Neteisingas pasirinkimas. Iveskite 'v', 'p', 'g' arba 'm':");
             }
             break;
@@ -106,12 +106,11 @@ void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardes
         }
     }
 
-    char input;
     while (true) {
         cout << "Surusiuoti didejancia ar mazejancia tvarka? (d - didejancia, m - mazejancia)" << endl;
-        cin >> input;
+        cin >> p2;
         try {
-            if (input != 'd' && input != 'm') {
+            if (p2 != 'd' && p2 != 'm') {
                 throw invalid_argument("Neteisingas pasirinkimas. Iveskite 'd' arba 'm':");
             }
             break;
@@ -119,7 +118,58 @@ void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardes
             cout << e.what() << endl;
         }
     }
+}
 
+void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis) {
+    string input;
+    cout << "Ar norite surusiuoti studentus? (y / n)" << endl;
+    cin >> input;
+    charInputProtection(input);
+    char pasirinkimas, rusiavimas;
+    kaipRusiuoti(pasirinkimas, rusiavimas);
+    isvedimoSortinimas(stud, pasirinkimas, rusiavimas);
+    ofstream out("rezultatas.txt");
+    out << left
+        << setw(maxPavardesIlgis + 2) << "Pavarde"
+        << setw(maxVardoIlgis + 2) << "Vardas"
+        << setw(17) << "Galutinis(Vid.)"
+        << setw(15) << "Galutinis(Med.)" << endl;
+
+    out << setfill('-') << setw(maxPavardesIlgis + maxVardoIlgis + 34) << "-" << endl;
+    out << setfill(' ');
+
+    for (const auto &student : stud) {
+        out << setw(maxPavardesIlgis + 2) << student.pavarde
+            << setw(maxVardoIlgis + 2) << student.vardas
+            << setw(17) << fixed << setprecision(2) << student.galutinisVid
+            << setw(15) << fixed << setprecision(2) << student.galutinisMed << endl;
+    }
+    out.close();
+    cout << "\nRezultatai isvesti i faila 'rezultatas.txt'.\n";
+}
+
+void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis, string pavadinimas) {
+    ofstream out(pavadinimas);
+    out << left
+        << setw(maxPavardesIlgis + 2) << "Pavarde"
+        << setw(maxVardoIlgis + 2) << "Vardas"
+        << setw(17) << "Galutinis(Vid.)"
+        << setw(15) << "Galutinis(Med.)" << endl;
+
+    out << setfill('-') << setw(maxPavardesIlgis + maxVardoIlgis + 34) << "-" << endl;
+    out << setfill(' ');
+
+    for (const auto &student : stud) {
+        out << setw(maxPavardesIlgis + 2) << student.pavarde
+            << setw(maxVardoIlgis + 2) << student.vardas
+            << setw(17) << fixed << setprecision(2) << student.galutinisVid
+            << setw(15) << fixed << setprecision(2) << student.galutinisMed << endl;
+    }
+    out.close();
+    cout << "\nRezultatai isvesti i faila '" << pavadinimas << "'.\n";
+}
+
+void isvedimoSortinimas(vector<studentaiStruct> &stud, char pasirinkimas, char input) {
     if (pasirinkimas == 'v') {
         if (input == 'd')
             sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.vardas < b.vardas; });
@@ -141,26 +191,7 @@ void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardes
         else
             sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.galutinisMed > b.galutinisMed; });
     }
-
-    ofstream out("rezultatas.txt");
-    out << left
-        << setw(maxPavardesIlgis + 2) << "Pavarde"
-        << setw(maxVardoIlgis + 2) << "Vardas"
-        << setw(17) << "Galutinis(Vid.)"
-        << setw(15) << "Galutinis(Med.)" << endl;
-
-    out << setfill('-') << setw(maxPavardesIlgis + maxVardoIlgis + 34) << "-" << endl;
-    out << setfill(' ');
-
-    for (const auto &student : stud) {
-        out << setw(maxPavardesIlgis + 2) << student.pavarde
-            << setw(maxVardoIlgis + 2) << student.vardas
-            << setw(17) << fixed << setprecision(2) << student.galutinisVid
-            << setw(15) << fixed << setprecision(2) << student.galutinisMed << endl;
-    }
-    out.close();
-    cout << "\nRezultatai isvesti i faila 'rezultatas.txt'.\n";
-}
+};
 
 void generuotiFaila(int kiekis, int pazymiuKiekis) {
     int tarpuIlgis = to_string(kiekis).length();
