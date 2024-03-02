@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -21,13 +22,13 @@ int main() {
         studentaiStruct studentas;
         studentas.ndSuma = 0;
 
-        cout << "Meniu. Pasirinkite viena is galimu variantu:\n"
+        cout << "\nMeniu. Pasirinkite viena is galimu variantu:\n"
              << "1. Studento duomenis ivesti rankiniu budu.\n"
              << "2. Ivesti studento varda/pavarde rankiniu budu, o pazymius sugeneruoti atsitiktiniu budu.\n"
              << "3. Studento varda, pavarde, pazymius sugeneruoti atsitiktiniu budu\n"
              << "4. Nuskaityti studentu duomenis is failo.\n"
              << "5. Sugeneruoti studentu duomenu faila.\n"
-             << "6. Baigti darba, rodyti rezultatus.\n"
+             << "6. Baigti darba (rodyti rezultatus).\n\n"
              << "Iveskite pasirinkima: \n";
         cin >> input;
         cout << endl;
@@ -40,10 +41,9 @@ int main() {
         if (meniuPasirinkimas == 6)
             break;
 
-        if (meniuPasirinkimas == 1 || meniuPasirinkimas == 2)
-            vardoIvedimas(studentas);
-
         if (meniuPasirinkimas == 1) {
+            cout << "1. STUDENTO DUOMENU IVEDIMAS\n";
+            vardoIvedimas(studentas);
             int i = 0;
             while (true) {
                 cout << "Iveskite " << i + 1 << " namu darbo rezultata (1 - 10):" << endl;
@@ -65,6 +65,8 @@ int main() {
             skaiciavimai(studentas);
             stud.push_back(studentas);
         } else if (meniuPasirinkimas == 2) {
+            cout << "2. VARDO, PAVARDES IVEDIMAS. PAZYMIU GENERAVIMAS. \n";
+            vardoIvedimas(studentas);
             studentas.nd.resize(10);
             for (int i = 0; i < 10; i++) {
                 studentas.nd[i] = rand() % 10 + 1;
@@ -75,6 +77,7 @@ int main() {
             stud.push_back(studentas);
             cout << "Studento pazymiai sugeneruoti atsitiktinai.\n \n";
         } else if (meniuPasirinkimas == 3) {
+            cout << "3. DUOMENU GENERAVIMAS\n";
             cout << "Kiek studentu sugeneruoti?" << endl;
             cin >> input;
             while (!isNumber(input) || stoi(input) < 1) {
@@ -98,7 +101,7 @@ int main() {
             cout << "Studento duomenys sugeneruoti atsitiktinai. \n \n";
         } else if (meniuPasirinkimas == 4) {
             ifstream in;
-
+            cout << "4. DUOMENU NUSKAITYMAS. \n";
             while (true) {
                 cout << "Iveskite tikslu file pavadinima (pvz. 'kursiokai.txt'):" << endl;
                 cin >> input;
@@ -114,38 +117,69 @@ int main() {
             }
             cout << "Nuskaitomi studentu duomenys is failo...\n";
             clock_t start2 = clock();
-
-            string vardas, pavarde, line;
+            vector<studentaiStruct> failoStud;
+            failoStud.reserve(1000);
+            string line;
             getline(in, line);
-            while (in.peek() != EOF) {
+            while (getline(in, line)) {
+                istringstream iss(line);
                 studentaiStruct studentas;
-                in >> studentas.vardas >> studentas.pavarde;
+                iss >> studentas.vardas >> studentas.pavarde;
                 studentas.ndSuma = 0;
                 int pazymys;
-                while (in >> pazymys) {
+                while (iss >> pazymys) {
                     studentas.nd.push_back(pazymys);
                     studentas.ndSuma += pazymys;
-                    if (in.peek() == '\n')
-                        break;
+                    if (iss.peek() == '\n') break;
                 }
                 if (!studentas.nd.empty()) {
                     studentas.egzas = studentas.nd.back();
-                    studentas.ndSuma -= studentas.egzas;
                     studentas.nd.pop_back();
+                    studentas.ndSuma -= studentas.egzas;
                     skaiciavimai(studentas);
                 }
-                stud.push_back(studentas);
                 maxVardoIlgis = max(maxVardoIlgis, int(studentas.vardas.length()));
                 maxPavardesIlgis = max(maxPavardesIlgis, int(studentas.pavarde.length()));
+                failoStud.push_back(move(studentas));
             }
-
             in.close();
             clock_t end2 = clock();
             double laikas2 = double(end2 - start2) / CLOCKS_PER_SEC;
             cout << "Studentu duomenys nuskaityti is failo per " << laikas2 << " sekundziu.\n\n";
+
+            cout << "Ar norite prideti savo anksciau ivestu ar generuotu studentu duomenis? (y / n)" << endl;
+            cin >> input;
+            charInputProtection(input);
+            if (input == "y") {
+                for (auto &studentas : stud) {
+                    failoStud.push_back(studentas);
+                }
+                stud.clear();
+            }
+
+            vector<studentaiStruct> islaike, neislaike;
+            for (auto &studentas : failoStud) {
+                if (studentas.galutinisVid >= 5 && studentas.galutinisMed >= 5)
+                    islaike.push_back(studentas);
+                else
+                    neislaike.push_back(studentas);
+            }
+            cout << "Ar norite rusiuoti studentus i islaikiusius ir neislaikiusius? (y / n)" << endl;
+            cin >> input;
+            charInputProtection(input);
+            if (input == "y") {
+                char pasirinkimas, rusiavimas;
+                kaipRusiuoti(pasirinkimas, rusiavimas);
+
+                isvedimoSortinimas(islaike, pasirinkimas, rusiavimas);
+                isvedimoSortinimas(neislaike, pasirinkimas, rusiavimas);
+            }
+            isvedimas(islaike, maxVardoIlgis, maxPavardesIlgis, "islaike.txt");
+            isvedimas(neislaike, maxVardoIlgis, maxPavardesIlgis, "neislaike.txt");
         } else if (meniuPasirinkimas == 5) {
-            cout << "Ar norite nurodyti studentu kieki - 1 \n"
-                 << "Ar norite sugeneruoti 5 failus (1'000 / 10'000 / 100'000 / 1'000'000 / 10'000'000 dydzio) - 2\n"
+            cout << "5. DUOMENU GENERAVIMAS\n";
+            cout << "1 - Nurodyti studentu kieki \n"
+                 << "2 - Sugeneruoti 5 failus (1'000 / 10'000 / 100'000 / 1'000'000 / 10'000'000 dydzio)\n"
                  << "Iveskite pasirinkima (1 arba 2): \n";
             cin >> input;
             while (input != "1" && input != "2") {
@@ -199,7 +233,8 @@ int main() {
 
     clock_t end = clock();
     double laikas = double(end - start) / CLOCKS_PER_SEC;
-    isvedimas(stud, maxVardoIlgis, maxPavardesIlgis);
+    if (!stud.empty())
+        isvedimas(stud, maxVardoIlgis, maxPavardesIlgis);
     cout << "Programa uztruko: " << laikas << " sekundziu." << endl;
     return 0;
 }
