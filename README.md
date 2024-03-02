@@ -19,6 +19,7 @@ Programos meniu siūlo penkias pagrindines pasirinkimo galimybes, kiekviena iš 
     5.  Baigti darbą ir rodyti rezultatus: Pasirinkus šią funkciją, programa leidžia vartotojui pasirinkti, kaip nori rikiuoti galutinius duomenis (pagal vardą, pavardę, galutinį įvertinimą ir pan.) ir pateikia galutinę ataskaitą su visais studentų įrašais, jų vardais, pavardėmis ir galutiniais įvertinimais.
 
 1 tyrimas. Failų kūrimas ir jų uždarymas (su 15 ND):
+
     1 000: 0.019s.
     10 000: 0.014s.
     100 000: 0.215s.
@@ -26,6 +27,7 @@ Programos meniu siūlo penkias pagrindines pasirinkimo galimybes, kiekviena iš 
     10 000 000: 19.784s.
 
 2 tyrimas. Duomenų apdorojimas: 
+
     Duomenų nuskaitymas iš failo:
         1 000: 0.001s.
         10 000: 0.071s.
