@@ -11,6 +11,7 @@
     "xutility": "cpp",
     "stdexcept": "cpp",
     "iomanip": "cpp",
-    "ios": "cpp"
+    "ios": "cpp",
+    "utility": "cpp"
   }
 }
