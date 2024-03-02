@@ -115,10 +115,23 @@ int main() {
                     break;
                 }
             }
+            vector<studentaiStruct> failoStud;
+            cout << "Ar zinote kiek studentu yra faile? (y / n)" << endl;
+            cin >> input;
+            charInputProtection(input);
+            if (input == "y") {
+                cout << "Iveskite studentu kieki:" << endl;
+                cin >> input;
+                while (!isNumber(input) || stoi(input) < 1) {
+                    cout << "Neteisingas pasirinkimas. Iveskite skaiciu didesni uz 0:" << endl;
+                    cin >> input;
+                }
+                int kiek = stoi(input);
+                stud.reserve(kiek);
+            }
+
             cout << "Nuskaitomi studentu duomenys is failo...\n";
             clock_t start2 = clock();
-            vector<studentaiStruct> failoStud;
-            failoStud.reserve(1000);
             string line;
             getline(in, line);
             while (getline(in, line)) {
@@ -147,35 +160,48 @@ int main() {
             double laikas2 = double(end2 - start2) / CLOCKS_PER_SEC;
             cout << "Studentu duomenys nuskaityti is failo per " << laikas2 << " sekundziu.\n\n";
 
-            cout << "Ar norite prideti savo anksciau ivestu ar generuotu studentu duomenis? (y / n)" << endl;
-            cin >> input;
-            charInputProtection(input);
-            if (input == "y") {
-                for (auto &studentas : stud) {
-                    failoStud.push_back(studentas);
+            if (!stud.empty()) {
+                cout << "Ar norite prideti savo anksciau ivestu ar generuotu studentu duomenis? (y / n)" << endl;
+                cin >> input;
+                charInputProtection(input);
+                if (input == "y") {
+                    for (auto &studentas : stud) {
+                        failoStud.push_back(studentas);
+                    }
+                    stud.clear();
                 }
-                stud.clear();
             }
 
-            vector<studentaiStruct> islaike, neislaike;
-            for (auto &studentas : failoStud) {
-                if (studentas.galutinisVid >= 5 && studentas.galutinisMed >= 5)
-                    islaike.push_back(studentas);
-                else
-                    neislaike.push_back(studentas);
-            }
             cout << "Ar norite rusiuoti studentus i islaikiusius ir neislaikiusius? (y / n)" << endl;
             cin >> input;
             charInputProtection(input);
             if (input == "y") {
+                clock_t start4 = clock();
+                vector<studentaiStruct> islaike, neislaike;
+                for (auto &studentas : failoStud) {
+                    if (studentas.galutinisVid >= 5 && studentas.galutinisMed >= 5)
+                        islaike.push_back(studentas);
+                    else
+                        neislaike.push_back(studentas);
+                }
+                cout << "Studentai islaikyti ir neislaikyti surusiuoti per " << double(clock() - start4) / CLOCKS_PER_SEC << " sekundziu.\n\n";
                 char pasirinkimas, rusiavimas;
                 kaipRusiuoti(pasirinkimas, rusiavimas);
-
                 isvedimoSortinimas(islaike, pasirinkimas, rusiavimas);
                 isvedimoSortinimas(neislaike, pasirinkimas, rusiavimas);
+                clock_t start5 = clock();
+                isvedimas(islaike, maxVardoIlgis, maxPavardesIlgis, "islaike.txt");
+                isvedimas(neislaike, maxVardoIlgis, maxPavardesIlgis, "neislaike.txt");
+                cout << "Rezultatai isvesti i failus per " << double(clock() - start5) / CLOCKS_PER_SEC << " sekundziu.\n\n";
+            } else {
+                char pasirinkimas, rusiavimas;
+                kaipRusiuoti(pasirinkimas, rusiavimas);
+                isvedimoSortinimas(failoStud, pasirinkimas, rusiavimas);
+                clock_t start6 = clock();
+                isvedimas(failoStud, maxVardoIlgis, maxPavardesIlgis);
+                cout << "Rezultatai isvesti i faila 'rezultatas.txt' per " << double(clock() - start6) / CLOCKS_PER_SEC << " sekundziu.\n\n";
             }
-            isvedimas(islaike, maxVardoIlgis, maxPavardesIlgis, "islaike.txt");
-            isvedimas(neislaike, maxVardoIlgis, maxPavardesIlgis, "neislaike.txt");
+
         } else if (meniuPasirinkimas == 5) {
             cout << "5. DUOMENU GENERAVIMAS\n";
             cout << "1 - Nurodyti studentu kieki \n"
