@@ -3,12 +3,12 @@
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
+#include <deque>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <string>
-#include <vector>
 #include <sstream>
+#include <string>
 using namespace std;
 
 bool isNumber(string &str) {
@@ -92,7 +92,7 @@ void charInputProtection(string &input) {
     }
 }
 
-void kaipRusiuoti(char &p1, char &p2){
+void kaipRusiuoti(char &p1, char &p2) {
     while (true) {
         cout << "Kaip noretumete surusiuoti studentus? (pagal: v - varda, p - pavarde, g - galutini bala(vidurkis), m - galutini bala(mediana)):" << endl;
         cin >> p1;
@@ -120,7 +120,7 @@ void kaipRusiuoti(char &p1, char &p2){
     }
 }
 
-void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis) {
+void isvedimas(deque<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis) {
     string input;
     cout << "Ar norite surusiuoti studentus? (y / n)" << endl;
     cin >> input;
@@ -148,7 +148,7 @@ void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardes
     cout << "\nRezultatai isvesti i faila 'rezultatas.txt'.\n";
 }
 
-void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis, string pavadinimas) {
+void isvedimas(deque<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis, string pavadinimas) {
     ofstream out(pavadinimas);
     out << left
         << setw(maxPavardesIlgis + 2) << "Pavarde"
@@ -169,7 +169,7 @@ void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardes
     cout << "\nRezultatai isvesti i faila '" << pavadinimas << "'.\n";
 }
 
-void isvedimoSortinimas(vector<studentaiStruct> &stud, char pasirinkimas, char input) {
+void isvedimoSortinimas(deque<studentaiStruct> &stud, char pasirinkimas, char input) {
     if (pasirinkimas == 'v') {
         if (input == 'd')
             sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.vardas < b.vardas; });
