@@ -170,6 +170,7 @@ void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardes
 }
 
 void isvedimoSortinimas(vector<studentaiStruct> &stud, char pasirinkimas, char input) {
+    clock_t _start = clock();
     if (pasirinkimas == 'v') {
         if (input == 'd')
             sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.vardas < b.vardas; });
@@ -191,6 +192,7 @@ void isvedimoSortinimas(vector<studentaiStruct> &stud, char pasirinkimas, char i
         else
             sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.galutinisMed > b.galutinisMed; });
     }
+    cout << "Surusiuota per " << (clock() - _start) / (double)CLOCKS_PER_SEC << " s.\n";
 };
 
 void generuotiFaila(int kiekis, int pazymiuKiekis) {
