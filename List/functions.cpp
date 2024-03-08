@@ -7,8 +7,9 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
-#include <vector>
+#include <list>
 #include <sstream>
+#include <numeric>
 using namespace std;
 
 bool isNumber(string &str) {
@@ -26,13 +27,17 @@ bool isString(string &str) {
 }
 
 void skaiciavimai(studentaiStruct &studentas) {
-    int ndKiekis = studentas.nd.size();
-    sort(studentas.nd.begin(), studentas.nd.end());
-    if (ndKiekis % 2 == 0)
-        studentas.mediana = (studentas.nd[ndKiekis / 2] + studentas.nd[(ndKiekis / 2) - 1]) / 2.0;
-    else
-        studentas.mediana = studentas.nd[ndKiekis / 2];
-    studentas.galutinisVid = 0.4 * (studentas.ndSuma / ndKiekis) + 0.6 * studentas.egzas;
+    int ndKiekis = distance(studentas.nd.begin(), studentas.nd.end());
+    studentas.nd.sort();
+    auto mid = next(studentas.nd.begin(), ndKiekis / 2);
+    if (ndKiekis % 2 == 0){
+        auto midPrev = std::prev(mid);
+        studentas.mediana = (*mid + *midPrev) / 2.0;
+    } else
+        studentas.mediana = *mid;
+
+    double sum = accumulate(studentas.nd.begin(), studentas.nd.end(), 0);
+    studentas.galutinisVid = 0.4 * (sum / ndKiekis) + 0.6 * studentas.egzas;
     studentas.galutinisMed = 0.4 * studentas.mediana + 0.6 * studentas.egzas;
 }
 
@@ -120,7 +125,7 @@ void kaipRusiuoti(char &p1, char &p2){
     }
 }
 
-void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis) {
+void isvedimas(list<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis) {
     string input;
     cout << "Ar norite surusiuoti studentus? (y / n)" << endl;
     cin >> input;
@@ -148,7 +153,7 @@ void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardes
     cout << "\nRezultatai isvesti i faila 'rezultatas.txt'.\n";
 }
 
-void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis, string pavadinimas) {
+void isvedimas(list<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis, string pavadinimas) {
     ofstream out(pavadinimas);
     out << left
         << setw(maxPavardesIlgis + 2) << "Pavarde"
@@ -169,28 +174,30 @@ void isvedimas(vector<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardes
     cout << "\nRezultatai isvesti i faila '" << pavadinimas << "'.\n";
 }
 
-void isvedimoSortinimas(vector<studentaiStruct> &stud, char pasirinkimas, char input) {
+void isvedimoSortinimas(list<studentaiStruct> &stud, char pasirinkimas, char input) {
+    clock_t _start = clock();
     if (pasirinkimas == 'v') {
         if (input == 'd')
-            sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.vardas < b.vardas; });
+            stud.sort([](const studentaiStruct &a, const studentaiStruct &b) { return a.vardas < b.vardas; });
         else
-            sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.vardas > b.vardas; });
+            stud.sort([](const studentaiStruct &a, const studentaiStruct &b) { return a.vardas > b.vardas; });
     } else if (pasirinkimas == 'p') {
         if (input == 'd')
-            sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.pavarde < b.pavarde; });
+            stud.sort([](const studentaiStruct &a, const studentaiStruct &b) { return a.pavarde < b.pavarde; });
         else
-            sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.pavarde > b.pavarde; });
+            stud.sort([](const studentaiStruct &a, const studentaiStruct &b) { return a.pavarde > b.pavarde; });
     } else if (pasirinkimas == 'g') {
         if (input == 'd')
-            sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.galutinisVid < b.galutinisVid; });
+            stud.sort([](const studentaiStruct &a, const studentaiStruct &b) { return a.galutinisVid < b.galutinisVid; });
         else
-            sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.galutinisVid > b.galutinisVid; });
+            stud.sort([](const studentaiStruct &a, const studentaiStruct &b) { return a.galutinisVid > b.galutinisVid; });
     } else if (pasirinkimas == 'm') {
         if (input == 'd')
-            sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.galutinisMed < b.galutinisMed; });
+            stud.sort([](const studentaiStruct &a, const studentaiStruct &b) { return a.galutinisMed < b.galutinisMed; });
         else
-            sort(stud.begin(), stud.end(), [](const studentaiStruct &a, const studentaiStruct &b) { return a.galutinisMed > b.galutinisMed; });
+            stud.sort([](const studentaiStruct &a, const studentaiStruct &b) { return a.galutinisMed > b.galutinisMed; });
     }
+    cout << "Surusiuota per " << (clock() - _start) / (double)CLOCKS_PER_SEC << " s.\n";
 };
 
 void generuotiFaila(int kiekis, int pazymiuKiekis) {
