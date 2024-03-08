@@ -6,14 +6,14 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <vector>
+#include <list>
 
 #include "functions.h"
 using namespace std;
 
 int main() {
     clock_t start = clock();
-    vector<studentaiStruct> stud;
+    list<studentaiStruct> stud;
     srand(time(nullptr));
     int maxVardoIlgis = 6, maxPavardesIlgis = 7;
     string input;
@@ -69,8 +69,9 @@ int main() {
             vardoIvedimas(studentas);
             studentas.nd.resize(10);
             for (int i = 0; i < 10; i++) {
-                studentas.nd[i] = rand() % 10 + 1;
-                studentas.ndSuma += studentas.nd[i];
+                int random_grade = rand() % 10 + 1; 
+                studentas.nd.push_back(random_grade);
+                studentas.ndSuma += random_grade;
             }
             studentas.egzas = rand() % 10 + 1;
             skaiciavimai(studentas);
@@ -91,8 +92,9 @@ int main() {
                 studentas.pavarde = "Pavarde" + to_string(stud.size() + 1);
                 studentas.nd.resize(10);
                 for (int i = 0; i < 10; i++) {
-                    studentas.nd[i] = rand() % 10 + 1;
-                    studentas.ndSuma += studentas.nd[i];
+                    int random_grade = rand() % 10 + 1;
+                    studentas.nd.push_back(random_grade);
+                    studentas.ndSuma += random_grade;
                 }
                 studentas.egzas = rand() % 10 + 1;
                 skaiciavimai(studentas);
@@ -115,21 +117,7 @@ int main() {
                     break;
                 }
             }
-            vector<studentaiStruct> failoStud;
-            cout << "Ar zinote kiek studentu yra faile? (y / n)" << endl;
-            cin >> input;
-            charInputProtection(input);
-            if (input == "y") {
-                cout << "Iveskite studentu kieki:" << endl;
-                cin >> input;
-                while (!isNumber(input) || stoi(input) < 1) {
-                    cout << "Neteisingas pasirinkimas. Iveskite skaiciu didesni uz 0:" << endl;
-                    cin >> input;
-                }
-                int kiek = stoi(input);
-                stud.reserve(kiek);
-            }
-
+            list<studentaiStruct> failoStud;
             cout << "Nuskaitomi studentu duomenys is failo...\n";
             clock_t start2 = clock();
             string line;
@@ -177,7 +165,7 @@ int main() {
             charInputProtection(input);
             if (input == "y") {
                 clock_t start4 = clock();
-                vector<studentaiStruct> islaike, neislaike;
+                list<studentaiStruct> islaike, neislaike;
                 for (auto &studentas : failoStud) {
                     if (studentas.galutinisVid >= 5 && studentas.galutinisMed >= 5)
                         islaike.push_back(studentas);
