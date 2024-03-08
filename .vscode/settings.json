@@ -12,6 +12,7 @@
     "stdexcept": "cpp",
     "iomanip": "cpp",
     "ios": "cpp",
-    "utility": "cpp"
+    "utility": "cpp",
+    "deque": "cpp"
   }
 }
