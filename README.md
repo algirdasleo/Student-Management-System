@@ -18,35 +18,23 @@ Programos meniu siūlo penkias pagrindines pasirinkimo galimybes, kiekviena iš 
 
     5.  Baigti darbą ir rodyti rezultatus: Pasirinkus šią funkciją, programa leidžia vartotojui pasirinkti, kaip nori rikiuoti galutinius duomenis (pagal vardą, pavardę, galutinį įvertinimą ir pan.) ir pateikia galutinę ataskaitą su visais studentų įrašais, jų vardais, pavardėmis ir galutiniais įvertinimais.
 
-1 tyrimas. Failų kūrimas ir jų uždarymas (su 15 ND):
+---------------------
+    Spartos palyginimas.
 
-    1 000: 0.019s.
-    10 000: 0.014s.
-    100 000: 0.215s.
-    1 000 000: 2.168 s.
-    10 000 000: 19.784s.
+    | Užduočių atlikimas (s)  | 1000 | 10000 | 100000 | 1000000 | 10000000 |
+    |-------------------------|------|-------|--------|---------|----------|
+    | Deque                   |      |       |        |         |          |
+    | Failų nuskaitymas       | 0.02 | 0.036 | 0.298  | 2.95    | 10.732   |
+    | Skirstymas į grupes     |  0   | 0.015 |  0.167 |  1.867  | 56.521   |
+    | Rūšiavimas didėjimo t.  | 0.011| 0.053 |  1.1   |  12.6   | 96.79    |
+    |-------------------------|------|-------|--------|---------|----------|
+    | Vector                  |      |       |        |         |          |
+    | Failų nuskaitymas       | 0.01 |  0.03 |  0.26  |  2.55   |  25.99   |
+    | Skirstymas į grupes     |  0   |  0.01 |  0.035 |  0.329  |  3.766   |
+    | Rūšiavimas didėjimo t.  |  0   | 0.083 |  0.185 |  2.84   |  32.94   |
+    |-------------------------|------|-------|--------|---------|----------|
+    | List                    |      |       |        |         |          |
+    | Failų nuskaitymas       |  0   | 0.024 |  0.278 |  2.763  |  28.461  |
+    | Skirstymas į grupes     |  0   |  0.01 |  0.101 |  0.915  |  18.026  |
+    | Rūšiavimas didėjimo t.  |  0   |  0.002|  0.051 |  0.569  |  8.465   |
 
-2 tyrimas. Duomenų apdorojimas: 
-
-    Duomenų nuskaitymas iš failo:
-        1 000: 0.001s.
-        10 000: 0.071s.
-        100 000: 0.533s.
-        1 000 000: 5.117s.
-        10 000 000: 50.937s
-
-    Studentų rūšiavimas į dvi grupes / kategorijas:
-        1 000: 0s.
-        10 000: 0s. 
-        100 000: 0.036s.
-        1 000 000: 0.35s.
-        10 000 000: 5.951s.
-
-    Surūšiuotų studentų išvedimas į du naujus failus:
-        1 000: 0.025s.
-        10 000: 0.073s.
-        100 000: 0.605s. 
-        1 000 000: 5.389s.
-        10 000 000: 53.092s.
-
-    Visos programos veikimo laikas (ilgiausias): 164s.
