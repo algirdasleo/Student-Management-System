@@ -13,6 +13,7 @@
     "iomanip": "cpp",
     "ios": "cpp",
     "utility": "cpp",
-    "deque": "cpp"
+    "deque": "cpp",
+    "list": "cpp"
   }
 }
