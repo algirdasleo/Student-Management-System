@@ -6,14 +6,14 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <vector>
+#include <deque>
 
 #include "functions.h"
 using namespace std;
 
 int main() {
     clock_t start = clock();
-    vector<studentaiStruct> stud;
+    deque<studentaiStruct> stud;
     srand(time(nullptr));
     int maxVardoIlgis = 6, maxPavardesIlgis = 7;
     string input;
@@ -115,7 +115,7 @@ int main() {
                     break;
                 }
             }
-            vector<studentaiStruct> failoStud;
+            deque<studentaiStruct> failoStud;
             cout << "Ar zinote kiek studentu yra faile? (y / n)" << endl;
             cin >> input;
             charInputProtection(input);
@@ -127,7 +127,7 @@ int main() {
                     cin >> input;
                 }
                 int kiek = stoi(input);
-                stud.reserve(kiek);
+                stud.resize(kiek);
             }
 
             cout << "Nuskaitomi studentu duomenys is failo...\n";
@@ -177,7 +177,7 @@ int main() {
             charInputProtection(input);
             if (input == "y") {
                 clock_t start4 = clock();
-                vector<studentaiStruct> islaike, neislaike;
+                deque<studentaiStruct> islaike, neislaike;
                 for (auto &studentas : failoStud) {
                     if (studentas.galutinisVid >= 5 && studentas.galutinisMed >= 5)
                         islaike.push_back(studentas);
