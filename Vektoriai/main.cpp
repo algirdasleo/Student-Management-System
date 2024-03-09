@@ -177,6 +177,7 @@ int main() {
             charInputProtection(input);
             if (input == "y") {
                 clock_t start4 = clock();
+                /* 1 STRATEGIJA
                 vector<studentaiStruct> islaike, neislaike;
                 for (auto &studentas : failoStud) {
                     if (studentas.galutinisVid >= 5 && studentas.galutinisMed >= 5)
@@ -191,6 +192,26 @@ int main() {
                 isvedimoSortinimas(neislaike, pasirinkimas, rusiavimas);
                 clock_t start5 = clock();
                 isvedimas(islaike, maxVardoIlgis, maxPavardesIlgis, "islaike.txt");
+                isvedimas(neislaike, maxVardoIlgis, maxPavardesIlgis, "neislaike.txt");
+                */
+                // 2 STRATEGIJA
+                vector<studentaiStruct> neislaike;
+                auto it = failoStud.begin();
+                while (it != failoStud.end()) {
+                    if (it->galutinisVid < 5 && it->galutinisMed < 5) {
+                        neislaike.push_back(std::move(*it));
+                        it = failoStud.erase(it);
+                    } else {
+                        ++it;
+                    }
+                }
+                cout << "Studentai islaikyti ir neislaikyti surusiuoti per " << double(clock() - start4) / CLOCKS_PER_SEC << " sekundziu.\n\n";
+                char pasirinkimas, rusiavimas;
+                kaipRusiuoti(pasirinkimas, rusiavimas);
+                isvedimoSortinimas(failoStud, pasirinkimas, rusiavimas);
+                isvedimoSortinimas(neislaike, pasirinkimas, rusiavimas);
+                clock_t start5 = clock();
+                isvedimas(failoStud, maxVardoIlgis, maxPavardesIlgis, "islaike.txt");
                 isvedimas(neislaike, maxVardoIlgis, maxPavardesIlgis, "neislaike.txt");
                 cout << "Rezultatai isvesti i failus per " << double(clock() - start5) / CLOCKS_PER_SEC << " sekundziu.\n\n";
             } else {
