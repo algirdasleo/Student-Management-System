@@ -4,9 +4,9 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <list>
 #include <sstream>
 #include <string>
-#include <list>
 
 #include "functions.h"
 using namespace std;
@@ -69,7 +69,7 @@ int main() {
             vardoIvedimas(studentas);
             studentas.nd.resize(10);
             for (int i = 0; i < 10; i++) {
-                int random_grade = rand() % 10 + 1; 
+                int random_grade = rand() % 10 + 1;
                 studentas.nd.push_back(random_grade);
                 studentas.ndSuma += random_grade;
             }
@@ -165,6 +165,8 @@ int main() {
             charInputProtection(input);
             if (input == "y") {
                 clock_t start4 = clock();
+
+                /* 1 STRATEGIJA
                 list<studentaiStruct> islaike, neislaike;
                 for (auto &studentas : failoStud) {
                     if (studentas.galutinisVid >= 5 && studentas.galutinisMed >= 5)
@@ -180,6 +182,51 @@ int main() {
                 clock_t start5 = clock();
                 isvedimas(islaike, maxVardoIlgis, maxPavardesIlgis, "islaike.txt");
                 isvedimas(neislaike, maxVardoIlgis, maxPavardesIlgis, "neislaike.txt");
+                */
+                /* 2 STRATEGIJA
+                list<studentaiStruct> neislaike;
+                failoStud.sort([](const studentaiStruct& a, const studentaiStruct& b) {
+                    bool aPassed = a.galutinisVid >= 5 && a.galutinisMed >= 5;
+                    bool bPassed = b.galutinisVid >= 5 && b.galutinisMed >= 5;
+                    return !aPassed && bPassed;
+                });
+
+                auto partitionPoint = find_if(failoStud.begin(), failoStud.end(),
+                [](const studentaiStruct& student) {
+                    return student.galutinisVid >= 5 && student.galutinisMed >= 5;
+                });
+
+                neislaike.splice(neislaike.end(), failoStud, failoStud.begin(), partitionPoint);
+
+                cout << "Studentai islaikyti ir neislaikyti surusiuoti per " << double(clock()- start4) / CLOCKS_PER_SEC << " sekundziu.\n\n";
+
+                char pasirinkimas, rusiavimas;
+                kaipRusiuoti(pasirinkimas, rusiavimas);
+                isvedimoSortinimas(failoStud, pasirinkimas, rusiavimas);
+                isvedimoSortinimas(neislaike, pasirinkimas, rusiavimas);
+                clock_t start5 = clock();
+                isvedimas(failoStud, maxVardoIlgis, maxPavardesIlgis, "islaike.txt");
+                isvedimas(neislaike, maxVardoIlgis, maxPavardesIlgis, "neislaike.txt");
+                */
+                // 3 STRATEGIJA (greiciausia)
+                list<studentaiStruct> neislaike;
+                auto it = failoStud.begin();
+                while (it != failoStud.end()) {
+                    if (it->galutinisVid < 5 && it->galutinisMed < 5) {
+                        neislaike.splice(neislaike.end(), failoStud, it++);
+                    } else {
+                        ++it;
+                    }
+                }
+                cout << "Studentai islaikyti ir neislaikyti surusiuoti per " << double(clock() - start4) / CLOCKS_PER_SEC << " sekundziu.\n\n";
+                char pasirinkimas, rusiavimas;
+                kaipRusiuoti(pasirinkimas, rusiavimas);
+                isvedimoSortinimas(failoStud, pasirinkimas, rusiavimas);
+                isvedimoSortinimas(neislaike, pasirinkimas, rusiavimas);
+                clock_t start5 = clock();
+                isvedimas(failoStud, maxVardoIlgis, maxPavardesIlgis, "islaike.txt");
+                isvedimas(neislaike, maxVardoIlgis, maxPavardesIlgis, "neislaike.txt");
+
                 cout << "Rezultatai isvesti i failus per " << double(clock() - start5) / CLOCKS_PER_SEC << " sekundziu.\n\n";
             } else {
                 char pasirinkimas, rusiavimas;
