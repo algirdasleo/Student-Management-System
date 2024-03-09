@@ -194,7 +194,8 @@ int main() {
                 isvedimas(islaike, maxVardoIlgis, maxPavardesIlgis, "islaike.txt");
                 isvedimas(neislaike, maxVardoIlgis, maxPavardesIlgis, "neislaike.txt");
                 */
-                // 2 STRATEGIJA
+
+                /* // 2 STRATEGIJA
                 vector<studentaiStruct> neislaike;
                 auto it = failoStud.begin();
                 while (it != failoStud.end()) {
@@ -212,6 +213,27 @@ int main() {
                 isvedimoSortinimas(neislaike, pasirinkimas, rusiavimas);
                 clock_t start5 = clock();
                 isvedimas(failoStud, maxVardoIlgis, maxPavardesIlgis, "islaike.txt");
+                isvedimas(neislaike, maxVardoIlgis, maxPavardesIlgis, "neislaike.txt");
+                */
+                // 3 STRATEGIJA (greiciausiai veikianti strategija)
+                vector<studentaiStruct> islaike, neislaike;
+                auto it = partition(failoStud.begin(), failoStud.end(), 
+                    [](const studentaiStruct& student) {
+                        return student.galutinisVid >= 5 && student.galutinisMed >= 5;
+                    });
+                
+                neislaike.insert(neislaike.end(), make_move_iterator(it), make_move_iterator(failoStud.end()));
+                failoStud.erase(it, failoStud.end());
+                cout << "Studentai islaikyti ir neislaikyti surusiuoti per " << double(clock() - start4) / CLOCKS_PER_SEC << " sekundziu.\n\n";
+                failoStud.shrink_to_fit();
+                neislaike.shrink_to_fit();
+
+                char pasirinkimas, rusiavimas;
+                kaipRusiuoti(pasirinkimas, rusiavimas);
+                isvedimoSortinimas(islaike, pasirinkimas, rusiavimas);
+                isvedimoSortinimas(neislaike, pasirinkimas, rusiavimas);
+                clock_t start5 = clock();
+                isvedimas(islaike, maxVardoIlgis, maxPavardesIlgis, "islaike.txt");
                 isvedimas(neislaike, maxVardoIlgis, maxPavardesIlgis, "neislaike.txt");
                 cout << "Rezultatai isvesti i failus per " << double(clock() - start5) / CLOCKS_PER_SEC << " sekundziu.\n\n";
             } else {
