@@ -177,21 +177,61 @@ int main() {
             charInputProtection(input);
             if (input == "y") {
                 clock_t start4 = clock();
-                deque<studentaiStruct> islaike, neislaike;
-                for (auto &studentas : failoStud) {
-                    if (studentas.galutinisVid >= 5 && studentas.galutinisMed >= 5)
-                        islaike.push_back(studentas);
-                    else
-                        neislaike.push_back(studentas);
-                }
+                // 1 STRATEGIJA
+                // deque<studentaiStruct> islaike, neislaike;
+                // for (auto &studentas : failoStud) {
+                //     if (studentas.galutinisVid >= 5 && studentas.galutinisMed >= 5)
+                //         islaike.push_back(studentas);
+                //     else
+                //         neislaike.push_back(studentas);
+                // }
+                // cout << "Studentai islaikyti ir neislaikyti surusiuoti per " << double(clock() - start4) / CLOCKS_PER_SEC << " sekundziu.\n\n";
+                // char pasirinkimas, rusiavimas;
+                // kaipRusiuoti(pasirinkimas, rusiavimas);
+                // isvedimoSortinimas(islaike, pasirinkimas, rusiavimas);
+                // isvedimoSortinimas(neislaike, pasirinkimas, rusiavimas);
+                // clock_t start5 = clock();
+                // isvedimas(islaike, maxVardoIlgis, maxPavardesIlgis, "islaike.txt");
+                // isvedimas(neislaike, maxVardoIlgis, maxPavardesIlgis, "neislaike.txt");
+
+                // 2 STRATEGIJA 
+                // deque<studentaiStruct> neislaike;
+                // deque<Student>iterator it = failoStud.begin();
+                // while (it != failoStud.end()) {
+                //     if (it->galutinisVid < 5 && it->galutinisMed < 5) {
+                //         neislaike.push_back(*it);
+                //         it = failoStud.erase(it); 
+                //     } else {
+                //         ++it; 
+                //     }
+                // }
+                // cout << "Studentai islaikyti ir neislaikyti surusiuoti per " << double(clock() - start4) / CLOCKS_PER_SEC << " sekundziu.\n\n";
+                // char pasirinkimas, rusiavimas;
+                // kaipRusiuoti(pasirinkimas, rusiavimas);
+                // isvedimoSortinimas(failoStud, pasirinkimas, rusiavimas);
+                // isvedimoSortinimas(neislaike, pasirinkimas, rusiavimas);
+                // clock_t start5 = clock();
+                // isvedimas(failoStud, maxVardoIlgis, maxPavardesIlgis, "islaike.txt");
+                // isvedimas(neislaike, maxVardoIlgis, maxPavardesIlgis, "neislaike.txt");
+
+                // 3 STRATEGIJA
+                deque<studentaiStruct> neislaike;
+                auto partitionIt = partition(begin(failoStud), end(failoStud), 
+                    [](const studentaiStruct& s) { 
+                        return s.galutinisVid < 5 && s.galutinisMed < 5; 
+                    });
+                neislaike.insert(end(neislaike), make_move_iterator(partitionIt), make_move_iterator(end(failoStud)));
+                failoStud.erase(partitionIt, end(failoStud));
                 cout << "Studentai islaikyti ir neislaikyti surusiuoti per " << double(clock() - start4) / CLOCKS_PER_SEC << " sekundziu.\n\n";
+                failoStud.shrink_to_fit();
+                neislaike.shrink_to_fit();
                 char pasirinkimas, rusiavimas;
                 kaipRusiuoti(pasirinkimas, rusiavimas);
-                isvedimoSortinimas(islaike, pasirinkimas, rusiavimas);
+                isvedimoSortinimas(failoStud, pasirinkimas, rusiavimas);
                 isvedimoSortinimas(neislaike, pasirinkimas, rusiavimas);
                 clock_t start5 = clock();
-                isvedimas(islaike, maxVardoIlgis, maxPavardesIlgis, "islaike.txt");
-                isvedimas(neislaike, maxVardoIlgis, maxPavardesIlgis, "neislaike.txt");
+                isvedimas(failoStud, maxVardoIlgis, maxPavardesIlgis, "islaike.txt");
+                isvedimas(neislaike, maxVardoIlgis, maxPavardesIlgis, "neislaike.txt");               
                 cout << "Rezultatai isvesti i failus per " << double(clock() - start5) / CLOCKS_PER_SEC << " sekundziu.\n\n";
             } else {
                 char pasirinkimas, rusiavimas;
