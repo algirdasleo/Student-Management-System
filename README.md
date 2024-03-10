@@ -18,23 +18,68 @@ Programos meniu siūlo penkias pagrindines pasirinkimo galimybes, kiekviena iš 
 
     5.  Baigti darbą ir rodyti rezultatus: Pasirinkus šią funkciją, programa leidžia vartotojui pasirinkti, kaip nori rikiuoti galutinius duomenis (pagal vardą, pavardę, galutinį įvertinimą ir pan.) ir pateikia galutinę ataskaitą su visais studentų įrašais, jų vardais, pavardėmis ir galutiniais įvertinimais.
 
----------------------
-    Spartos palyginimas.
+---
+
+Kaip diegti šią programą?
+
+    - Prieš paleidžiant programą, ją reikia sukompiliuoti su komanda terminale: make build.
+    - Norint paleisti programą, reikia parašyti komandą: make run.
+    - Norint išvalyti sukurtą paleisties failą, reikią parašyti komandą: make clean.
+
+---
+
+Spartos palyginimas.
 
     | Užduočių atlikimas (s)  | 1000 | 10000 | 100000 | 1000000 | 10000000 |
     |-------------------------|------|-------|--------|---------|----------|
     | Deque                   |      |       |        |         |          |
-    | Failų nuskaitymas       | 0.02 | 0.036 | 0.298  | 2.95    | 10.732   |
-    | Skirstymas į grupes     |  0   | 0.015 |  0.167 |  1.867  | 56.521   |
-    | Rūšiavimas didėjimo t.  | 0.011| 0.053 |  1.1   |  12.6   | 96.79    |
+    | Failų nuskaitymas       | 0.02 | 0.036 | 0.298  |  2.95   |  10.732  |
+    | Skirstymas į grupes     | 0    | 0.015 | 0.167  |  1.867  |  56.521  |
+    | Rūšiavimas didėjimo t.  | 0.011| 0.053 | 1.1    |  12.6   |  96.79   |
     |-------------------------|------|-------|--------|---------|----------|
     | Vector                  |      |       |        |         |          |
-    | Failų nuskaitymas       | 0.01 |  0.03 |  0.26  |  2.55   |  25.99   |
-    | Skirstymas į grupes     |  0   |  0.01 |  0.035 |  0.329  |  3.766   |
-    | Rūšiavimas didėjimo t.  |  0   | 0.083 |  0.185 |  2.84   |  32.94   |
+    | Failų nuskaitymas       | 0.01 | 0.03  | 0.26   |  2.55   |  25.99   |
+    | Skirstymas į grupes     | 0    | 0.01  | 0.035  |  0.329  |  3.766   |
+    | Rūšiavimas didėjimo t.  | 0    | 0.083 | 0.185  |  2.84   |  32.94   |
     |-------------------------|------|-------|--------|---------|----------|
     | List                    |      |       |        |         |          |
-    | Failų nuskaitymas       |  0   | 0.024 |  0.278 |  2.763  |  28.461  |
-    | Skirstymas į grupes     |  0   |  0.01 |  0.101 |  0.915  |  18.026  |
-    | Rūšiavimas didėjimo t.  |  0   |  0.002|  0.051 |  0.569  |  8.465   |
+    | Failų nuskaitymas       | 0    | 0.024 | 0.278  |  2.763  |  28.461  |
+    | Skirstymas į grupes     | 0    | 0.01  | 0.101  |  0.915  |  18.026  |
+    | Rūšiavimas didėjimo t.  | 0    | 0.002 | 0.051  |  0.569  |  8.465   |
+    |-------------------------|------|-------|--------|---------|----------|
 
+---
+
+Strategijų palyginimas.
+
+    1 strategija - Bendro studentai konteinerio rūšiavimas į du naujus to paties tipo konteinerius.
+    2 strategija - Bendro studentų konteinerio skaidymas (rūšiavimas) panaudojant tik vieną naują konteinerį: "neišlaikę".
+    3 strategija - Bendro studentų konteinerio skaidymas, naudojant 1 ar 2 strategiją ir įtraukiant "efektyvius" darbo su konteineriais metodus.
+
+    | Studentų rušiavimas (s) | 1000 | 10000 | 100000 | 1000000 | 10000000 |
+    |-------------------------|------|-------|--------|---------|----------|
+    | 1 strategija            |      |       |        |         |          |
+    | Deque                   | 0    | 0.015 | 0.167  |  1.867  |  56.521  |
+    | Vector                  | 0    | 0.01  | 0.035  |  0.329  |  3.766   |
+    | List                    | 0    | 0.01  | 0.101  |  0.915  |  18.026  |
+    |-------------------------|------|-------|--------|---------|----------|
+    | 2 strategija            |      |       |        |         |          |
+    | Deque                   | 0.012| 1.285 | 139.783|   ...   |    ...   |
+    | Vector                  | 0.019| 1.64  | 160.687|   ...   |    ...   |
+    | List                    | 0    | 0     | 0.052  |  0.695  |  9.214   |
+    |-------------------------|------|-------|--------|---------|----------|
+    | 3 strategija            |      |       |        |         |          |
+    | Deque                   | 0    | 0     |        |  0.865  |  31.702  |
+    | Vector                  | 0    | 0.01  | 0.003  |  0.125  |  1.253   |
+    | List                    | 0    | 0     | 0.011  |  0.081  |  1.072   |
+    |-------------------------|------|-------|--------|---------|----------|
+
+---
+
+Versijų aprašymas:
+
+V0.1 - Sukurta pradinė programos versija.
+V0.2 - Galima nuskaityti iš failo, galima rūšiuoti pagal duomenis.
+V0.3 - Perkeliamos funkcijos į external failą, išimčių valdymas.
+V0.4 - Galima kurti testavimo failus, rušiavimas į dvi grupes.
+V1.0 - Konteineriu testavimas, optimizavimas, pridetas makefile.
