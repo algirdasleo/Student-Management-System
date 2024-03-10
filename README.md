@@ -78,8 +78,8 @@ Strategijų palyginimas.
 
 Versijų aprašymas:
 
-V0.1 - Sukurta pradinė programos versija.
-V0.2 - Galima nuskaityti iš failo, galima rūšiuoti pagal duomenis.
-V0.3 - Perkeliamos funkcijos į external failą, išimčių valdymas.
-V0.4 - Galima kurti testavimo failus, rušiavimas į dvi grupes.
-V1.0 - Konteineriu testavimas, optimizavimas, pridetas makefile.
+    V0.1 - Sukurta pradinė programos versija.
+    V0.2 - Galima nuskaityti iš failo, galima rūšiuoti pagal duomenis.
+    V0.3 - Perkeliamos funkcijos į external failą, išimčių valdymas.
+    V0.4 - Galima kurti testavimo failus, rušiavimas į dvi grupes.
+    V1.0 - Konteineriu testavimas, optimizavimas, pridetas makefile.
