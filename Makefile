@@ -1,6 +1,6 @@
 CC=g++
 TARGET=run
-CFLAGS=-03
+CFLAGS=-O3
 build: main.cpp functions.cpp functions.h
 	$(CC) -o $(TARGET) main.cpp functions.cpp -I.
 
