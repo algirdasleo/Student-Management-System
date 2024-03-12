@@ -21,18 +21,25 @@ private:
 public:
     Studentas() : ndPazymiai(), egzPazymys(0), galBalasVid(0), galBalasMed(0) {}
 
-    void readStudentData(int choice);  // nauja f.
+    void setName(string name);
+    string getName();
+    void setSurname(string surname);
+    string getSurname();
+    void addGrade(int grade);
+    void setEgz(int grade);
     void readName();
     void calculate();
-    static void generateFile(int range, int homeworkCount);
-    static void howToSort(char &choice1, char &choice2);
+    void readFromFile(list<Studentas> &failoStud, string fileName, int &maxNameLength, int &maxSurnameLength);
+    void sortIntoGroups(list<Studentas> &stud, list<Studentas> &neislaike);
     static void sorting(list<Studentas> &stud, char choice1, char choice2);
     static void printToFile(list<Studentas> &stud, int maxNameLength, int maxSurnameLength);
     static void printToFile(list<Studentas> &stud, int maxNameLength, int maxSurnameLength, string fileName);
-    static void numberInputProtection(string &input);
-    static void charInputProtection(string &input);
-    static bool isNumber(string &str);
-    static bool isString(string &str);
 };
+    void numberInputProtection(string &input);
+    void charInputProtection(string &input);
+    bool isNumber(string &str);
+    bool isString(string &str);
+    void howToSort(char &choice1, char &choice2);
+    void generateFile(int range, int homeworkCount);
 
 #endif
