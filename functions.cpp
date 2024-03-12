@@ -6,10 +6,10 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <string>
 #include <list>
-#include <sstream>
 #include <numeric>
+#include <sstream>
+#include <string>
 using namespace std;
 
 bool isNumber(string &str) {
@@ -24,6 +24,98 @@ bool isString(string &str) {
         if (!isalpha(c))
             return false;
     return true;
+}
+
+void numberInputProtection(string &input) {
+    try {
+        if (!isNumber(input) || stoi(input) < 1 || stoi(input) > 10) {
+            throw invalid_argument("Iveskite skaiciu nuo 1 iki 10:");
+        }
+    } catch (const invalid_argument &e) {
+        cout << e.what() << endl;
+        cin >> input;
+        numberInputProtection(input);
+    }
+}
+
+void charInputProtection(string &input) {
+    try {
+        if (input.length() > 1 || (input != "n" && input != "y")) {
+            throw invalid_argument("Neteisingas pasirinkimas. Iveskite 'y' arba 'n':");
+        }
+    } catch (const invalid_argument &e) {
+        cout << e.what() << endl;
+        cin >> input;
+        charInputProtection(input);
+    }
+}
+
+void generateFile(int range, int homeworkCount) {
+    int tarpuIlgis = to_string(range).length();
+    int maxVardoIlgis = 6 + tarpuIlgis, maxPavardesIlgis = 7 + tarpuIlgis;
+    string input;
+    cout << "Generuojamas failas su " << range << " studentu duomenimis...\n";
+    clock_t start3 = clock();
+    ofstream out("kursiokai" + to_string(range) + ".txt");
+    out << left;
+    out << setw(maxVardoIlgis + 3) << "Vardas"
+        << setw(maxPavardesIlgis + 3) << "Pavarde";
+    for (int i = 1; i <= homeworkCount; i++) out << setw(5) << "ND" + to_string(i);
+    out << setw(4) << " Egzaminas"
+        << "\n";
+
+    for (int i = 1; i <= range; i++) {
+        out << setw(maxVardoIlgis + 3) << "Vardas" + to_string(i)
+            << setw(maxPavardesIlgis + 3) << "Pavarde" + to_string(i);
+        for (int j = 1; j < homeworkCount; j++) out << setw(5) << to_string(rand() % 10 + 1);
+        if (homeworkCount > 0) out << setw(6) << to_string(rand() % 10 + 1);
+
+        out << setw(2) << to_string(rand() % 10 + 1) << "\n";
+    }
+    out.close();
+    cout << "Failas 'kursiokai" << range << ".txt' sugeneruotas per " << (clock() - start3) / (double)CLOCKS_PER_SEC << " s.\n";
+}
+
+void howToSort(char &choice1, char &choice2) {
+    string input;
+    cout << "Pagal ka norite surusiuoti studentus? (v - vardas, p - pavarde, g - galutinis (vidurkis), m - galutinis (mediana))" << endl;
+    cin >> input;
+    while (input.length() > 1 || (input != "v" && input != "p" && input != "g" && input != "m")) {
+        cout << "Neteisingas pasirinkimas. Iveskite 'v', 'p', 'g' arba 'm':" << endl;
+        cin >> input;
+    }
+    choice1 = input[0];
+    cout << "Kaip norite surusiuoti? (d - didejimo tvarka, m - mazejimo tvarka)" << endl;
+    cin >> input;
+    while (input.length() > 1 || (input != "d" && input != "m")) {
+        cout << "Neteisingas pasirinkimas. Iveskite 'd' arba 'm':" << endl;
+        cin >> input;
+    }
+    choice2 = input[0];
+}
+
+void Studentas::setName(string name) {
+    this->vardas = name;
+}
+
+string Studentas::getName() {
+    return this->vardas;
+}
+
+string Studentas::getSurname() {
+    return this->pavarde;
+}
+
+void Studentas::setSurname(string surname) {
+    this->pavarde = surname;
+}
+
+void Studentas::addGrade(int grade) {
+    this->ndPazymiai.push_back(grade);
+}
+
+void Studentas::setEgz(int grade) {
+    this->egzPazymys = grade;
 }
 
 void Studentas::calculate() {
@@ -65,58 +157,6 @@ void Studentas::readName() {
                 throw invalid_argument("Ivesta ne pavarde. Iveskite pavarde:");
             }
             this->pavarde = input;
-            break;
-        } catch (const invalid_argument &e) {
-            cout << e.what() << endl;
-        }
-    }
-}
-
-void Studentas::numberInputProtection(string &input) {
-    try {
-        if (!isNumber(input) || stoi(input) < 1 || stoi(input) > 10) {
-            throw invalid_argument("Iveskite skaiciu nuo 1 iki 10:");
-        }
-    } catch (const invalid_argument &e) {
-        cout << e.what() << endl;
-        cin >> input;
-        numberInputProtection(input);
-    }
-}
-
-void Studentas::charInputProtection(string &input) {
-    try {
-        if (input.length() > 1 || (input != "n" && input != "y")) {
-            throw invalid_argument("Neteisingas pasirinkimas. Iveskite 'y' arba 'n':");
-        }
-    } catch (const invalid_argument &e) {
-        cout << e.what() << endl;
-        cin >> input;
-        charInputProtection(input);
-    }
-}
-
-void Studentas::howToSort(char &p1, char &p2){
-    while (true) {
-        cout << "Kaip noretumete surusiuoti studentus? (pagal: v - varda, p - pavarde, g - galutini bala(vidurkis), m - galutini bala(mediana)):" << endl;
-        cin >> p1;
-        try {
-            if (p1 != 'v' && p1 != 'p' && p1 != 'g' && p1 != 'm') {
-                throw invalid_argument("Neteisingas pasirinkimas. Iveskite 'v', 'p', 'g' arba 'm':");
-            }
-            break;
-        } catch (const invalid_argument &e) {
-            cout << e.what() << endl;
-        }
-    }
-
-    while (true) {
-        cout << "Surusiuoti didejancia ar mazejancia tvarka? (d - didejancia, m - mazejancia)" << endl;
-        cin >> p2;
-        try {
-            if (p2 != 'd' && p2 != 'm') {
-                throw invalid_argument("Neteisingas pasirinkimas. Iveskite 'd' arba 'm':");
-            }
             break;
         } catch (const invalid_argument &e) {
             cout << e.what() << endl;
@@ -199,28 +239,51 @@ void Studentas::sorting(list<Studentas> &stud, char pasirinkimas, char input) {
     cout << "Surusiuota per " << (clock() - _start) / (double)CLOCKS_PER_SEC << " s.\n";
 };
 
-void Studentas::generateFile(int range, int homeworkCount) {
-    int tarpuIlgis = to_string(range).length();
-    int maxVardoIlgis = 6 + tarpuIlgis, maxPavardesIlgis = 7 + tarpuIlgis;
-    string input;
-    cout << "Generuojamas failas su " << range << " studentu duomenimis...\n";
-    clock_t start3 = clock();
-    ofstream out("kursiokai" + to_string(range) + ".txt");
-    out << left;
-    out << setw(maxVardoIlgis + 3) << "Vardas"
-        << setw(maxPavardesIlgis + 3) << "Pavarde";
-    for (int i = 1; i <= homeworkCount; i++) out << setw(5) << "ND" + to_string(i);
-    out << setw(4) << " Egzaminas"
-        << "\n";
-
-    for (int i = 1; i <= range; i++) {
-        out << setw(maxVardoIlgis + 3) << "Vardas" + to_string(i)
-            << setw(maxPavardesIlgis + 3) << "Pavarde" + to_string(i);
-        for (int j = 1; j < homeworkCount; j++) out << setw(5) << to_string(rand() % 10 + 1);
-        if (homeworkCount > 0) out << setw(6) << to_string(rand() % 10 + 1);
-
-        out << setw(2) << to_string(rand() % 10 + 1) << "\n";
+void Studentas::readFromFile(list<Studentas> &failoStud, string fileName, int &maxNameLength, int &maxSurnameLength) {
+    cout << "Nuskaitomi duomenys is failo '" << fileName << "'.\n";
+    clock_t start = clock();
+    ifstream in(fileName);
+    string line;
+    getline(in, line);
+    string vardas, pavarde, pazymys;
+    int pazymysInt;
+    while (getline(in, line)) {
+        istringstream iss(line);
+        iss >> vardas >> pavarde;
+        Studentas student;
+        student.setName(vardas);
+        student.setSurname(pavarde);
+        while (iss >> pazymys) {
+            pazymysInt = stoi(pazymys);
+            if (pazymysInt < 1 || pazymysInt > 10) {
+                cout << "Neteisingas pazymys: " << pazymysInt << ". Pazymys turi buti nuo 1 iki 10. Praleidziamas pazymys.\n";
+                continue;
+            }
+            student.addGrade(pazymysInt);
+        }
+        if (!student.ndPazymiai.empty()) {
+            student.setEgz(student.ndPazymiai.back());
+            student.ndPazymiai.pop_back();
+            student.calculate();
+        }
+        if (vardas.length() > maxNameLength) maxNameLength = vardas.length();
+        if (pavarde.length() > maxSurnameLength) maxSurnameLength = pavarde.length();
+        failoStud.push_back(student);
     }
-    out.close();
-    cout << "Failas 'kursiokai" << range << ".txt' sugeneruotas per " << (clock() - start3) / (double)CLOCKS_PER_SEC << " s.\n";
+    in.close();
+
+    cout << "Duomenys nuskaityti is failo per " << (clock() - start) / (double)CLOCKS_PER_SEC << " s.\n";
+}
+
+void Studentas::sortIntoGroups(list<Studentas> &stud, list<Studentas> &neislaike) {
+    clock_t start = clock();
+    auto it = stud.begin();
+    while (it != stud.end()) {
+        if (it->galBalasVid < 5 && it->galBalasMed < 5) {
+            neislaike.splice(neislaike.end(), stud, it++);
+        } else {
+            ++it;
+        }
+    }
+    cout << "Studentai islaikyti ir neislaikyti surusiuoti per " << double(clock() - start) / CLOCKS_PER_SEC << " sekundziu.\n\n";
 }
