@@ -28,7 +28,24 @@ Kaip diegti šią programą?
 
 ---
 
-Spartos palyginimas.
+Spartos palyginimas. (V1.1)
+
+    Pasirinkau optimaliausią duomenų struktūrą darbui su studentais: List.
+
+    | Užduočių atlikimas (s)  | 1000000 | 10000000 |
+    |-------------------------|---------|----------|
+    | Klasė (List)            |         |          |
+    | Failų nuskaitymas       |  4.02   |  37.653  | <= 35% lėčiau
+    | Skirstymas į grupes     |  0.062  |  0.565   | <= 15% greičiau
+    | Rūšiavimas didėjimo t.  |  0.568  |  6.94    | <= 6% greičiau
+    |-------------------------|---------|----------|
+    | Struktūra (List)        |         |          |
+    | Failų nuskaitymas       |  2.916  |  27.902  |
+    | Skirstymas į grupes     |  0.074  |  0.666   |
+    | Rūšiavimas didėjimo t.  |  0.715  |  7.35    |
+    |-------------------------|---------|----------|
+
+Spartos palyginimas. (V1.0)
 
     | Užduočių atlikimas (s)  | 1000 | 10000 | 100000 | 1000000 | 10000000 |
     |-------------------------|------|-------|--------|---------|----------|
