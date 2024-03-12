@@ -20,6 +20,7 @@ private:
     double egzPazymys, galBalasVid, galBalasMed;
 public:
     Studentas() : ndPazymiai(), egzPazymys(0), galBalasVid(0), galBalasMed(0) {}
+    ~Studentas() {}
 
     void setName(string name);
     string getName();
