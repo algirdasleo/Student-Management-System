@@ -13,23 +13,26 @@
 
 using namespace std;
 
-struct studentaiStruct {
+class Studentas{
+private:
     string vardas, pavarde;
-    list<int> nd;
-    double ndSuma, egzas, galutinisVid, mediana, galutinisMed;
+    list<int> ndPazymiai;
+    double egzPazymys, galBalasVid, galBalasMed;
+public:
+    Studentas() : ndPazymiai(), egzPazymys(0), galBalasVid(0), galBalasMed(0) {}
+
+    void readStudentData(int choice);  // nauja f.
+    void readName();
+    void calculate();
+    static void generateFile(int range, int homeworkCount);
+    static void howToSort(char &choice1, char &choice2);
+    static void sorting(list<Studentas> &stud, char choice1, char choice2);
+    static void printToFile(list<Studentas> &stud, int maxNameLength, int maxSurnameLength);
+    static void printToFile(list<Studentas> &stud, int maxNameLength, int maxSurnameLength, string fileName);
+    static void numberInputProtection(string &input);
+    static void charInputProtection(string &input);
+    static bool isNumber(string &str);
+    static bool isString(string &str);
 };
-
-bool isNumber(string &str);
-bool isString(string &str);
-void skaiciavimai(studentaiStruct &studentas);
-void vardoIvedimas(studentaiStruct &studentas);
-void numberInputProtection(string &input);
-void charInputProtection(string &input);
-void kaipRusiuoti(char &p1, char &p2);
-void isvedimas(list<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis);
-void isvedimas(list<studentaiStruct> &stud, int maxVardoIlgis, int maxPavardesIlgis, string pavadinimas);
-void isvedimoSortinimas(list<studentaiStruct> &stud, char pasirinkimas, char input);
-
-void generuotiFaila(int kiekis, int pazymiuKiekis);
 
 #endif
