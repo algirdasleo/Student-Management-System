@@ -65,6 +65,9 @@ Kompiliatoriaus optimizavimo lygio analizė:
     | Rūšiavimas didėjimo t.  |  0.564  |  7.05    | <= 5% greičiau už 01
     |-------------------------|---------|----------|
 
+    -01 .exe file dydis: 255KB
+    -02 .exe file dydis: 255KB
+    -03 .exe file dydis: 255KB
 
 Spartos palyginimas. (V1.0)
 
