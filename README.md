@@ -45,6 +45,27 @@ Spartos palyginimas. (V1.1)
     | Rūšiavimas didėjimo t.  |  0.715  |  7.35    |
     |-------------------------|---------|----------|
 
+Kompiliatoriaus optimizavimo lygio analizė:
+
+    | Užduočių atlikimas (s)  | 1000000 | 10000000 |
+    |-------------------------|---------|----------|
+    | 01                      |         |          |
+    | Failų nuskaitymas       |  3.767  |  40.186  |
+    | Skirstymas į grupes     |  0.069  |  0.7     |
+    | Rūšiavimas didėjimo t.  |  0.58   |  7.406   |
+    |-------------------------|---------|----------|
+    | 02                      |         |          |
+    | Failų nuskaitymas       |  4.102  |  38.536  |
+    | Skirstymas į grupes     |  0.062  |  0.65    |
+    | Rūšiavimas didėjimo t.  |  0.557  |  7.466   |
+    |-------------------------|---------|----------|
+    | 03                      |         |          |
+    | Failų nuskaitymas       |  4.707  |  37.686  | <= 6.2% greičiau už 01
+    | Skirstymas į grupes     |  0.067  |  0.608   | <= 13% greičiau už 01
+    | Rūšiavimas didėjimo t.  |  0.564  |  7.05    | <= 5% greičiau už 01
+    |-------------------------|---------|----------|
+
+
 Spartos palyginimas. (V1.0)
 
     | Užduočių atlikimas (s)  | 1000 | 10000 | 100000 | 1000000 | 10000000 |
