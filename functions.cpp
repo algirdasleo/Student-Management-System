@@ -10,103 +10,315 @@
 #include <numeric>
 #include <sstream>
 #include <string>
-using namespace std;
 
-bool isNumber(string &str) {
-    for (char c : str)
-        if (!isdigit(c))
-            return false;
-    return true;
-}
+// Defining constructors and destructors.
 
-bool isString(string &str) {
-    for (char c : str)
-        if (!isalpha(c))
-            return false;
-    return true;
-}
+Studentas::Studentas() : egzPazymys(0), galBalasVid(0), galBalasMed(0) {}
 
-void numberInputProtection(string &input) {
-    try {
-        if (!isNumber(input) || stoi(input) < 1 || stoi(input) > 10) {
-            throw invalid_argument("Iveskite skaiciu nuo 1 iki 10:");
-        }
-    } catch (const invalid_argument &e) {
-        cout << e.what() << endl;
-        cin >> input;
-        numberInputProtection(input);
+StudentasManager::StudentasManager() : maxNameLength(0), maxSurnameLength(0) {}
+
+Studentas::~Studentas() {}
+
+StudentasManager::~StudentasManager() {}
+
+// Copy and Move constructors and assignment operators.
+
+Studentas::Studentas(const Studentas &stud) : vardas(stud.vardas), pavarde(stud.pavarde), ndPazymiai(stud.ndPazymiai), egzPazymys(stud.egzPazymys), galBalasVid(stud.galBalasVid), galBalasMed(stud.galBalasMed) {}
+
+Studentas &Studentas::operator=(const Studentas &stud) {
+    if (this != &stud) {
+        vardas = stud.vardas;
+        pavarde = stud.pavarde;
+        ndPazymiai = stud.ndPazymiai;
+        egzPazymys = stud.egzPazymys;
+        galBalasVid = stud.galBalasVid;
+        galBalasMed = stud.galBalasMed;
     }
+    return *this;
 }
 
-void charInputProtection(string &input) {
-    try {
-        if (input.length() > 1 || (input != "n" && input != "y")) {
-            throw invalid_argument("Neteisingas pasirinkimas. Iveskite 'y' arba 'n':");
-        }
-    } catch (const invalid_argument &e) {
-        cout << e.what() << endl;
-        cin >> input;
-        charInputProtection(input);
+Studentas::Studentas(Studentas &&stud) noexcept : vardas(std::move(stud.vardas)), pavarde(std::move(stud.pavarde)), ndPazymiai(std::move(stud.ndPazymiai)), egzPazymys(stud.egzPazymys), galBalasVid(stud.galBalasVid), galBalasMed(stud.galBalasMed) {}
+
+Studentas &Studentas::operator=(Studentas &&stud) noexcept {
+    if (this != &stud) {
+        vardas = std::move(stud.vardas);
+        pavarde = std::move(stud.pavarde);
+        ndPazymiai = std::move(stud.ndPazymiai);
+        egzPazymys = stud.egzPazymys;
+        galBalasVid = stud.galBalasVid;
+        galBalasMed = stud.galBalasMed;
     }
+    return *this;
 }
 
-void generateFile(int range, int homeworkCount) {
-    int tarpuIlgis = to_string(range).length();
-    int maxVardoIlgis = 6 + tarpuIlgis, maxPavardesIlgis = 7 + tarpuIlgis;
-    string input;
-    cout << "Generuojamas failas su " << range << " studentu duomenimis...\n";
-    clock_t start3 = clock();
-    ofstream out("kursiokai" + to_string(range) + ".txt");
-    out << left;
-    out << setw(maxVardoIlgis + 3) << "Vardas"
-        << setw(maxPavardesIlgis + 3) << "Pavarde";
-    for (int i = 1; i <= homeworkCount; i++) out << setw(5) << "ND" + to_string(i);
-    out << setw(4) << " Egzaminas"
-        << "\n";
+std::ostream &operator<<(std::ostream &out, const StudentasManager::OutputHelper &helper) {
+    out << std::setw(helper.maxSurnameLength + 2) << helper.student.pavarde
+        << std::setw(helper.maxNameLength + 2) << helper.student.vardas
+        << std::setw(17) << std::fixed << std::setprecision(2) << helper.student.galBalasVid
+        << std::setw(15) << std::fixed << std::setprecision(2) << helper.student.galBalasMed << std::endl;
+    return out;
+}
 
-    for (int i = 1; i <= range; i++) {
-        out << setw(maxVardoIlgis + 3) << "Vardas" + to_string(i)
-            << setw(maxPavardesIlgis + 3) << "Pavarde" + to_string(i);
-        for (int j = 1; j < homeworkCount; j++) out << setw(5) << to_string(rand() % 10 + 1);
-        if (homeworkCount > 0) out << setw(6) << to_string(rand() % 10 + 1);
+// StudentasManager class functions
 
-        out << setw(2) << to_string(rand() % 10 + 1) << "\n";
+size_t StudentasManager::getStudentListSize() {
+    return studentList.size();
+}
+
+void StudentasManager::setMaxNameLength(int length) {
+    this->maxNameLength = length;
+}
+
+void StudentasManager::setMaxSurnameLength(int length) {
+    this->maxSurnameLength = length;
+}
+
+int StudentasManager::getMaxNameLength() {
+    return this->maxNameLength;
+}
+
+int StudentasManager::getMaxSurnameLength() {
+    return this->maxSurnameLength;
+}
+
+void StudentasManager::addStudent(Studentas student) {
+    if (student.getName().length() > maxNameLength)
+        maxNameLength = student.getName().length();
+    if (student.getSurname().length() > maxSurnameLength)
+        maxSurnameLength = student.getSurname().length();
+
+    studentList.push_back(student);
+}
+
+void StudentasManager::printToFile() {
+    if (studentList.empty()) {
+        std::cout << "Studentu duomenu nerasta.\n";
+        return;
+    }
+
+    std::string input;
+    std::cout << "|- Ar norite surusiuoti studentus? (y / n) " << std::endl;
+    std::cin >> input;
+    charInputProtection(input);
+    if (input == "y") {
+        char pasirinkimas, rusiavimas;
+        howToSort(pasirinkimas, rusiavimas);
+        sortStudents(pasirinkimas, rusiavimas);
+    }
+    std::ofstream out("rezultatas.txt");
+    out << std::left
+        << std::setw(maxNameLength + 2) << "Pavarde"
+        << std::setw(maxSurnameLength + 2) << "Vardas"
+        << std::setw(17) << "Galutinis(Vid.)"
+        << std::setw(15) << "Galutinis(Med.)" << std::endl;
+
+    out << std::setfill('-') << std::setw(maxNameLength + maxSurnameLength + 34) << "-" << std::endl;
+    out << std::setfill(' ');
+
+    for (const auto &student : studentList) {
+        out << OutputHelper(student, maxNameLength, maxSurnameLength);
     }
     out.close();
-    cout << "Failas 'kursiokai" << range << ".txt' sugeneruotas per " << (clock() - start3) / (double)CLOCKS_PER_SEC << " s.\n";
+    std::cout << "\nRezultatai isvesti i faila 'rezultatas.txt'.\n";
+    studentList.clear();
 }
 
-void howToSort(char &choice1, char &choice2) {
-    string input;
-    cout << "Pagal ka norite surusiuoti studentus? (v - vardas, p - pavarde, g - galutinis (vidurkis), m - galutinis (mediana))" << endl;
-    cin >> input;
-    while (input.length() > 1 || (input != "v" && input != "p" && input != "g" && input != "m")) {
-        cout << "Neteisingas pasirinkimas. Iveskite 'v', 'p', 'g' arba 'm':" << endl;
-        cin >> input;
+void StudentasManager::printToFile(std::string fileName) {
+    if (studentList.empty()) {
+        std::cout << "\nStudentu duomenu nerasta.\n";
+        return;
     }
-    choice1 = input[0];
-    cout << "Kaip norite surusiuoti? (d - didejimo tvarka, m - mazejimo tvarka)" << endl;
-    cin >> input;
-    while (input.length() > 1 || (input != "d" && input != "m")) {
-        cout << "Neteisingas pasirinkimas. Iveskite 'd' arba 'm':" << endl;
-        cin >> input;
+
+    std::ofstream out(fileName);
+
+    out << "\nNEISLAIKUSIU STUDENTU SARASAS.\n";
+
+    out << std::left
+        << std::setw(maxSurnameLength + 2) << "Pavarde"
+        << std::setw(maxNameLength + 2) << "Vardas"
+        << std::setw(17) << "Galutinis(Vid.)"
+        << std::setw(15) << "Galutinis(Med.)" << std::endl;
+
+    out << std::setfill('-') << std::setw(maxSurnameLength + maxNameLength + 34) << "-" << std::endl;
+    out << std::setfill(' ');
+
+    for (const auto &student : studentList) {
+        out << std::setw(maxSurnameLength + 2) << student.pavarde
+            << std::setw(maxNameLength + 2) << student.vardas
+            << std::setw(17) << std::fixed << std::setprecision(2) << student.galBalasVid
+            << std::setw(15) << std::fixed << std::setprecision(2) << student.galBalasMed << std::endl;
     }
-    choice2 = input[0];
+    out.close();
+    std::cout << "\nRezultatai isvesti i faila '" << fileName << "'.\n";
+    studentList.clear();
 }
 
-void Studentas::setName(string name) {
+void StudentasManager::printToFile(std::string fileName, std::list<Studentas> &neislaike) {
+    if (studentList.empty()) {
+        std::cout << "\nStudentu duomenu nerasta.\n";
+        return;
+    }
+
+    std::ofstream out(fileName);
+    out << "\nNEISLAIKUSIU STUDENTU SARASAS.\n";
+
+    out << std::left
+        << std::setw(maxSurnameLength + 2) << "Pavarde"
+        << std::setw(maxNameLength + 2) << "Vardas"
+        << std::setw(17) << "Galutinis(Vid.)"
+        << std::setw(15) << "Galutinis(Med.)" << std::endl;
+
+    out << std::setfill('-') << std::setw(maxSurnameLength + maxNameLength + 34) << "-" << std::endl;
+    out << std::setfill(' ');
+
+    for (const auto &student : studentList) {
+        out << std::setw(maxSurnameLength + 2) << student.pavarde
+            << std::setw(maxNameLength + 2) << student.vardas
+            << std::setw(17) << std::fixed << std::setprecision(2) << student.galBalasVid
+            << std::setw(15) << std::fixed << std::setprecision(2) << student.galBalasMed << std::endl;
+    }
+
+    for (const auto &student : neislaike) {
+        out << std::setw(maxSurnameLength + 2) << student.pavarde
+            << std::setw(maxNameLength + 2) << student.vardas
+            << std::setw(17) << std::fixed << std::setprecision(2) << student.galBalasVid
+            << std::setw(15) << std::fixed << std::setprecision(2) << student.galBalasMed << std::endl;
+    }
+    out.close();
+    std::cout << "\nRezultatai isvesti i faila '" << fileName << "'.\n";
+    neislaike.clear();
+}
+
+void StudentasManager::sortStudents(char pasirinkimas, char input) {
+    clock_t _start = clock();
+    if (pasirinkimas == 'v') {
+        if (input == 'd')
+            studentList.sort([](const Studentas &a, const Studentas &b) { return a.vardas < b.vardas; });
+        else
+            studentList.sort([](const Studentas &a, const Studentas &b) { return a.vardas > b.vardas; });
+    } else if (pasirinkimas == 'p') {
+        if (input == 'd')
+            studentList.sort([](const Studentas &a, const Studentas &b) { return a.pavarde < b.pavarde; });
+        else
+            studentList.sort([](const Studentas &a, const Studentas &b) { return a.pavarde > b.pavarde; });
+    } else if (pasirinkimas == 'g') {
+        if (input == 'd')
+            studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasVid < b.galBalasVid; });
+        else
+            studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasVid > b.galBalasVid; });
+    } else if (pasirinkimas == 'm') {
+        if (input == 'd')
+            studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed < b.galBalasMed; });
+        else
+            studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed > b.galBalasMed; });
+    }
+    std::cout << "\nSurusiuota per " << (clock() - _start) / (double)CLOCKS_PER_SEC << " s.\n";
+}
+
+void StudentasManager::sortStudents(char pasirinkimas, char input, std::list<Studentas> &neislaike) {
+    clock_t _start = clock();
+    if (pasirinkimas == 'v') {
+        if (input == 'd') {
+            studentList.sort([](const Studentas &a, const Studentas &b) { return a.vardas < b.vardas; });
+            neislaike.sort([](const Studentas &a, const Studentas &b) { return a.vardas < b.vardas; });
+        } else {
+            studentList.sort([](const Studentas &a, const Studentas &b) { return a.vardas > b.vardas; });
+            neislaike.sort([](const Studentas &a, const Studentas &b) { return a.vardas > b.vardas; });
+        }
+    } else if (pasirinkimas == 'p') {
+        if (input == 'd') {
+            studentList.sort([](const Studentas &a, const Studentas &b) { return a.pavarde < b.pavarde; });
+            neislaike.sort([](const Studentas &a, const Studentas &b) { return a.pavarde < b.pavarde; });
+        } else {
+            studentList.sort([](const Studentas &a, const Studentas &b) { return a.pavarde > b.pavarde; });
+            neislaike.sort([](const Studentas &a, const Studentas &b) { return a.pavarde > b.pavarde; });
+        }
+    } else if (pasirinkimas == 'g') {
+        if (input == 'd') {
+            studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasVid < b.galBalasVid; });
+            neislaike.sort([](const Studentas &a, const Studentas &b) { return a.galBalasVid < b.galBalasVid; });
+        } else {
+            studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasVid > b.galBalasVid; });
+            neislaike.sort([](const Studentas &a, const Studentas &b) { return a.galBalasVid > b.galBalasVid; });
+        }
+    } else if (pasirinkimas == 'm') {
+        if (input == 'd') {
+            studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed < b.galBalasMed; });
+            neislaike.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed < b.galBalasMed; });
+        } else {
+            studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed > b.galBalasMed; });
+            neislaike.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed > b.galBalasMed; });
+        }
+    }
+    std::cout << "\nSurusiuota per " << (clock() - _start) / (double)CLOCKS_PER_SEC << " s.\n";
+}
+
+void StudentasManager::readFromFile(std::string fileName) {
+    std::cout << "Nuskaitomi duomenys is failo '" << fileName << "'.\n";
+    clock_t start = clock();
+    std::ifstream in(fileName);
+    std::string line;
+    getline(in, line);
+    std::string vardas, pavarde, pazymys;
+    int pazymysInt;
+    while (getline(in, line)) {
+        std::istringstream iss(line);
+        iss >> vardas >> pavarde;
+        Studentas student;
+        student.setName(vardas);
+        student.setSurname(pavarde);
+        while (iss >> pazymys) {
+            pazymysInt = stoi(pazymys);
+            if (pazymysInt < 1 || pazymysInt > 10) {
+                std::cout << "Neteisingas pazymys: " << pazymysInt << ". Pazymys turi buti nuo 1 iki 10. Praleidziamas pazymys.\n";
+                continue;
+            }
+            student.addGrade(pazymysInt);
+        }
+        if (!student.ndPazymiai.empty()) {
+            student.setEgz(student.ndPazymiai.back());
+            student.ndPazymiai.pop_back();
+            student.calculate();
+        }
+        if (vardas.length() > maxNameLength) maxNameLength = vardas.length();
+        if (pavarde.length() > maxSurnameLength) maxSurnameLength = pavarde.length();
+        studentList.push_back(student);
+    }
+    setMaxNameLength(maxNameLength);
+    setMaxSurnameLength(maxSurnameLength);
+    in.close();
+
+    std::cout << "\nDuomenys nuskaityti is failo per " << (clock() - start) / (double)CLOCKS_PER_SEC << " s.\n";
+}
+
+void StudentasManager::sortIntoGroups(std::list<Studentas> &neislaike) {
+    clock_t start = clock();
+    auto it = studentList.begin();
+    while (it != studentList.end()) {
+        if (it->galBalasVid < 5 && it->galBalasMed < 5) {
+            neislaike.splice(neislaike.end(), studentList, it++);
+        } else {
+            ++it;
+        }
+    }
+    std::cout << "Islaike ir Neislaike Studentai surusiuoti per " << double(clock() - start) / CLOCKS_PER_SEC << " sekundziu.\n\n";
+}
+
+// Studentas class functions
+
+void Studentas::setName(std::string name) {
     this->vardas = name;
 }
 
-string Studentas::getName() {
+std::string Studentas::getName() {
     return this->vardas;
 }
 
-string Studentas::getSurname() {
+std::string Studentas::getSurname() {
     return this->pavarde;
 }
 
-void Studentas::setSurname(string surname) {
+void Studentas::setSurname(std::string surname) {
     this->pavarde = surname;
 }
 
@@ -133,157 +345,164 @@ void Studentas::calculate() {
 }
 
 void Studentas::readName() {
-    string input;
+    std::string input;
 
     while (true) {
-        cout << "Iveskite studento varda:" << endl;
-        cin >> input;
+        std::cout << "Iveskite studento varda:" << std::endl;
+        std::cin >> input;
         try {
             if (!isString(input)) {
-                throw invalid_argument("Ivestas ne vardas. Iveskite varda:");
+                throw std::invalid_argument("Ivestas ne vardas. Iveskite varda:");
             }
             this->vardas = input;
             break;
-        } catch (const invalid_argument &e) {
-            cout << e.what() << endl;
+        } catch (const std::invalid_argument &e) {
+            std::cout << e.what() << std::endl;
         }
     }
 
     while (true) {
-        cout << "Iveskite studento pavarde:" << endl;
-        cin >> input;
+        std::cout << "Iveskite studento pavarde:" << std::endl;
+        std::cin >> input;
         try {
             if (!isString(input)) {
-                throw invalid_argument("Ivesta ne pavarde. Iveskite pavarde:");
+                throw std::invalid_argument("Ivesta ne pavarde. Iveskite pavarde:");
             }
             this->pavarde = input;
             break;
-        } catch (const invalid_argument &e) {
-            cout << e.what() << endl;
+        } catch (const std::invalid_argument &e) {
+            std::cout << e.what() << std::endl;
         }
     }
 }
 
-void Studentas::printToFile(list<Studentas> &stud, int maxVardoIlgis, int maxPavardesIlgis) {
-    string input;
-    cout << "Ar norite surusiuoti studentus? (y / n)" << endl;
-    cin >> input;
-    charInputProtection(input);
-    char pasirinkimas, rusiavimas;
-    howToSort(pasirinkimas, rusiavimas);
-    sorting(stud, pasirinkimas, rusiavimas);
-    ofstream out("rezultatas.txt");
-    out << left
-        << setw(maxPavardesIlgis + 2) << "Pavarde"
-        << setw(maxVardoIlgis + 2) << "Vardas"
-        << setw(17) << "Galutinis(Vid.)"
-        << setw(15) << "Galutinis(Med.)" << endl;
+// Testing Rule of Five for Studentas class
 
-    out << setfill('-') << setw(maxPavardesIlgis + maxVardoIlgis + 34) << "-" << endl;
-    out << setfill(' ');
+void testStudentasClass() {
+    Studentas stud1;
+    stud1.setName("Jonas");
+    stud1.setSurname("Jonaitis");
+    stud1.addGrade(8);
+    stud1.setEgz(9);
+    stud1.calculate();
 
-    for (const auto &student : stud) {
-        out << setw(maxPavardesIlgis + 2) << student.pavarde
-            << setw(maxVardoIlgis + 2) << student.vardas
-            << setw(17) << fixed << setprecision(2) << student.galBalasVid
-            << setw(15) << fixed << setprecision(2) << student.galBalasMed << endl;
+    // Default Constructor TEST
+    if (stud1.getName() != "Jonas") {
+        throw std::runtime_error("Default constructor test FAILED: setName() or getName()");
+    }
+    std::cout << "Default constructor test: PASSED.\n";
+
+    // Copy Constructor TEST
+    Studentas stud2 = stud1;
+    if (stud2.getName() != "Jonas") {
+        throw std::runtime_error("Copy constructor test failed.");
+    }
+    std::cout << "Copy constructor test: PASSED.\n";
+
+    // Move Constructor TEST
+    Studentas stud3 = std::move(stud1);
+    if (stud3.getName() != "Jonas" || !stud1.getName().empty()) {
+        throw std::runtime_error("Move constructor test failed.");
+    }
+    std::cout << "Move constructor test: PASSED.\n";
+
+    // Copy Assignment Operator TEST
+    Studentas stud4;
+    stud4 = stud2;
+    if (stud4.getName() != "Jonas") {
+        throw std::runtime_error("Copy assignment operator test failed.");
+    }
+    std::cout << "Copy assignment operator test: PASSED.\n";
+
+    // Move Assignment Operator TEST
+    Studentas stud5;
+    stud5 = std::move(stud2);
+    if (stud5.getName() != "Jonas" || !stud2.getName().empty()) {
+        throw std::runtime_error("Move assignment operator test failed.");
+    }
+    std::cout << "Move assignment operator test: PASSED.\n";
+}
+
+// Other functions
+
+bool isNumber(std::string &str) {
+    for (char c : str)
+        if (!isdigit(c))
+            return false;
+    return true;
+}
+
+bool isString(std::string &str) {
+    for (char c : str)
+        if (!isalpha(c))
+            return false;
+    return true;
+}
+
+void numberInputProtection(std::string &input) {
+    try {
+        if (!isNumber(input) || stoi(input) < 1 || stoi(input) > 10) {
+            throw std::invalid_argument("Iveskite skaiciu nuo 1 iki 10:");
+        }
+    } catch (const std::invalid_argument &e) {
+        std::cout << e.what() << std::endl;
+        std::cin >> input;
+        numberInputProtection(input);
+    }
+}
+
+void charInputProtection(std::string &input) {
+    try {
+        if (input.length() > 1 || (input != "n" && input != "y")) {
+            throw std::invalid_argument("\nNeteisingas pasirinkimas. Iveskite 'y' arba 'n':");
+        }
+    } catch (const std::invalid_argument &e) {
+        std::cout << e.what() << std::endl;
+        std::cin >> input;
+        charInputProtection(input);
+    }
+}
+
+void generateFile(int range, int homeworkCount) {
+    int tarpuIlgis = std::to_string(range).length();
+    int maxVardoIlgis = 6 + tarpuIlgis, maxPavardesIlgis = 7 + tarpuIlgis;
+    std::string input;
+    std::cout << "Generuojamas failas su " << range << " studentu duomenimis...\n";
+    clock_t start3 = clock();
+    std::ofstream out("kursiokai" + std::to_string(range) + ".txt");
+    out << std::left;
+    out << std::setw(maxVardoIlgis + 3) << "Vardas"
+        << std::setw(maxPavardesIlgis + 3) << "Pavarde";
+    for (int i = 1; i <= homeworkCount; i++) out << std::setw(5) << "ND" + std::to_string(i);
+    out << std::setw(4) << " Egzaminas"
+        << "\n";
+
+    for (int i = 1; i <= range; i++) {
+        out << std::setw(maxVardoIlgis + 3) << "Vardas" + std::to_string(i)
+            << std::setw(maxPavardesIlgis + 3) << "Pavarde" + std::to_string(i);
+        for (int j = 1; j < homeworkCount; j++) out << std::setw(5) << std::to_string(rand() % 10 + 1);
+        if (homeworkCount > 0) out << std::setw(6) << std::to_string(rand() % 10 + 1);
+
+        out << std::setw(2) << std::to_string(rand() % 10 + 1) << "\n";
     }
     out.close();
-    cout << "\nRezultatai isvesti i faila 'rezultatas.txt'.\n";
+    std::cout << "Failas 'kursiokai" << range << ".txt' sugeneruotas per " << (clock() - start3) / (double)CLOCKS_PER_SEC << " s.\n";
 }
 
-void Studentas::printToFile(list<Studentas> &stud, int maxNameLength, int maxSurnameLength, string fileName) {
-    ofstream out(fileName);
-    out << left
-        << setw(maxSurnameLength + 2) << "Pavarde"
-        << setw(maxNameLength + 2) << "Vardas"
-        << setw(17) << "Galutinis(Vid.)"
-        << setw(15) << "Galutinis(Med.)" << endl;
-
-    out << setfill('-') << setw(maxSurnameLength + maxNameLength + 34) << "-" << endl;
-    out << setfill(' ');
-
-    for (const auto &student : stud) {
-        out << setw(maxSurnameLength + 2) << student.pavarde
-            << setw(maxNameLength + 2) << student.vardas
-            << setw(17) << fixed << setprecision(2) << student.galBalasVid
-            << setw(15) << fixed << setprecision(2) << student.galBalasMed << endl;
+void howToSort(char &choice1, char &choice2) {
+    std::string input;
+    std::cout << "|- Pagal ka norite surusiuoti studentus? (v - vardas, p - pavarde, g - galutinis (vidurkis), m - galutinis (mediana)) " << std::endl;
+    std::cin >> input;
+    while (input.length() > 1 || (input != "v" && input != "p" && input != "g" && input != "m")) {
+        std::cout << "Neteisingas pasirinkimas. Iveskite 'v', 'p', 'g' arba 'm':" << std::endl;
+        std::cin >> input;
+    } 
+    choice1 = input[0];
+    std::cout << "\n|- Kaip norite surusiuoti? (d - didejimo tvarka, m - mazejimo tvarka)  " << std::endl;
+    std::cin >> input;
+    while (input.length() > 1 || (input != "d" && input != "m")) {
+        std::cout << "Neteisingas pasirinkimas. Iveskite 'd' arba 'm':" << std::endl;
+        std::cin >> input;
     }
-    out.close();
-    cout << "\nRezultatai isvesti i faila '" << fileName << "'.\n";
-}
-
-void Studentas::sorting(list<Studentas> &stud, char pasirinkimas, char input) {
-    clock_t _start = clock();
-    if (pasirinkimas == 'v') {
-        if (input == 'd')
-            stud.sort([](const Studentas &a, const Studentas &b) { return a.vardas < b.vardas; });
-        else
-            stud.sort([](const Studentas &a, const Studentas &b) { return a.vardas > b.vardas; });
-    } else if (pasirinkimas == 'p') {
-        if (input == 'd')
-            stud.sort([](const Studentas &a, const Studentas &b) { return a.pavarde < b.pavarde; });
-        else
-            stud.sort([](const Studentas &a, const Studentas &b) { return a.pavarde > b.pavarde; });
-    } else if (pasirinkimas == 'g') {
-        if (input == 'd')
-            stud.sort([](const Studentas &a, const Studentas &b) { return a.galBalasVid < b.galBalasVid; });
-        else
-            stud.sort([](const Studentas &a, const Studentas &b) { return a.galBalasVid > b.galBalasVid; });
-    } else if (pasirinkimas == 'm') {
-        if (input == 'd')
-            stud.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed < b.galBalasMed; });
-        else
-            stud.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed > b.galBalasMed; });
-    }
-    cout << "Surusiuota per " << (clock() - _start) / (double)CLOCKS_PER_SEC << " s.\n";
-};
-
-void Studentas::readFromFile(list<Studentas> &failoStud, string fileName, int &maxNameLength, int &maxSurnameLength) {
-    cout << "Nuskaitomi duomenys is failo '" << fileName << "'.\n";
-    clock_t start = clock();
-    ifstream in(fileName);
-    string line;
-    getline(in, line);
-    string vardas, pavarde, pazymys;
-    int pazymysInt;
-    while (getline(in, line)) {
-        istringstream iss(line);
-        iss >> vardas >> pavarde;
-        Studentas student;
-        student.setName(vardas);
-        student.setSurname(pavarde);
-        while (iss >> pazymys) {
-            pazymysInt = stoi(pazymys);
-            if (pazymysInt < 1 || pazymysInt > 10) {
-                cout << "Neteisingas pazymys: " << pazymysInt << ". Pazymys turi buti nuo 1 iki 10. Praleidziamas pazymys.\n";
-                continue;
-            }
-            student.addGrade(pazymysInt);
-        }
-        if (!student.ndPazymiai.empty()) {
-            student.setEgz(student.ndPazymiai.back());
-            student.ndPazymiai.pop_back();
-            student.calculate();
-        }
-        if (vardas.length() > maxNameLength) maxNameLength = vardas.length();
-        if (pavarde.length() > maxSurnameLength) maxSurnameLength = pavarde.length();
-        failoStud.push_back(student);
-    }
-    in.close();
-
-    cout << "Duomenys nuskaityti is failo per " << (clock() - start) / (double)CLOCKS_PER_SEC << " s.\n";
-}
-
-void Studentas::sortIntoGroups(list<Studentas> &stud, list<Studentas> &neislaike) {
-    clock_t start = clock();
-    auto it = stud.begin();
-    while (it != stud.end()) {
-        if (it->galBalasVid < 5 && it->galBalasMed < 5) {
-            neislaike.splice(neislaike.end(), stud, it++);
-        } else {
-            ++it;
-        }
-    }
-    cout << "Studentai islaikyti ir neislaikyti surusiuoti per " << double(clock() - start) / CLOCKS_PER_SEC << " sekundziu.\n\n";
+    choice2 = input[0];
 }
