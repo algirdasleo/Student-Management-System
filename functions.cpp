@@ -116,7 +116,7 @@ void StudentasManager::printToFile() {
     out << std::setfill(' ');
 
     for (const auto &student : studentList) {
-        out << OutputHelper(student, maxNameLength, maxSurnameLength);
+        out << OutputHelper(student, maxNameLength, maxSurnameLength);      // Naudojamas operatorius << ir OutputHelper struktura
     }
     out.close();
     std::cout << "\nRezultatai isvesti i faila 'rezultatas.txt'.\n";
@@ -143,10 +143,7 @@ void StudentasManager::printToFile(std::string fileName) {
     out << std::setfill(' ');
 
     for (const auto &student : studentList) {
-        out << std::setw(maxSurnameLength + 2) << student.pavarde
-            << std::setw(maxNameLength + 2) << student.vardas
-            << std::setw(17) << std::fixed << std::setprecision(2) << student.galBalasVid
-            << std::setw(15) << std::fixed << std::setprecision(2) << student.galBalasMed << std::endl;
+        out << OutputHelper(student, maxNameLength, maxSurnameLength);      // Naudojamas operatorius << ir OutputHelper struktura
     }
     out.close();
     std::cout << "\nRezultatai isvesti i faila '" << fileName << "'.\n";
@@ -170,13 +167,6 @@ void StudentasManager::printToFile(std::string fileName, std::list<Studentas> &n
 
     out << std::setfill('-') << std::setw(maxSurnameLength + maxNameLength + 34) << "-" << std::endl;
     out << std::setfill(' ');
-
-    for (const auto &student : studentList) {
-        out << std::setw(maxSurnameLength + 2) << student.pavarde
-            << std::setw(maxNameLength + 2) << student.vardas
-            << std::setw(17) << std::fixed << std::setprecision(2) << student.galBalasVid
-            << std::setw(15) << std::fixed << std::setprecision(2) << student.galBalasMed << std::endl;
-    }
 
     for (const auto &student : neislaike) {
         out << std::setw(maxSurnameLength + 2) << student.pavarde
@@ -295,12 +285,13 @@ void StudentasManager::sortIntoGroups(std::list<Studentas> &neislaike) {
     clock_t start = clock();
     auto it = studentList.begin();
     while (it != studentList.end()) {
-        if (it->galBalasVid < 5 && it->galBalasMed < 5) {
+        if (it->galBalasVid < 5 || it->galBalasMed < 5) {
             neislaike.splice(neislaike.end(), studentList, it++);
         } else {
             ++it;
         }
     }
+    std::cout << "Neislaikiusiu kiekis: " << neislaike.size() << "\n";
     std::cout << "Islaike ir Neislaike Studentai surusiuoti per " << double(clock() - start) / CLOCKS_PER_SEC << " sekundziu.\n\n";
 }
 
