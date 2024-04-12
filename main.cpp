@@ -12,6 +12,13 @@
 using namespace std;
 
 int main() {
+    try {
+        cout << "Testing students class.\n";
+        testStudentasClass();
+    } catch (const exception &e) {
+        cout << "Error: " << e.what() << endl;
+    }
+
     clock_t start = clock();
     list<Studentas> studList;
     srand(time(nullptr));
