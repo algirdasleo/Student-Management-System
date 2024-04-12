@@ -151,8 +151,8 @@ void StudentasManager::printToFile(std::string fileName) {
 }
 
 void StudentasManager::printToFile(std::string fileName, std::list<Studentas> &neislaike) {
-    if (studentList.empty()) {
-        std::cout << "\nStudentu duomenu nerasta.\n";
+    if (neislaike.empty()) {
+        std::cout << "\nNeislaikiusiu nerasta.\n";
         return;
     }
 
@@ -175,7 +175,7 @@ void StudentasManager::printToFile(std::string fileName, std::list<Studentas> &n
             << std::setw(15) << std::fixed << std::setprecision(2) << student.galBalasMed << std::endl;
     }
     out.close();
-    std::cout << "\nRezultatai isvesti i faila '" << fileName << "'.\n";
+    std::cout << "Rezultatai isvesti i faila '" << fileName << "'.\n";
     neislaike.clear();
 }
 
