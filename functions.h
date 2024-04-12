@@ -10,17 +10,26 @@
 #include <list>
 #include <sstream>
 #include <string>
-
 using namespace std;
 
-class Studentas{
+class Studentas {
 private:
     string vardas, pavarde;
     list<int> ndPazymiai;
     double egzPazymys, galBalasVid, galBalasMed;
+    int maxNameLength, maxSurnameLength;
+
 public:
-    Studentas() : ndPazymiai(), egzPazymys(0), galBalasVid(0), galBalasMed(0) {}
-    ~Studentas() {}
+    Studentas();
+    ~Studentas();
+
+    // Rule of Five
+    Studentas(const Studentas &stud);
+    Studentas &operator=(const Studentas &stud);
+    Studentas(Studentas &&stud) noexcept;
+    Studentas &operator=(Studentas &&stud) noexcept;
+
+    friend ostream &operator<<(ostream &out, const Studentas &stud);
 
     void setName(string name);
     string getName();
@@ -36,11 +45,13 @@ public:
     static void printToFile(list<Studentas> &stud, int maxNameLength, int maxSurnameLength);
     static void printToFile(list<Studentas> &stud, int maxNameLength, int maxSurnameLength, string fileName);
 };
-    void numberInputProtection(string &input);
-    void charInputProtection(string &input);
-    bool isNumber(string &str);
-    bool isString(string &str);
-    void howToSort(char &choice1, char &choice2);
-    void generateFile(int range, int homeworkCount);
+void testStudentasClass();  // Testing Rule of Five for Studentas class
+
+void numberInputProtection(string &input);
+void charInputProtection(string &input);
+bool isNumber(string &str);
+bool isString(string &str);
+void howToSort(char &choice1, char &choice2);
+void generateFile(int range, int homeworkCount);
 
 #endif
