@@ -6,6 +6,5 @@ build: main.cpp functions.cpp functions.h
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $(TARGET) main.cpp functions.cpp
 run: build
 	./$(TARGET)
-
 clean:
 	rm -f $(TARGET)
