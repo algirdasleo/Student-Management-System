@@ -131,7 +131,7 @@ void StudentasManager::printToFile(std::string fileName) {
 
     std::ofstream out(fileName);
 
-    out << "\nNEISLAIKUSIU STUDENTU SARASAS.\n";
+    out << "\nISLAIKUSIU STUDENTU SARASAS.\n";
 
     out << std::left
         << std::setw(maxSurnameLength + 2) << "Pavarde"
