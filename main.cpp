@@ -30,7 +30,7 @@ int main() {
                   << "3. Studento varda, pavarde, pazymius sugeneruoti atsitiktiniu budu\n"
                   << "4. Nuskaityti studentu duomenis is failo.\n"
                   << "5. Sugeneruoti studentu duomenu faila.\n"
-                  << "6. Baigti darba (rodyti rezultatus).\n\n"
+                  << "6. Baigti darba.\n\n"
                   << "|- Iveskite pasirinkima:\n";
         std::cin >> input;
         std::cout << std::endl;
@@ -142,14 +142,13 @@ int main() {
 
                         char pasirinkimas, rusiavimas;
                         howToSort(pasirinkimas, rusiavimas);
-                        manager.sortStudents(pasirinkimas, rusiavimas);
                         manager.sortStudents(pasirinkimas, rusiavimas, neislaike);
                         clock_t start5 = clock();
                         manager.printToFile("islaike.txt");
                         manager.printToFile("neislaike.txt", neislaike);
 
-                        std::cout << "Rezultatai isvesti i failus per " << double(clock() - start5) / CLOCKS_PER_SEC << " sekundziu.\n\n";
-                    } else {
+                        std::cout << "\nRezultatai isvesti i failus per " << double(clock() - start5) / CLOCKS_PER_SEC << " sekundziu.\n\n";
+                    } else { 
                         char pasirinkimas, rusiavimas;
                         howToSort(pasirinkimas, rusiavimas);
                         manager.sortStudents(pasirinkimas, rusiavimas);
@@ -214,10 +213,10 @@ int main() {
         }
     }
     if (manager.getStudentListSize() == 0) {
-        std::cout << "Nera ivestu studentu duomenu. Programa baigia darba." << std::endl;
+        std::cout << "Programa baige darba." << std::endl;
         return 0;
     }
-    std::cout << "Programa uztruko: " << double(clock() - start) / CLOCKS_PER_SEC << " sekundziu." << std::endl;
+        std::cout << "Programa uztruko: " << double(clock() - start) / CLOCKS_PER_SEC << " sekundziu." << std::endl;
 
     return 0;
 }
