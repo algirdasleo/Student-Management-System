@@ -10,19 +10,20 @@
 #include <list>
 #include <sstream>
 #include <string>
+#include <chrono>
 
-class Studentas; // Forward declaration
+class Studentas;  // Forward declaration
 
-class StudentasManager { // Class for managing students, reading from file, sorting, printing to file
+class StudentasManager {  // Class for managing students, reading from file, sorting, printing to file
 private:
     std::list<Studentas> studentList;
     int maxNameLength, maxSurnameLength;
+
 public:
     struct OutputHelper {
         const Studentas &student;
         int maxNameLength, maxSurnameLength;
-        OutputHelper(const Studentas &s, int maxName, int maxSurname) : 
-            student(s), maxNameLength(maxName), maxSurnameLength(maxSurname) {}
+        OutputHelper(const Studentas &s, int maxName = 0, int maxSurname = 0) : student(s), maxNameLength(maxName), maxSurnameLength(maxSurname) {}
     };
 
     friend std::ostream &operator<<(std::ostream &out, const OutputHelper &helper);
@@ -40,23 +41,24 @@ public:
     void sortIntoGroups(std::list<Studentas> &neislaike);
     void sortStudents(char choice1, char choice2);
     void sortStudents(char choice1, char choice2, std::list<Studentas> &neislaike);
-    void printToFile();                     // Print to a default file name Rezultatas.txt
-    void printToFile(std::string fileName); // Print to a custom file name
-    void printToFile(std::string fileName, std::list<Studentas> &neislaike); 
+    void printToFile();                      // Print to a default file name Rezultatas.txt
+    void printToFile(std::string fileName);  // Print to a custom file name
+    void printToFile(std::string fileName, std::list<Studentas> &neislaike);
 };
 
-class Studentas { // Class for student data
+class Studentas {  // Class for student data
 private:
     std::string vardas, pavarde;
     std::list<int> ndPazymiai;
     double egzPazymys, galBalasVid, galBalasMed;
+
 public:
     Studentas();
     ~Studentas();
-    
-    friend class StudentasManager; // StudentasManager can access private members of Studentas
-    friend std::ostream &operator<<(std::ostream &out, const StudentasManager::OutputHelper &helper); // OutputHelper can access private members of Studentas
-    
+
+    friend class StudentasManager;                                                                     // StudentasManager can access private members of Studentas
+    friend std::ostream &operator<<(std::ostream &out, const StudentasManager::OutputHelper &helper);  // OutputHelper can access private members of Studentas
+
     // Rule of Five
     Studentas(const Studentas &stud);
     Studentas &operator=(const Studentas &stud);

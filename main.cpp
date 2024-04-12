@@ -7,6 +7,7 @@
 #include <list>
 #include <sstream>
 #include <string>
+#include <chrono>
 
 #include "functions.h"
 
@@ -19,7 +20,7 @@ int main() {
         return 1;
     }
 
-    clock_t start = clock();
+    auto start = std::chrono::high_resolution_clock::now();
     StudentasManager manager;
     while (true) {
         int meniuPasirinkimas;
@@ -50,10 +51,12 @@ int main() {
         srand(time(nullptr));
         if (!exit) {
             switch (meniuPasirinkimas) {
+
                 // Read student data
+                
                 case 1: {
                     std::cout << "1. STUDENTO DUOMENU IVEDIMAS\n";
-                    st.readName();
+                    std::cin >> st;                 // Naudojamas operatorius >> overloadintas klaseje Studentas
                     int i = 0;
                     while (true) {
                         std::cout << "Iveskite " << i + 1 << " namu darbo rezultata (1 - 10):" << std::endl;
@@ -75,7 +78,9 @@ int main() {
                     manager.addStudent(st);
                     break;
                 }
+
                 // Generate student grades
+                
                 case 2: {
                     std::cout << "2. VARDO, PAVARDES IVEDIMAS. PAZYMIU GENERAVIMAS. \n";
                     st.readName();
@@ -89,7 +94,9 @@ int main() {
                     std::cout << "Studento pazymiai sugeneruoti atsitiktinai.\n \n";
                     break;
                 }
+
                 // Generate student data
+                
                 case 3: {
                     std::cout << "3. STUDENTU DUOMENU GENERAVIMAS\n";
                     std::cout << "Kiek studentu sugeneruoti?" << std::endl;
@@ -109,11 +116,14 @@ int main() {
 
                         st.setEgz(rand() % 10 + 1);
                         st.calculate();
-                        manager.addStudent(st);                   }
+                        manager.addStudent(st);
+                    }
                     std::cout << "Studento duomenys sugeneruoti atsitiktinai. \n \n";
                     break;
                 }
+                
                 // Read data from file
+                
                 case 4: {
                     std::ifstream in;
                     std::cout << "4. DUOMENU NUSKAITYMAS. \n";
@@ -136,30 +146,33 @@ int main() {
                     std::cin >> input;
                     charInputProtection(input);
                     if (input == "y") {
-                        clock_t start4 = clock();
+                        auto start4 = std::chrono::high_resolution_clock::now();
                         std::list<Studentas> neislaike;
                         manager.sortIntoGroups(neislaike);
 
                         char pasirinkimas, rusiavimas;
                         howToSort(pasirinkimas, rusiavimas);
                         manager.sortStudents(pasirinkimas, rusiavimas, neislaike);
-                        clock_t start5 = clock();
+                        auto start5 = std::chrono::high_resolution_clock::now();
                         manager.printToFile("islaike.txt");
                         manager.printToFile("neislaike.txt", neislaike);
 
-                        std::cout << "\nRezultatai isvesti i failus per " << double(clock() - start5) / CLOCKS_PER_SEC << " sekundziu.\n\n";
-                    } else { 
+                        std::cout << "Rezultatai isvesti i failus 'islaike.txt' ir 'neislaike.txt' per "
+                                  << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start5).count() / 1000.0 << " sekundziu.\n\n";
+                    } else {
                         char pasirinkimas, rusiavimas;
                         howToSort(pasirinkimas, rusiavimas);
                         manager.sortStudents(pasirinkimas, rusiavimas);
-                        clock_t start6 = clock();
+                        auto start6 = std::chrono::high_resolution_clock::now();
                         manager.printToFile();
-                        std::cout << "Rezultatai isvesti i faila 'rezultatas.txt' per " << double(clock() - start6) / CLOCKS_PER_SEC << " sekundziu.\n\n";
+                        std::cout << "Rezultatai isvesti i faila 'Rezultatas.txt' per "
+                                  << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start6).count() / 1000.0 << " sekundziu.\n\n";
                     }
-
                     break;
                 }
+
                 // Generate data files
+                
                 case 5: {
                     std::cout << "5. FAILU GENERAVIMAS\n";
                     std::cout << "1 - Nurodyti studentu kieki \n"
@@ -199,13 +212,14 @@ int main() {
                             std::cin >> input;
                         }
                         int pazymiuKiekis = stoi(input);
-                        clock_t start3 = clock();
+                        auto start3 = std::chrono::high_resolution_clock::now();
                         generateFile(1000, pazymiuKiekis);
                         generateFile(10000, pazymiuKiekis);
                         generateFile(100000, pazymiuKiekis);
                         generateFile(1000000, pazymiuKiekis);
                         generateFile(10000000, pazymiuKiekis);
-                        std::cout << "Failai sugeneruoti per " << double(clock() - start3) / CLOCKS_PER_SEC << " sekundziu.\n\n";
+                        std::cout << "Failai sugeneruoti per "
+                                  << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start3).count() / 1000.0 << " sekundziu.\n\n";
                     }
                     break;
                 }
@@ -216,7 +230,11 @@ int main() {
         std::cout << "Programa baige darba." << std::endl;
         return 0;
     }
-        std::cout << "Programa uztruko: " << double(clock() - start) / CLOCKS_PER_SEC << " sekundziu." << std::endl;
-
+    if (manager.getStudentListSize() != 0)
+        manager.printToFile();
+    
+    auto end = std::chrono::high_resolution_clock::now();
+    std::cout << "Programa baige darba per "
+              << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() / 1000.0 << " sekundziu.\n";
     return 0;
 }

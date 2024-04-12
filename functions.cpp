@@ -10,6 +10,7 @@
 #include <numeric>
 #include <sstream>
 #include <string>
+#include <chrono>
 
 // Defining constructors and destructors.
 
@@ -24,6 +25,38 @@ StudentasManager::~StudentasManager() {}
 // Copy and Move constructors and assignment operators.
 
 Studentas::Studentas(const Studentas &stud) : vardas(stud.vardas), pavarde(stud.pavarde), ndPazymiai(stud.ndPazymiai), egzPazymys(stud.egzPazymys), galBalasVid(stud.galBalasVid), galBalasMed(stud.galBalasMed) {}
+
+std::istream &operator>>(std::istream &in, Studentas &stud) {
+    std::string input;
+    while (true) {
+        std::cout << "Iveskite studento varda:" << std::endl;
+        in >> input;
+        try {
+            if (!isString(input)) {
+                throw std::invalid_argument("Ivestas ne vardas. Iveskite varda:");
+            }
+            stud.setName(input);
+            break;
+        } catch (const std::invalid_argument &e) {
+            std::cout << e.what() << std::endl;
+        }
+    }
+
+    while (true) {
+        std::cout << "Iveskite studento pavarde:" << std::endl;
+        in >> input;
+        try {
+            if (!isString(input)) {
+                throw std::invalid_argument("Ivesta ne pavarde. Iveskite pavarde:");
+            }
+            stud.setSurname(input);
+            break;
+        } catch (const std::invalid_argument &e) {
+            std::cout << e.what() << std::endl;
+        }
+    }
+    return in;
+}
 
 Studentas &Studentas::operator=(const Studentas &stud) {
     if (this != &stud) {
@@ -52,8 +85,8 @@ Studentas &Studentas::operator=(Studentas &&stud) noexcept {
 }
 
 std::ostream &operator<<(std::ostream &out, const StudentasManager::OutputHelper &helper) {
-    out << std::setw(helper.maxSurnameLength + 2) << helper.student.pavarde
-        << std::setw(helper.maxNameLength + 2) << helper.student.vardas
+    out << std::setw(helper.maxSurnameLength + 7) << helper.student.pavarde
+        << std::setw(helper.maxNameLength + 7) << helper.student.vardas
         << std::setw(17) << std::fixed << std::setprecision(2) << helper.student.galBalasVid
         << std::setw(15) << std::fixed << std::setprecision(2) << helper.student.galBalasMed << std::endl;
     return out;
@@ -84,6 +117,8 @@ int StudentasManager::getMaxSurnameLength() {
 void StudentasManager::addStudent(Studentas student) {
     if (student.getName().length() > maxNameLength)
         maxNameLength = student.getName().length();
+    
+
     if (student.getSurname().length() > maxSurnameLength)
         maxSurnameLength = student.getSurname().length();
 
@@ -107,16 +142,16 @@ void StudentasManager::printToFile() {
     }
     std::ofstream out("rezultatas.txt");
     out << std::left
-        << std::setw(maxNameLength + 2) << "Pavarde"
-        << std::setw(maxSurnameLength + 2) << "Vardas"
+        << std::setw(maxNameLength + 7) << "Pavarde"
+        << std::setw(maxSurnameLength + 7) << "Vardas"
         << std::setw(17) << "Galutinis(Vid.)"
         << std::setw(15) << "Galutinis(Med.)" << std::endl;
 
-    out << std::setfill('-') << std::setw(maxNameLength + maxSurnameLength + 34) << "-" << std::endl;
+    out << std::setfill('-') << std::setw(maxNameLength + maxSurnameLength + 45) << "-" << std::endl;
     out << std::setfill(' ');
 
     for (const auto &student : studentList) {
-        out << OutputHelper(student, maxNameLength, maxSurnameLength);      // Naudojamas operatorius << ir OutputHelper struktura
+        out << OutputHelper(student, maxNameLength, maxSurnameLength);  // Naudojamas operatorius << ir OutputHelper struktura
     }
     out.close();
     std::cout << "\nRezultatai isvesti i faila 'rezultatas.txt'.\n";
@@ -131,19 +166,19 @@ void StudentasManager::printToFile(std::string fileName) {
 
     std::ofstream out(fileName);
 
-    out << "\nISLAIKUSIU STUDENTU SARASAS.\n";
+    out << "ISLAIKUSIU STUDENTU SARASAS.\n\n";
 
     out << std::left
-        << std::setw(maxSurnameLength + 2) << "Pavarde"
-        << std::setw(maxNameLength + 2) << "Vardas"
+        << std::setw(maxSurnameLength + 7) << "Pavarde"
+        << std::setw(maxNameLength + 7) << "Vardas"
         << std::setw(17) << "Galutinis(Vid.)"
         << std::setw(15) << "Galutinis(Med.)" << std::endl;
 
-    out << std::setfill('-') << std::setw(maxSurnameLength + maxNameLength + 34) << "-" << std::endl;
+    out << std::setfill('-') << std::setw(maxSurnameLength + maxNameLength + 45) << "-" << std::endl;
     out << std::setfill(' ');
 
     for (const auto &student : studentList) {
-        out << OutputHelper(student, maxNameLength, maxSurnameLength);      // Naudojamas operatorius << ir OutputHelper struktura
+        out << OutputHelper(student, maxNameLength, maxSurnameLength);  // Naudojamas operatorius << ir OutputHelper struktura
     }
     out.close();
     std::cout << "\nRezultatai isvesti i faila '" << fileName << "'.\n";
@@ -157,22 +192,19 @@ void StudentasManager::printToFile(std::string fileName, std::list<Studentas> &n
     }
 
     std::ofstream out(fileName);
-    out << "\nNEISLAIKUSIU STUDENTU SARASAS.\n";
+    out << "NEISLAIKUSIU STUDENTU SARASAS.\n\n";
 
     out << std::left
-        << std::setw(maxSurnameLength + 2) << "Pavarde"
-        << std::setw(maxNameLength + 2) << "Vardas"
+        << std::setw(maxSurnameLength + 7) << "Pavarde"
+        << std::setw(maxNameLength + 7) << "Vardas"
         << std::setw(17) << "Galutinis(Vid.)"
         << std::setw(15) << "Galutinis(Med.)" << std::endl;
 
-    out << std::setfill('-') << std::setw(maxSurnameLength + maxNameLength + 34) << "-" << std::endl;
+    out << std::setfill('-') << std::setw(maxSurnameLength + maxNameLength + 45) << "-" << std::endl;
     out << std::setfill(' ');
 
     for (const auto &student : neislaike) {
-        out << std::setw(maxSurnameLength + 2) << student.pavarde
-            << std::setw(maxNameLength + 2) << student.vardas
-            << std::setw(17) << std::fixed << std::setprecision(2) << student.galBalasVid
-            << std::setw(15) << std::fixed << std::setprecision(2) << student.galBalasMed << std::endl;
+        out << OutputHelper(student, maxNameLength, maxSurnameLength);  // Naudojamas operatorius << ir OutputHelper struktura
     }
     out.close();
     std::cout << "Rezultatai isvesti i faila '" << fileName << "'.\n";
@@ -180,7 +212,7 @@ void StudentasManager::printToFile(std::string fileName, std::list<Studentas> &n
 }
 
 void StudentasManager::sortStudents(char pasirinkimas, char input) {
-    clock_t _start = clock();
+    auto start = std::chrono::high_resolution_clock::now();
     if (pasirinkimas == 'v') {
         if (input == 'd')
             studentList.sort([](const Studentas &a, const Studentas &b) { return a.vardas < b.vardas; });
@@ -202,11 +234,12 @@ void StudentasManager::sortStudents(char pasirinkimas, char input) {
         else
             studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed > b.galBalasMed; });
     }
-    std::cout << "\nSurusiuota per " << (clock() - _start) / (double)CLOCKS_PER_SEC << " s.\n";
+    auto end = std::chrono::high_resolution_clock::now();
+    std::cout << "\nSurusiuota per " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
 }
 
 void StudentasManager::sortStudents(char pasirinkimas, char input, std::list<Studentas> &neislaike) {
-    clock_t _start = clock();
+    auto start = std::chrono::high_resolution_clock::now();
     if (pasirinkimas == 'v') {
         if (input == 'd') {
             studentList.sort([](const Studentas &a, const Studentas &b) { return a.vardas < b.vardas; });
@@ -240,12 +273,13 @@ void StudentasManager::sortStudents(char pasirinkimas, char input, std::list<Stu
             neislaike.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed > b.galBalasMed; });
         }
     }
-    std::cout << "\nSurusiuota per " << (clock() - _start) / (double)CLOCKS_PER_SEC << " s.\n";
+    auto end = std::chrono::high_resolution_clock::now();
+    std::cout << "\nSurusiuota per " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
 }
 
 void StudentasManager::readFromFile(std::string fileName) {
     std::cout << "Nuskaitomi duomenys is failo '" << fileName << "'.\n";
-    clock_t start = clock();
+    auto start = std::chrono::high_resolution_clock::now();
     std::ifstream in(fileName);
     std::string line;
     getline(in, line);
@@ -270,19 +304,17 @@ void StudentasManager::readFromFile(std::string fileName) {
             student.ndPazymiai.pop_back();
             student.calculate();
         }
-        if (vardas.length() > maxNameLength) maxNameLength = vardas.length();
-        if (pavarde.length() > maxSurnameLength) maxSurnameLength = pavarde.length();
-        studentList.push_back(student);
+        addStudent(student);
     }
     setMaxNameLength(maxNameLength);
     setMaxSurnameLength(maxSurnameLength);
     in.close();
-
-    std::cout << "\nDuomenys nuskaityti is failo per " << (clock() - start) / (double)CLOCKS_PER_SEC << " s.\n";
+    auto end = std::chrono::high_resolution_clock::now();
+    std::cout << "Duomenys nuskaityti per " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
 }
 
 void StudentasManager::sortIntoGroups(std::list<Studentas> &neislaike) {
-    clock_t start = clock();
+    auto start = std::chrono::high_resolution_clock::now();
     auto it = studentList.begin();
     while (it != studentList.end()) {
         if (it->galBalasVid < 5 || it->galBalasMed < 5) {
@@ -291,8 +323,10 @@ void StudentasManager::sortIntoGroups(std::list<Studentas> &neislaike) {
             ++it;
         }
     }
-    std::cout << "Neislaikiusiu kiekis: " << neislaike.size() << "\n";
-    std::cout << "Islaike ir Neislaike Studentai surusiuoti per " << double(clock() - start) / CLOCKS_PER_SEC << " sekundziu.\n\n";
+    std::cout << "Neislaikiusiu studentu kiekis: " << neislaike.size() << "\n";
+    std::cout << "Islaikiusiu studentu kiekis: " << studentList.size() << "\n";
+    auto end = std::chrono::high_resolution_clock::now();
+    std::cout << "Studentai suskirstyti per " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
 }
 
 // Studentas class functions
@@ -459,7 +493,7 @@ void generateFile(int range, int homeworkCount) {
     int maxVardoIlgis = 6 + tarpuIlgis, maxPavardesIlgis = 7 + tarpuIlgis;
     std::string input;
     std::cout << "Generuojamas failas su " << range << " studentu duomenimis...\n";
-    clock_t start3 = clock();
+    auto start = std::chrono::high_resolution_clock::now();
     std::ofstream out("kursiokai" + std::to_string(range) + ".txt");
     out << std::left;
     out << std::setw(maxVardoIlgis + 3) << "Vardas"
@@ -477,7 +511,8 @@ void generateFile(int range, int homeworkCount) {
         out << std::setw(2) << std::to_string(rand() % 10 + 1) << "\n";
     }
     out.close();
-    std::cout << "Failas 'kursiokai" << range << ".txt' sugeneruotas per " << (clock() - start3) / (double)CLOCKS_PER_SEC << " s.\n";
+    auto end = std::chrono::high_resolution_clock::now();
+    std::cout << "Failas 'kursiokai" << range << ".txt' sukurtas per " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
 }
 
 void howToSort(char &choice1, char &choice2) {
@@ -487,7 +522,7 @@ void howToSort(char &choice1, char &choice2) {
     while (input.length() > 1 || (input != "v" && input != "p" && input != "g" && input != "m")) {
         std::cout << "Neteisingas pasirinkimas. Iveskite 'v', 'p', 'g' arba 'm':" << std::endl;
         std::cin >> input;
-    } 
+    }
     choice1 = input[0];
     std::cout << "\n|- Kaip norite surusiuoti? (d - didejimo tvarka, m - mazejimo tvarka)  " << std::endl;
     std::cin >> input;
