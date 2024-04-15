@@ -91,8 +91,9 @@ public:
     void calculate();
     void printInfo() const override;
 };
+// Testing Rule of Five for Studentas class
 
-
+void testStudentasClass();
 
 // Derived classes for different ways of reading student data
 
@@ -134,8 +135,6 @@ public:
 private:
     std::string enterFileName(std::istream &is);
 };
-
-void testStudentasClass();  // Testing Rule of Five for Studentas class
 
 void numberInputProtection(std::string &input);
 void charInputProtection(std::string &input);
