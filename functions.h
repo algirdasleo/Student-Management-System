@@ -12,6 +12,8 @@
 #include <sstream>
 #include <string>
 
+// Base class for name and surname
+
 class Zmogus {
 protected:
     std::string vardas, pavarde;
@@ -27,7 +29,9 @@ public:
 };
 class Studentas;
 
-class StudentasManager {  // Class for managing students, reading from file, sorting, printing to file
+// Class for managing students, reading from file, sorting, printing to file
+
+class StudentasManager {  
 private:
     std::list<Studentas> studentList;
     int maxNameLength, maxSurnameLength;
@@ -62,16 +66,21 @@ public:
     void printToFile(std::string fileName, std::list<Studentas> &neislaike);
 };
 
-class Studentas : public Zmogus {  // Class for student data
+// Class for student data
+
+class Studentas : public Zmogus {  
 
 private:
     std::list<int> ndPazymiai;
     double egzPazymys, galBalasVid, galBalasMed;
 
 public:
-    Studentas();
-    ~Studentas();
 
+    Studentas();
+
+    // Rule of Five: Destructor, Copy Constructor, Copy Assignment Operator, Move Constructor, Move Assignment Operator
+
+    ~Studentas();
     friend std::ostream &operator<<(std::ostream &out, const StudentasManager::OutputHelper &helper);  // OutputHelper can access private members of Studentas
     Studentas(const Studentas &stud);
     Studentas &operator=(const Studentas &stud);
@@ -135,6 +144,8 @@ public:
 private:
     std::string enterFileName(std::istream &is);
 };
+
+// Other functions
 
 void numberInputProtection(std::string &input);
 void charInputProtection(std::string &input);
