@@ -28,6 +28,37 @@ Kaip diegti šią programą?
 
 ---
 
+Pasirinktiniai duomenų įvedimo būdai (V1.2):
+
+    Rankinis duomenų įvedimas (ManualStudentas::read):
+        - Šis metodas leidžia vartotojui rankiniu būdu įvesti studento vardą, pavardę ir pažymius.
+        - Vartotojas taip pat gali nuspręsti, kiek namų darbų pažymių nori įvesti.
+
+    Pusiau-automatinis duomenų įvedimas (SemiAutoStudentas::read):
+        - Vartotojas įveda studento vardą ir pavardę rankiniu būdu.
+        - Namų darbų pažymiai ir egzamino rezultatas sugeneruojami automatiškai naudojant atsitiktinius skaičius.
+
+    Automatinis duomenų įvedimas (AutoStudentas::read):
+        - Visi studento duomenys, įskaitant vardą, pavardę ir visus pažymius, generuojami automatiškai.
+        - Vartotojas nurodo, kiek studentų duomenų nori sugeneruoti.
+
+    Duomenų įvedimas iš failo (FileStudentas::read):
+        - Šis metodas skaito studentų duomenis iš nurodyto tekstinio failo.
+        - Vartotojas turi įvesti failo pavadinimą, iš kurio bus skaitoma.
+
+Išvesties Metodai V(1.2):
+
+    Išvestis į ekraną:
+        - StudentasManager::print metodas išveda visų studentų duomenis tiesiogiai į konsolės langą.
+            Išvedami duomenys: vardas, pavardė, galutinis balas (vidurkis ir mediana).
+
+    Išvestis į failą (StudentasManager::printToFile):
+        - Šis metodas išveda visų studentų duomenis į nurodytą tekstinių failą.
+            Failo pavadinimas gali būti pasirinktas vartotojo. Jeigu jis nenurodomas, naudojamas numatytasis pavadinimas "rezultatai.txt".
+            Išvedami duomenys: vardas, pavardė, galutinis balas (vidurkis ir mediana), taip pat galima atskirti studentus, kurie išlaikė arba ne.
+
+---
+
 Spartos palyginimas. (V1.1)
 
     Pasirinkau optimaliausią duomenų struktūrą darbui su studentais: List.
@@ -68,6 +99,8 @@ Kompiliatoriaus optimizavimo lygio analizė:
     -01 .exe file dydis: 255KB
     -02 .exe file dydis: 255KB
     -03 .exe file dydis: 255KB
+
+---
 
 Spartos palyginimas. (V1.0)
 
