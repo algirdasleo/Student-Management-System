@@ -24,7 +24,7 @@ StudentasManager::~StudentasManager() {}
 
 // Copy and Move constructors and assignment operators.
 
-Studentas::Studentas(const Studentas &stud) : vardas(stud.vardas), pavarde(stud.pavarde), ndPazymiai(stud.ndPazymiai), egzPazymys(stud.egzPazymys), galBalasVid(stud.galBalasVid), galBalasMed(stud.galBalasMed) {}
+Studentas::Studentas(const Studentas &stud) : Zmogus(stud), ndPazymiai(stud.ndPazymiai), egzPazymys(stud.egzPazymys), galBalasVid(stud.galBalasVid), galBalasMed(stud.galBalasMed) {}
 
 Studentas &Studentas::operator=(const Studentas &stud) {
     if (this != &stud) {
@@ -38,7 +38,7 @@ Studentas &Studentas::operator=(const Studentas &stud) {
     return *this;
 }
 
-Studentas::Studentas(Studentas &&stud) noexcept : vardas(std::move(stud.vardas)), pavarde(std::move(stud.pavarde)), ndPazymiai(std::move(stud.ndPazymiai)), egzPazymys(stud.egzPazymys), galBalasVid(stud.galBalasVid), galBalasMed(stud.galBalasMed) {}
+Studentas::Studentas(Studentas &&stud) noexcept : Zmogus(std::move(stud)), ndPazymiai(std::move(stud.ndPazymiai)), egzPazymys(stud.egzPazymys), galBalasVid(stud.galBalasVid), galBalasMed(stud.galBalasMed) {}
 
 Studentas &Studentas::operator=(Studentas &&stud) noexcept {
     if (this != &stud) {
@@ -51,10 +51,16 @@ Studentas &Studentas::operator=(Studentas &&stud) noexcept {
     }
     return *this;
 }
+// Zmogus class functions
+
+Zmogus::Zmogus(std::string name, std::string surname) : vardas(name), pavarde(surname) {}
+Zmogus::Zmogus(const Zmogus &other) : vardas(other.vardas), pavarde(other.pavarde) {}
+Zmogus::Zmogus(Zmogus &&other) noexcept : vardas(std::move(other.vardas)), pavarde(std::move(other.pavarde)) {}
+Zmogus::~Zmogus() {}
 
 // Operator overloading for output stream
 
-std::ostream &operator<<(std::ostream &out, const StudentasManager::OutputHelper &helper) { 
+std::ostream &operator<<(std::ostream &out, const StudentasManager::OutputHelper &helper) {
     out << std::setw(helper.maxSurnameLength + 7) << helper.student.pavarde
         << std::setw(helper.maxNameLength + 7) << helper.student.vardas
         << std::setw(17) << std::fixed << std::setprecision(2) << helper.student.galBalasVid
@@ -244,7 +250,7 @@ void StudentasManager::printToFile() {
     }
 
     std::string input;
-    std::cout << "|- Ar norite surusiuoti studentus? (y / n) " << std::endl;
+    std::cout << "\n|- Ar norite surikiuoti studentus? (y / n) " << std::endl;
     std::cin >> input;
     charInputProtection(input);
     if (input == "y") {
@@ -347,7 +353,7 @@ void StudentasManager::sortStudents(char pasirinkimas, char input) {
             studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed > b.galBalasMed; });
     }
     auto end = std::chrono::high_resolution_clock::now();
-    std::cout << "\nSurusiuota per " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
+    std::cout << "\nSurikiuota per " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
 }
 
 void StudentasManager::sortStudents(char pasirinkimas, char input, std::list<Studentas> &neislaike) {
@@ -386,7 +392,7 @@ void StudentasManager::sortStudents(char pasirinkimas, char input, std::list<Stu
         }
     }
     auto end = std::chrono::high_resolution_clock::now();
-    std::cout << "\nSurusiuota per " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
+    std::cout << "\nSurikiuota per " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
 }
 
 void StudentasManager::readFromFile(std::string fileName) {
@@ -473,13 +479,7 @@ void StudentasManager::groupAndPrint() {
 }
 
 void StudentasManager::noGroupPrint() {
-    char pasirinkimas, rusiavimas;
-    howToSort(pasirinkimas, rusiavimas);
-    this->sortStudents(pasirinkimas, rusiavimas);
-    auto start6 = std::chrono::high_resolution_clock::now();
     this->printToFile();
-    std::cout << "Rezultatai isvesti i faila 'Rezultatas.txt' per "
-              << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start6).count() / 1000.0 << " sekundziu.\n\n";
 }
 
 // Studentas class functions
@@ -617,14 +617,14 @@ void generateFile(int range, int homeworkCount) {
 }
 void howToSort(char &choice1, char &choice2) {
     std::string input;
-    std::cout << "|- Pagal ka norite surusiuoti studentus? (v - vardas, p - pavarde, g - galutinis (vidurkis), m - galutinis (mediana)) " << std::endl;
+    std::cout << "\n|- Pagal ka norite surikiuoti studentus? (v - vardas, p - pavarde, g - galutinis (vidurkis), m - galutinis (mediana)) " << std::endl;
     std::cin >> input;
     while (input.length() > 1 || (input != "v" && input != "p" && input != "g" && input != "m")) {
         std::cout << "\n|- Neteisingas pasirinkimas. Iveskite 'v', 'p', 'g' arba 'm':" << std::endl;
         std::cin >> input;
     }
     choice1 = input[0];
-    std::cout << "\n|- Kaip norite surusiuoti? (d - didejimo tvarka, m - mazejimo tvarka)  " << std::endl;
+    std::cout << "\n|- Kaip norite surikiuoti? (d - didejimo tvarka, m - mazejimo tvarka)  " << std::endl;
     std::cin >> input;
     while (input.length() > 1 || (input != "d" && input != "m")) {
         std::cout << "\n|- Neteisingas pasirinkimas. Iveskite 'd' arba 'm':" << std::endl;
@@ -688,4 +688,8 @@ void fiveFileGenerator() {
     generateFile(10000000, pazymiuKiekis);
     std::cout << "Failai sugeneruoti per "
               << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start3).count() / 1000.0 << " sekundziu.\n\n";
+}
+
+void Studentas::printInfo() const{
+    std::cout << "Test implementation" << std::endl;
 }
