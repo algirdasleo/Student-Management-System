@@ -1,6 +1,7 @@
 #include "functions.h"
 
 #include <algorithm>
+#include <chrono>
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
@@ -10,7 +11,6 @@
 #include <numeric>
 #include <sstream>
 #include <string>
-#include <chrono>
 
 // Defining constructors and destructors.
 
@@ -25,38 +25,6 @@ StudentasManager::~StudentasManager() {}
 // Copy and Move constructors and assignment operators.
 
 Studentas::Studentas(const Studentas &stud) : vardas(stud.vardas), pavarde(stud.pavarde), ndPazymiai(stud.ndPazymiai), egzPazymys(stud.egzPazymys), galBalasVid(stud.galBalasVid), galBalasMed(stud.galBalasMed) {}
-
-std::istream &operator>>(std::istream &in, Studentas &stud) {
-    std::string input;
-    while (true) {
-        std::cout << "Iveskite studento varda:" << std::endl;
-        in >> input;
-        try {
-            if (!isString(input)) {
-                throw std::invalid_argument("Ivestas ne vardas. Iveskite varda:");
-            }
-            stud.setName(input);
-            break;
-        } catch (const std::invalid_argument &e) {
-            std::cout << e.what() << std::endl;
-        }
-    }
-
-    while (true) {
-        std::cout << "Iveskite studento pavarde:" << std::endl;
-        in >> input;
-        try {
-            if (!isString(input)) {
-                throw std::invalid_argument("Ivesta ne pavarde. Iveskite pavarde:");
-            }
-            stud.setSurname(input);
-            break;
-        } catch (const std::invalid_argument &e) {
-            std::cout << e.what() << std::endl;
-        }
-    }
-    return in;
-}
 
 Studentas &Studentas::operator=(const Studentas &stud) {
     if (this != &stud) {
@@ -84,12 +52,157 @@ Studentas &Studentas::operator=(Studentas &&stud) noexcept {
     return *this;
 }
 
-std::ostream &operator<<(std::ostream &out, const StudentasManager::OutputHelper &helper) {
+// Operator overloading for output stream
+
+std::ostream &operator<<(std::ostream &out, const StudentasManager::OutputHelper &helper) { 
     out << std::setw(helper.maxSurnameLength + 7) << helper.student.pavarde
         << std::setw(helper.maxNameLength + 7) << helper.student.vardas
         << std::setw(17) << std::fixed << std::setprecision(2) << helper.student.galBalasVid
         << std::setw(15) << std::fixed << std::setprecision(2) << helper.student.galBalasMed << std::endl;
     return out;
+}
+
+// Derived classes for different ways of reading student data
+
+std::istream &ReadStudentas::read(std::istream &is, StudentasManager &manager, Studentas &student) {
+    return is;
+}
+
+std::istream &ManualStudentas::read(std::istream &is, StudentasManager &manager, Studentas &student) {
+    readName(is, student);
+    getUserGradeInput(is, student);
+    return is;
+}
+
+void ManualStudentas::readName(std::istream &is, Studentas &student) {
+    std::string input;
+    while (true) {
+        std::cout << "Iveskite studento varda:" << std::endl;
+        std::cin >> input;
+        try {
+            if (!isString(input)) {
+                throw std::invalid_argument("Ivestas ne vardas. Iveskite varda:");
+            }
+            student.setName(input);
+            break;
+        } catch (const std::invalid_argument &e) {
+            std::cout << e.what() << std::endl;
+        }
+    }
+    while (true) {
+        std::cout << "Iveskite studento pavarde:" << std::endl;
+        std::cin >> input;
+        try {
+            if (!isString(input)) {
+                throw std::invalid_argument("Ivesta ne pavarde. Iveskite pavarde:");
+            }
+            student.setSurname(input);
+            break;
+        } catch (const std::invalid_argument &e) {
+            std::cout << e.what() << std::endl;
+        }
+    }
+}
+void ManualStudentas::getUserGradeInput(std::istream &is, Studentas &student) {
+    int i = 0;
+    std::string input;
+    while (true) {
+        std::cout << "Iveskite " << i + 1 << " namu darbo rezultata (1 - 10):" << std::endl;
+        std::cin >> input;
+        numberInputProtection(input);
+        student.addGrade(stoi(input));
+        std::cout << "Ar norite ivesti dar viena namu darbo rezultata? (y / n)" << std::endl;
+        std::cin >> input;
+        charInputProtection(input);
+        if (input == "n")
+            break;
+        i++;
+    }
+    std::cout << "Iveskite egzamino rezultata (1 - 10):" << std::endl;
+    std::cin >> input;
+    numberInputProtection(input);
+    student.setEgz(stoi(input));
+    student.calculate();
+}
+
+std::istream &SemiAutoStudentas::read(std::istream &is, StudentasManager &manager, Studentas &student) {
+    readName(is, student);
+    generateGrades(student);
+    return is;
+}
+
+void SemiAutoStudentas::readName(std::istream &is, Studentas &student) {
+    std::string input;
+    while (true) {
+        std::cout << "Iveskite studento varda:" << std::endl;
+        std::cin >> input;
+        try {
+            if (!isString(input)) {
+                throw std::invalid_argument("Ivestas ne vardas. Iveskite varda:");
+            }
+            student.setName(input);
+            break;
+        } catch (const std::invalid_argument &e) {
+            std::cout << e.what() << std::endl;
+        }
+    }
+    while (true) {
+        std::cout << "Iveskite studento pavarde:" << std::endl;
+        std::cin >> input;
+        try {
+            if (!isString(input)) {
+                throw std::invalid_argument("Ivesta ne pavarde. Iveskite pavarde:");
+            }
+            student.setSurname(input);
+            break;
+        } catch (const std::invalid_argument &e) {
+            std::cout << e.what() << std::endl;
+        }
+    }
+}
+void SemiAutoStudentas::generateGrades(Studentas &student) {
+    for (int i = 0; i < 10; i++) {
+        int random_grade = rand() % 10 + 1;
+        student.addGrade(random_grade);
+    }
+    student.setEgz(rand() % 10 + 1);
+    student.calculate();
+}
+
+std::istream &AutoStudentas::read(std::istream &is, StudentasManager &manager, Studentas &student) {
+    std::string input;
+    std::cout << "Kiek studentu sugeneruoti?" << std::endl;
+    std::cin >> input;
+    while (!isNumber(input) || stoi(input) < 1) {
+        std::cout << "Neteisingas pasirinkimas. Iveskite skaiciu didesni uz 0:" << std::endl;
+        std::cin >> input;
+    }
+    manager.generateRandomStudents(stoi(input));
+    return is;
+}
+
+std::istream &FileStudentas::read(std::istream &is, StudentasManager &manager, Studentas &student) {
+    std::string fileName = enterFileName(is);
+    manager.readFromFile(fileName);
+    return is;
+}
+
+std::string FileStudentas::enterFileName(std::istream &is) {
+    std::ifstream in;
+    std::string fileName;
+    while (true) {
+        std::cout << "Iveskite tikslu file pavadinima (pvz. 'kursiokai.txt'):" << std::endl;
+        std::cin >> fileName;
+        in.open(fileName);
+        if (!in) {
+            std::cout << "Failas '" << fileName << "' nerastas. Bandykite dar karta." << std::endl;
+            in.clear();
+        } else {
+            break;
+        }
+    }
+    in.close();
+    return fileName;
 }
 
 // StudentasManager class functions
@@ -114,10 +227,9 @@ int StudentasManager::getMaxSurnameLength() {
     return this->maxSurnameLength;
 }
 
-void StudentasManager::addStudent(Studentas student) {
+void StudentasManager::addStudent(Studentas &student) {
     if (student.getName().length() > maxNameLength)
         maxNameLength = student.getName().length();
-    
 
     if (student.getSurname().length() > maxSurnameLength)
         maxSurnameLength = student.getSurname().length();
@@ -323,38 +435,72 @@ void StudentasManager::sortIntoGroups(std::list<Studentas> &neislaike) {
             ++it;
         }
     }
-    std::cout << "Neislaikiusiu studentu kiekis: " << neislaike.size() << "\n";
-    std::cout << "Islaikiusiu studentu kiekis: " << studentList.size() << "\n";
+    std::cout << "|- Neislaikiusiu studentu kiekis: " << neislaike.size() << "\n";
+    std::cout << "|- Islaikiusiu studentu kiekis: " << studentList.size() << "\n";
     auto end = std::chrono::high_resolution_clock::now();
     std::cout << "Studentai suskirstyti per " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
 }
 
-// Studentas class functions
+void StudentasManager::generateRandomStudents(int count) {
+    int number = getStudentListSize();
+    if (number == 0) {
+        number = 1;
+    }
+    while (count-- > 0) {
+        Studentas student;
+        student.setName("Vardas" + std::to_string(number));
+        student.setSurname("Pavarde" + std::to_string(number));
+        for (int i = 0; i < 10; i++)
+            student.addGrade(rand() % 10 + 1);
 
+        student.setEgz(rand() % 10 + 1);
+        student.calculate();
+        addStudent(student);
+        number++;
+    }
+}
+void StudentasManager::groupAndPrint() {
+    std::list<Studentas> neislaike;
+    this->sortIntoGroups(neislaike);
+    char pasirinkimas, rusiavimas;
+    howToSort(pasirinkimas, rusiavimas);
+    this->sortStudents(pasirinkimas, rusiavimas, neislaike);
+    auto start5 = std::chrono::high_resolution_clock::now();
+    this->printToFile("islaike.txt");
+    this->printToFile("neislaike.txt", neislaike);
+    std::cout << "Rezultatai isvesti i failus 'islaike.txt' ir 'neislaike.txt' per "
+              << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start5).count() / 1000.0 << " sekundziu.\n\n";
+}
+
+void StudentasManager::noGroupPrint() {
+    char pasirinkimas, rusiavimas;
+    howToSort(pasirinkimas, rusiavimas);
+    this->sortStudents(pasirinkimas, rusiavimas);
+    auto start6 = std::chrono::high_resolution_clock::now();
+    this->printToFile();
+    std::cout << "Rezultatai isvesti i faila 'Rezultatas.txt' per "
+              << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start6).count() / 1000.0 << " sekundziu.\n\n";
+}
+
+// Studentas class functions
 void Studentas::setName(std::string name) {
     this->vardas = name;
 }
-
 std::string Studentas::getName() {
     return this->vardas;
 }
-
 std::string Studentas::getSurname() {
     return this->pavarde;
 }
-
 void Studentas::setSurname(std::string surname) {
     this->pavarde = surname;
 }
-
 void Studentas::addGrade(int grade) {
     this->ndPazymiai.push_back(grade);
 }
-
 void Studentas::setEgz(int grade) {
     this->egzPazymys = grade;
 }
-
 void Studentas::calculate() {
     int ndrange = distance(this->ndPazymiai.begin(), this->ndPazymiai.end());
     this->ndPazymiai.sort();
@@ -369,40 +515,7 @@ void Studentas::calculate() {
     this->galBalasVid = 0.4 * (sum / ndrange) + 0.6 * this->egzPazymys;
 }
 
-void Studentas::readName() {
-    std::string input;
-
-    while (true) {
-        std::cout << "Iveskite studento varda:" << std::endl;
-        std::cin >> input;
-        try {
-            if (!isString(input)) {
-                throw std::invalid_argument("Ivestas ne vardas. Iveskite varda:");
-            }
-            this->vardas = input;
-            break;
-        } catch (const std::invalid_argument &e) {
-            std::cout << e.what() << std::endl;
-        }
-    }
-
-    while (true) {
-        std::cout << "Iveskite studento pavarde:" << std::endl;
-        std::cin >> input;
-        try {
-            if (!isString(input)) {
-                throw std::invalid_argument("Ivesta ne pavarde. Iveskite pavarde:");
-            }
-            this->pavarde = input;
-            break;
-        } catch (const std::invalid_argument &e) {
-            std::cout << e.what() << std::endl;
-        }
-    }
-}
-
 // Testing Rule of Five for Studentas class
-
 void testStudentasClass() {
     Studentas stud1;
     stud1.setName("Jonas");
@@ -410,27 +523,23 @@ void testStudentasClass() {
     stud1.addGrade(8);
     stud1.setEgz(9);
     stud1.calculate();
-
     // Default Constructor TEST
     if (stud1.getName() != "Jonas") {
         throw std::runtime_error("Default constructor test FAILED: setName() or getName()");
     }
     std::cout << "Default constructor test: PASSED.\n";
-
     // Copy Constructor TEST
     Studentas stud2 = stud1;
     if (stud2.getName() != "Jonas") {
         throw std::runtime_error("Copy constructor test failed.");
     }
     std::cout << "Copy constructor test: PASSED.\n";
-
     // Move Constructor TEST
     Studentas stud3 = std::move(stud1);
     if (stud3.getName() != "Jonas" || !stud1.getName().empty()) {
         throw std::runtime_error("Move constructor test failed.");
     }
     std::cout << "Move constructor test: PASSED.\n";
-
     // Copy Assignment Operator TEST
     Studentas stud4;
     stud4 = stud2;
@@ -438,7 +547,6 @@ void testStudentasClass() {
         throw std::runtime_error("Copy assignment operator test failed.");
     }
     std::cout << "Copy assignment operator test: PASSED.\n";
-
     // Move Assignment Operator TEST
     Studentas stud5;
     stud5 = std::move(stud2);
@@ -447,7 +555,6 @@ void testStudentasClass() {
     }
     std::cout << "Move assignment operator test: PASSED.\n";
 }
-
 // Other functions
 
 bool isNumber(std::string &str) {
@@ -456,18 +563,16 @@ bool isNumber(std::string &str) {
             return false;
     return true;
 }
-
 bool isString(std::string &str) {
     for (char c : str)
         if (!isalpha(c))
             return false;
     return true;
 }
-
 void numberInputProtection(std::string &input) {
     try {
         if (!isNumber(input) || stoi(input) < 1 || stoi(input) > 10) {
-            throw std::invalid_argument("Iveskite skaiciu nuo 1 iki 10:");
+            throw std::invalid_argument("\n|- Iveskite skaiciu nuo 1 iki 10:");
         }
     } catch (const std::invalid_argument &e) {
         std::cout << e.what() << std::endl;
@@ -475,11 +580,10 @@ void numberInputProtection(std::string &input) {
         numberInputProtection(input);
     }
 }
-
 void charInputProtection(std::string &input) {
     try {
         if (input.length() > 1 || (input != "n" && input != "y")) {
-            throw std::invalid_argument("\nNeteisingas pasirinkimas. Iveskite 'y' arba 'n':");
+            throw std::invalid_argument("\n|- Neteisingas pasirinkimas. Iveskite 'y' arba 'n':");
         }
     } catch (const std::invalid_argument &e) {
         std::cout << e.what() << std::endl;
@@ -487,7 +591,6 @@ void charInputProtection(std::string &input) {
         charInputProtection(input);
     }
 }
-
 void generateFile(int range, int homeworkCount) {
     int tarpuIlgis = std::to_string(range).length();
     int maxVardoIlgis = 6 + tarpuIlgis, maxPavardesIlgis = 7 + tarpuIlgis;
@@ -501,34 +604,88 @@ void generateFile(int range, int homeworkCount) {
     for (int i = 1; i <= homeworkCount; i++) out << std::setw(5) << "ND" + std::to_string(i);
     out << std::setw(4) << " Egzaminas"
         << "\n";
-
     for (int i = 1; i <= range; i++) {
         out << std::setw(maxVardoIlgis + 3) << "Vardas" + std::to_string(i)
             << std::setw(maxPavardesIlgis + 3) << "Pavarde" + std::to_string(i);
         for (int j = 1; j < homeworkCount; j++) out << std::setw(5) << std::to_string(rand() % 10 + 1);
         if (homeworkCount > 0) out << std::setw(6) << std::to_string(rand() % 10 + 1);
-
         out << std::setw(2) << std::to_string(rand() % 10 + 1) << "\n";
     }
     out.close();
     auto end = std::chrono::high_resolution_clock::now();
     std::cout << "Failas 'kursiokai" << range << ".txt' sukurtas per " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
 }
-
 void howToSort(char &choice1, char &choice2) {
     std::string input;
     std::cout << "|- Pagal ka norite surusiuoti studentus? (v - vardas, p - pavarde, g - galutinis (vidurkis), m - galutinis (mediana)) " << std::endl;
     std::cin >> input;
     while (input.length() > 1 || (input != "v" && input != "p" && input != "g" && input != "m")) {
-        std::cout << "Neteisingas pasirinkimas. Iveskite 'v', 'p', 'g' arba 'm':" << std::endl;
+        std::cout << "\n|- Neteisingas pasirinkimas. Iveskite 'v', 'p', 'g' arba 'm':" << std::endl;
         std::cin >> input;
     }
     choice1 = input[0];
     std::cout << "\n|- Kaip norite surusiuoti? (d - didejimo tvarka, m - mazejimo tvarka)  " << std::endl;
     std::cin >> input;
     while (input.length() > 1 || (input != "d" && input != "m")) {
-        std::cout << "Neteisingas pasirinkimas. Iveskite 'd' arba 'm':" << std::endl;
+        std::cout << "\n|- Neteisingas pasirinkimas. Iveskite 'd' arba 'm':" << std::endl;
         std::cin >> input;
     }
     choice2 = input[0];
+}
+int getMenuChoice() {
+    std::string input;
+    std::cout << "\nMeniu. Pasirinkite viena is galimu variantu:\n"
+              << "1. Studento duomenis ivesti rankiniu budu.\n"
+              << "2. Ivesti studento varda/pavarde rankiniu budu, o pazymius sugeneruoti atsitiktiniu budu.\n"
+              << "3. Studento varda, pavarde, pazymius sugeneruoti atsitiktiniu budu\n"
+              << "4. Nuskaityti studentu duomenis is failo.\n"
+              << "5. Sugeneruoti studentu duomenu faila.\n"
+              << "6. Baigti darba.\n\n"
+              << "|- Iveskite pasirinkima:\n";
+    std::cin >> input;
+    std::cout << std::endl;
+    while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 6) {
+        std::cout << "\n|- Neteisingas pasirinkimas. Iveskite skaiciu nuo 1 iki 6:" << std::endl;
+        std::cin >> input;
+    }
+    return stoi(input);
+}
+
+void rangeStudentGenerator() {
+    std::string input;
+    std::cout << "\n|- Iveskite studentu kieki (nuo 1 iki 10000000):" << std::endl;
+    std::cin >> input;
+    while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 10000000) {
+        std::cout << "\n|- Neteisingas pasirinkimas. Iveskite skaiciu nuo 1 iki 10'000'000:" << std::endl;
+        std::cin >> input;
+    }
+    int kiekis = stoi(input);
+
+    std::cout << "\n|- Kiek namu darbu pazymiu kiekvienam studentui sugeneruoti? (nuo 1 iki 20):" << std::endl;
+    std::cin >> input;
+    while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 20) {
+        std::cout << "|- Neteisingas pasirinkimas. Iveskite skaiciu nuo 1 iki 20:" << std::endl;
+        std::cin >> input;
+    }
+    int pazymiuKiekis = stoi(input);
+    generateFile(kiekis, pazymiuKiekis);
+}
+
+void fiveFileGenerator() {
+    std::string input;
+    std::cout << "\n|- Kiek namu darbu pazymiu kiekvienam studentui sugeneruoti? (nuo 1 iki 20):" << std::endl;
+    std::cin >> input;
+    while (!isNumber(input) || stoi(input) < 1 || stoi(input) > 20) {
+        std::cout << "\n|- Neteisingas pasirinkimas. Iveskite skaiciu nuo 1 iki 20:" << std::endl;
+        std::cin >> input;
+    }
+    int pazymiuKiekis = stoi(input);
+    auto start3 = std::chrono::high_resolution_clock::now();
+    generateFile(1000, pazymiuKiekis);
+    generateFile(10000, pazymiuKiekis);
+    generateFile(100000, pazymiuKiekis);
+    generateFile(1000000, pazymiuKiekis);
+    generateFile(10000000, pazymiuKiekis);
+    std::cout << "Failai sugeneruoti per "
+              << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start3).count() / 1000.0 << " sekundziu.\n\n";
 }
