@@ -12,6 +12,9 @@
 #include "functions.h"
 
 int main() {
+
+    // Test the Studentas class
+
     try {
         std::cout << "Testing students class.\n";
         testStudentasClass();
@@ -30,7 +33,6 @@ int main() {
         if (meniuPasirinkimas != 6) {
             std::string input;
             switch (meniuPasirinkimas) {
-                
                     // Read student data
 
                 case 1: {
@@ -108,10 +110,16 @@ int main() {
             }
         }
     }
+
+    // If there are no students, the program ends
+
     if (manager.getStudentListSize() == 0) {
         std::cout << "Programa baige darba." << std::endl;
         return 0;
     }
+
+    //  If there are students, the program asks if the user wants to group them
+
     if (manager.getStudentListSize() != 0)
         manager.printToFile();
 
