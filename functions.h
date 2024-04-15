@@ -12,7 +12,20 @@
 #include <sstream>
 #include <string>
 
-class Studentas;  // Forward declaration
+class Zmogus {
+protected:
+    std::string vardas, pavarde;
+
+public:
+    Zmogus() : vardas(""), pavarde("") {}          // Default constructor
+    Zmogus(std::string name, std::string surname); // Constructor
+    Zmogus(const Zmogus &other);                   // Copy constructor
+    Zmogus(Zmogus &&other) noexcept;               // Move constructor
+    virtual ~Zmogus();                             // Destructor
+
+    virtual void printInfo() const = 0;            // Makes the class abstract
+};
+class Studentas;
 
 class StudentasManager {  // Class for managing students, reading from file, sorting, printing to file
 private:
@@ -49,9 +62,7 @@ public:
     void printToFile(std::string fileName, std::list<Studentas> &neislaike);
 };
 
-class Studentas {  // Class for student data
-protected:
-    std::string vardas, pavarde;
+class Studentas : public Zmogus {  // Class for student data
 
 private:
     std::list<int> ndPazymiai;
@@ -78,7 +89,10 @@ public:
     void setEgz(int grade);
     void readName();
     void calculate();
+    void printInfo() const override;
 };
+
+
 
 // Derived classes for different ways of reading student data
 
