@@ -62,7 +62,6 @@ int main() {
                     AutoStudentas autoInput;
                     Studentas st;
                     autoInput.read(std::cin, manager, st);
-                    manager.addStudent(st);
                     std::cout << "Studentu duomenys sugeneruoti atsitiktinai. \n \n";
                     break;
                 }
