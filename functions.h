@@ -18,20 +18,20 @@ class Zmogus {
 protected:
     std::string vardas, pavarde;
 
-public:
-    Zmogus() : vardas(""), pavarde("") {}          // Default constructor
-    Zmogus(std::string name, std::string surname); // Constructor
-    Zmogus(const Zmogus &other);                   // Copy constructor
-    Zmogus(Zmogus &&other) noexcept;               // Move constructor
-    virtual ~Zmogus();                             // Destructor
+protected:
+    Zmogus() : vardas(""), pavarde("") {}           // Default constructor
+    Zmogus(std::string name, std::string surname);  // Constructor
+    Zmogus(const Zmogus &other);                    // Copy constructor
+    Zmogus(Zmogus &&other) noexcept;                // Move constructor
+    virtual ~Zmogus();                              // Destructor
 
-    virtual void printInfo() const = 0;            // Makes the class abstract
+    virtual void printInfo() const = 0;  // Makes the class abstract
 };
 class Studentas;
 
 // Class for managing students, reading from file, sorting, printing to file
 
-class StudentasManager {  
+class StudentasManager {
 private:
     std::list<Studentas> studentList;
     int maxNameLength, maxSurnameLength;
@@ -68,14 +68,12 @@ public:
 
 // Class for student data
 
-class Studentas : public Zmogus {  
-
+class Studentas : public Zmogus {
 private:
     std::list<int> ndPazymiai;
     double egzPazymys, galBalasVid, galBalasMed;
 
 public:
-
     Studentas();
 
     // Rule of Five: Destructor, Copy Constructor, Copy Assignment Operator, Move Constructor, Move Assignment Operator
