@@ -12,9 +12,10 @@
 #include "functions.h"
 
 int main() {
+    Studentas st;
     try {
         std::cout << "Testing students class.\n";
-        testStudentasClass();
+        st.testStudentasClass();
     } catch (const std::exception &e) {
         std::cout << "Error: " << e.what() << std::endl;
         return 1;

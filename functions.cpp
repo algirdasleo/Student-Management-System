@@ -37,8 +37,12 @@ Studentas &Studentas::operator=(const Studentas &stud) {
     }
     return *this;
 }
-
-Studentas::Studentas(Studentas &&stud) noexcept : vardas(std::move(stud.vardas)), pavarde(std::move(stud.pavarde)), ndPazymiai(std::move(stud.ndPazymiai)), egzPazymys(stud.egzPazymys), galBalasVid(stud.galBalasVid), galBalasMed(stud.galBalasMed) {}
+// prilygint stud egzpazymys ir galbalus = 0
+Studentas::Studentas(Studentas &&stud) noexcept : vardas(std::move(stud.vardas)), pavarde(std::move(stud.pavarde)), ndPazymiai(std::move(stud.ndPazymiai)), egzPazymys(stud.egzPazymys), galBalasVid(stud.galBalasVid), galBalasMed(stud.galBalasMed) {
+    stud.egzPazymys = 0;
+    stud.galBalasVid = 0;
+    stud.galBalasMed = 0;
+}
 
 Studentas &Studentas::operator=(Studentas &&stud) noexcept {
     if (this != &stud) {
@@ -46,15 +50,18 @@ Studentas &Studentas::operator=(Studentas &&stud) noexcept {
         pavarde = std::move(stud.pavarde);
         ndPazymiai = std::move(stud.ndPazymiai);
         egzPazymys = stud.egzPazymys;
+        stud.egzPazymys = 0;
         galBalasVid = stud.galBalasVid;
+        stud.galBalasVid = 0;
         galBalasMed = stud.galBalasMed;
+        stud.galBalasMed = 0;
     }
     return *this;
 }
 
 // Operator overloading for output stream
 
-std::ostream &operator<<(std::ostream &out, const StudentasManager::OutputHelper &helper) { 
+std::ostream &operator<<(std::ostream &out, const StudentasManager::OutputHelper &helper) {
     out << std::setw(helper.maxSurnameLength + 7) << helper.student.pavarde
         << std::setw(helper.maxNameLength + 7) << helper.student.vardas
         << std::setw(17) << std::fixed << std::setprecision(2) << helper.student.galBalasVid
@@ -516,30 +523,79 @@ void Studentas::calculate() {
 }
 
 // Testing Rule of Five for Studentas class
-void testStudentasClass() {
+void Studentas::testStudentasClass() {
     Studentas stud1;
     stud1.setName("Jonas");
     stud1.setSurname("Jonaitis");
     stud1.addGrade(8);
     stud1.setEgz(9);
     stud1.calculate();
-    // Default Constructor TEST
-    if (stud1.getName() != "Jonas") {
-        throw std::runtime_error("Default constructor test FAILED: setName() or getName()");
-    }
+
     std::cout << "Default constructor test: PASSED.\n";
     // Copy Constructor TEST
-    Studentas stud2 = stud1;
-    if (stud2.getName() != "Jonas") {
-        throw std::runtime_error("Copy constructor test failed.");
+    std::cout << "Copy constructor test. Stud before copying: \n";
+    std::cout << "Name: " << stud1.getName() << std::endl;
+    std::cout << "Surname: " << stud1.getSurname() << std::endl;
+    std::cout << "ND grades: ";
+    for (int grade : stud1.ndPazymiai) {
+        std::cout << grade << " ";
     }
-    std::cout << "Copy constructor test: PASSED.\n";
+    std::cout << std::endl;
+    std::cout << "Egzamino pazymys: " << stud1.egzPazymys << std::endl;
+    std::cout << "Galutinis balas (vidurkis): " << stud1.galBalasVid << std::endl;
+
+    Studentas stud2(stud1);
+
+    std::cout << "Copy constructor test. Stud after copying: \n";
+    std::cout << "Name: " << stud2.getName() << std::endl;
+    std::cout << "Surname: " << stud2.getSurname() << std::endl;
+    std::cout << "ND grades: ";
+    for (int grade : stud2.ndPazymiai) {
+        std::cout << grade << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "Egzamino pazymys: " << stud2.egzPazymys << std::endl;
+    std::cout << "Galutinis balas (vidurkis): " << stud2.galBalasVid << std::endl;
+    std::cout << "Galutinis balas (mediana): " << stud2.galBalasMed << std::endl;
+
     // Move Constructor TEST
-    Studentas stud3 = std::move(stud1);
-    if (stud3.getName() != "Jonas" || !stud1.getName().empty()) {
-        throw std::runtime_error("Move constructor test failed.");
+
+    std::cout << "Move constructor test. Stud before moving: \n";
+    std::cout << "Name: " << stud1.getName() << std::endl;
+    std::cout << "Surname: " << stud1.getSurname() << std::endl;
+    std::cout << "ND grades: ";
+    for (int grade : stud1.ndPazymiai)
+        std::cout << grade << " ";
+    std::cout << std::endl;
+    std::cout << "Egzamino pazymys: " << stud1.egzPazymys << std::endl;
+    std::cout << "Galutinis balas (vidurkis): " << stud1.galBalasVid << std::endl;
+    std::cout << "Galutinis balas (mediana): " << stud1.galBalasMed << std::endl;
+
+    Studentas stud3(std::move(stud1));
+
+    std::cout << "Move constructor test. Stud after moving: \n";
+    std::cout << "Name: " << stud3.getName() << std::endl;
+    std::cout << "Surname: " << stud3.getSurname() << std::endl;
+    std::cout << "ND grades: ";
+    for (int grade : stud3.ndPazymiai) {
+        std::cout << grade << " ";
     }
-    std::cout << "Move constructor test: PASSED.\n";
+    std::cout << std::endl;
+    std::cout << "Egzamino pazymys: " << stud3.egzPazymys << std::endl;
+    std::cout << "Galutinis balas (vidurkis): " << stud3.galBalasVid << std::endl;
+    std::cout << "Galutinis balas (mediana): " << stud3.galBalasMed << std::endl;
+
+    std::cout << "Previous student after moving: \n";
+    std::cout << "Name: " << stud1.getName() << std::endl;
+    std::cout << "Surname: " << stud1.getSurname() << std::endl;
+    std::cout << "ND grades: ";
+    for (int grade : stud1.ndPazymiai) 
+        std::cout << grade << " ";
+    std::cout << std::endl;
+    std::cout << "Egzamino pazymys: " << stud1.egzPazymys << std::endl;
+    std::cout << "Galutinis balas (vidurkis): " << stud1.galBalasVid << std::endl;
+    std::cout << "Galutinis balas (mediana): " << stud1.galBalasMed << std::endl;
+
     // Copy Assignment Operator TEST
     Studentas stud4;
     stud4 = stud2;

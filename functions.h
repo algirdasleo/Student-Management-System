@@ -78,6 +78,7 @@ public:
     void setEgz(int grade);
     void readName();
     void calculate();
+    void testStudentasClass();  // Testing Rule of Five for Studentas class
 };
 
 // Derived classes for different ways of reading student data
@@ -121,7 +122,6 @@ private:
     std::string enterFileName(std::istream &is);
 };
 
-void testStudentasClass();  // Testing Rule of Five for Studentas class
 
 void numberInputProtection(std::string &input);
 void charInputProtection(std::string &input);
