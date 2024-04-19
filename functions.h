@@ -97,11 +97,8 @@ public:
     void readName();
     void calculate();
     void printInfo() const override;
+    void testStudentasClass();
 };
-// Testing Rule of Five for Studentas class
-
-void testStudentasClass();
-
 // Derived classes for different ways of reading student data
 
 class ReadStudentas {
