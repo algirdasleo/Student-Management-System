@@ -4,19 +4,4 @@ neislaike.txt
 run
 rezultatas.txt
 
-*.aux
-*.log
-*.toc
-*.lof
-*.lot
-*.bit
-*.idx
-*.glo
-*.bbl
-*.bcf
-*.ilg
-*.toc
-*.ind
-*.out
-*.blg
-*.xml
+test_runner
