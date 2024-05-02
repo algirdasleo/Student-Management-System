@@ -22,6 +22,7 @@ int main() {
         std::cout << "Error: " << e.what() << std::endl;
         return 1;
     }
+
     auto start = std::chrono::high_resolution_clock::now();
     StudentasManager manager;
     while (true) {
@@ -33,6 +34,7 @@ int main() {
         if (meniuPasirinkimas != 6) {
             std::string input;
             switch (meniuPasirinkimas) {
+                
                     // Read student data
 
                 case 1: {

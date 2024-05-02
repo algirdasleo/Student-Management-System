@@ -17,8 +17,6 @@
 class Zmogus {
 protected:
     std::string vardas, pavarde;
-
-protected:
     Zmogus() : vardas(""), pavarde("") {}           // Default constructor
     Zmogus(std::string name, std::string surname);  // Constructor
     Zmogus(const Zmogus &other);                    // Copy constructor
