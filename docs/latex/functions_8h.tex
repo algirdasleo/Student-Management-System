@@ -1,0 +1,127 @@
+\doxysection{functions.\+h File Reference}
+\hypertarget{functions_8h}{}\label{functions_8h}\index{functions.h@{functions.h}}
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$ctime$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$list$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_zmogus}{Zmogus}}
+\item 
+class \mbox{\hyperlink{class_studentas_manager}{Studentas\+Manager}}
+\item 
+struct \mbox{\hyperlink{struct_studentas_manager_1_1_output_helper}{Studentas\+Manager\+::\+Output\+Helper}}
+\item 
+class \mbox{\hyperlink{class_studentas}{Studentas}}
+\item 
+class \mbox{\hyperlink{class_read_studentas}{Read\+Studentas}}
+\item 
+class \mbox{\hyperlink{class_manual_studentas}{Manual\+Studentas}}
+\item 
+class \mbox{\hyperlink{class_semi_auto_studentas}{Semi\+Auto\+Studentas}}
+\item 
+class \mbox{\hyperlink{class_auto_studentas}{Auto\+Studentas}}
+\item 
+class \mbox{\hyperlink{class_file_studentas}{File\+Studentas}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{functions_8h_aead006f40d5e112ce1a8e38ff9195206}{number\+Input\+Protection}} (std\+::string \&input)
+\item 
+void \mbox{\hyperlink{functions_8h_ad36fd93cebe6fadb16b8c11a8f8baf04}{char\+Input\+Protection}} (std\+::string \&input)
+\item 
+bool \mbox{\hyperlink{functions_8h_a4446cceb1aa1513eb09286305efc0e8b}{is\+Number}} (std\+::string \&str)
+\item 
+bool \mbox{\hyperlink{functions_8h_a7ec7e1136ff197cb2e19ecc5efc211ce}{is\+String}} (std\+::string \&str)
+\item 
+void \mbox{\hyperlink{functions_8h_a436438e3dc870067d478642499b11d22}{how\+To\+Sort}} (char \&choice1, char \&choice2)
+\item 
+void \mbox{\hyperlink{functions_8h_a2416c59d4f04fd6fb6aa74cbcb350ae9}{generate\+File}} (int range, int homework\+Count)
+\item 
+int \mbox{\hyperlink{functions_8h_a209d2105e9ad36e42b5474ad80c9beba}{get\+Menu\+Choice}} ()
+\item 
+void \mbox{\hyperlink{functions_8h_a5297521e10107e0748cf9ec03044f9be}{get\+User\+Grade\+Input}} (\mbox{\hyperlink{class_studentas}{Studentas}} \&st)
+\item 
+void \mbox{\hyperlink{functions_8h_a815d272161bc2acf4a024e6aa5662639}{enter\+File\+Name}} (std\+::ifstream \&in, std\+::string \&file\+Name)
+\item 
+void \mbox{\hyperlink{functions_8h_a94dd094e4d4d85c15055633d38244cde}{range\+Student\+Generator}} ()
+\item 
+void \mbox{\hyperlink{functions_8h_a9c38f7d9d3e45e80618c1bbe644b16a6}{five\+File\+Generator}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{functions_8h_ad36fd93cebe6fadb16b8c11a8f8baf04}\label{functions_8h_ad36fd93cebe6fadb16b8c11a8f8baf04} 
+\index{functions.h@{functions.h}!charInputProtection@{charInputProtection}}
+\index{charInputProtection@{charInputProtection}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{charInputProtection()}{charInputProtection()}}
+{\footnotesize\ttfamily void char\+Input\+Protection (\begin{DoxyParamCaption}\item[{std\+::string \&}]{input }\end{DoxyParamCaption})}
+
+\Hypertarget{functions_8h_a815d272161bc2acf4a024e6aa5662639}\label{functions_8h_a815d272161bc2acf4a024e6aa5662639} 
+\index{functions.h@{functions.h}!enterFileName@{enterFileName}}
+\index{enterFileName@{enterFileName}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{enterFileName()}{enterFileName()}}
+{\footnotesize\ttfamily void enter\+File\+Name (\begin{DoxyParamCaption}\item[{std\+::ifstream \&}]{in,  }\item[{std\+::string \&}]{file\+Name }\end{DoxyParamCaption})}
+
+\Hypertarget{functions_8h_a9c38f7d9d3e45e80618c1bbe644b16a6}\label{functions_8h_a9c38f7d9d3e45e80618c1bbe644b16a6} 
+\index{functions.h@{functions.h}!fiveFileGenerator@{fiveFileGenerator}}
+\index{fiveFileGenerator@{fiveFileGenerator}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{fiveFileGenerator()}{fiveFileGenerator()}}
+{\footnotesize\ttfamily void five\+File\+Generator (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{functions_8h_a2416c59d4f04fd6fb6aa74cbcb350ae9}\label{functions_8h_a2416c59d4f04fd6fb6aa74cbcb350ae9} 
+\index{functions.h@{functions.h}!generateFile@{generateFile}}
+\index{generateFile@{generateFile}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{generateFile()}{generateFile()}}
+{\footnotesize\ttfamily void generate\+File (\begin{DoxyParamCaption}\item[{int}]{range,  }\item[{int}]{homework\+Count }\end{DoxyParamCaption})}
+
+\Hypertarget{functions_8h_a209d2105e9ad36e42b5474ad80c9beba}\label{functions_8h_a209d2105e9ad36e42b5474ad80c9beba} 
+\index{functions.h@{functions.h}!getMenuChoice@{getMenuChoice}}
+\index{getMenuChoice@{getMenuChoice}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{getMenuChoice()}{getMenuChoice()}}
+{\footnotesize\ttfamily int get\+Menu\+Choice (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{functions_8h_a5297521e10107e0748cf9ec03044f9be}\label{functions_8h_a5297521e10107e0748cf9ec03044f9be} 
+\index{functions.h@{functions.h}!getUserGradeInput@{getUserGradeInput}}
+\index{getUserGradeInput@{getUserGradeInput}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{getUserGradeInput()}{getUserGradeInput()}}
+{\footnotesize\ttfamily void get\+User\+Grade\+Input (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_studentas}{Studentas}} \&}]{st }\end{DoxyParamCaption})}
+
+\Hypertarget{functions_8h_a436438e3dc870067d478642499b11d22}\label{functions_8h_a436438e3dc870067d478642499b11d22} 
+\index{functions.h@{functions.h}!howToSort@{howToSort}}
+\index{howToSort@{howToSort}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{howToSort()}{howToSort()}}
+{\footnotesize\ttfamily void how\+To\+Sort (\begin{DoxyParamCaption}\item[{char \&}]{choice1,  }\item[{char \&}]{choice2 }\end{DoxyParamCaption})}
+
+\Hypertarget{functions_8h_a4446cceb1aa1513eb09286305efc0e8b}\label{functions_8h_a4446cceb1aa1513eb09286305efc0e8b} 
+\index{functions.h@{functions.h}!isNumber@{isNumber}}
+\index{isNumber@{isNumber}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{isNumber()}{isNumber()}}
+{\footnotesize\ttfamily bool is\+Number (\begin{DoxyParamCaption}\item[{std\+::string \&}]{str }\end{DoxyParamCaption})}
+
+\Hypertarget{functions_8h_a7ec7e1136ff197cb2e19ecc5efc211ce}\label{functions_8h_a7ec7e1136ff197cb2e19ecc5efc211ce} 
+\index{functions.h@{functions.h}!isString@{isString}}
+\index{isString@{isString}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{isString()}{isString()}}
+{\footnotesize\ttfamily bool is\+String (\begin{DoxyParamCaption}\item[{std\+::string \&}]{str }\end{DoxyParamCaption})}
+
+\Hypertarget{functions_8h_aead006f40d5e112ce1a8e38ff9195206}\label{functions_8h_aead006f40d5e112ce1a8e38ff9195206} 
+\index{functions.h@{functions.h}!numberInputProtection@{numberInputProtection}}
+\index{numberInputProtection@{numberInputProtection}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{numberInputProtection()}{numberInputProtection()}}
+{\footnotesize\ttfamily void number\+Input\+Protection (\begin{DoxyParamCaption}\item[{std\+::string \&}]{input }\end{DoxyParamCaption})}
+
+\Hypertarget{functions_8h_a94dd094e4d4d85c15055633d38244cde}\label{functions_8h_a94dd094e4d4d85c15055633d38244cde} 
+\index{functions.h@{functions.h}!rangeStudentGenerator@{rangeStudentGenerator}}
+\index{rangeStudentGenerator@{rangeStudentGenerator}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{rangeStudentGenerator()}{rangeStudentGenerator()}}
+{\footnotesize\ttfamily void range\+Student\+Generator (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
