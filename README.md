@@ -28,6 +28,20 @@ Kaip diegti šią programą?
 
 ---
 
+Testavimas (V2.0):
+
+    Programoje yra įdiegti unit testai naudojant Catch2 testų framework su kuria yra tikrinamas programos funkcionalumas.
+
+    Norėdami paleisti testus, jūs turite įvykdyti šiuos žingsnius: 
+
+     - Kompiliuokite testavimo failus naudojant `make test`, kuris sukuria testų vykdymo failą ir jį paleidžia.
+    
+    Testų apžvalga:
+
+    - Konstruktorių testai: Patikrina, ar objektai teisingai sukuriami naudojant konstruktorius.
+    - Copy ir Move operacijų testai: Užtikrina, kad objektų kopijavimas ir perkėlimas veiktų teisingai ir duomenys nebūtų prarasti.
+    - Funkcionalumo testai: Tikrina pagrindines programos funkcijas, tokias kaip studentų duomenų įvedimas, skaičiavimas ir rūšiavimas.
+
 Pasirinktiniai duomenų įvedimo būdai (V1.2):
 
     Rankinis duomenų įvedimas (ManualStudentas::read):
