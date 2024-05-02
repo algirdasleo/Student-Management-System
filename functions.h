@@ -91,7 +91,11 @@ public:
     void setSurname(std::string surname);
     std::string getSurname();
     void addGrade(int grade);
+    std::list<int> getGrades();
     void setEgz(int grade);
+    int getEgz();
+    double getFinalGradeVid();
+    double getFinalGradeMed();
     void readName();
     void calculate();
     void printInfo() const override;
