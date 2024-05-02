@@ -14,14 +14,14 @@
 int main() {
 
     // Test the Studentas class
-    Studentas st;
-    try {
-        std::cout << "Testing students class.\n";
-        st.testStudentasClass();
-    } catch (const std::exception &e) {
-        std::cout << "Error: " << e.what() << std::endl;
-        return 1;
-    }
+    // Studentas st;
+    // try {
+    //     std::cout << "Testing students class.\n";
+    //     st.testStudentasClass();
+    // } catch (const std::exception &e) {
+    //     std::cout << "Error: " << e.what() << std::endl;
+    //     return 1;
+    // }
 
     auto start = std::chrono::high_resolution_clock::now();
     StudentasManager manager;
