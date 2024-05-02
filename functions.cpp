@@ -509,6 +509,12 @@ void Studentas::addGrade(int grade) {
 void Studentas::setEgz(int grade) {
     this->egzPazymys = grade;
 }
+int Studentas::getEgz(){
+    return this->egzPazymys;
+}
+std::list<int> Studentas::getGrades() {
+    return this->ndPazymiai;
+}
 void Studentas::calculate() {
     int ndrange = distance(this->ndPazymiai.begin(), this->ndPazymiai.end());
     this->ndPazymiai.sort();
@@ -521,6 +527,14 @@ void Studentas::calculate() {
     }
     double sum = accumulate(this->ndPazymiai.begin(), this->ndPazymiai.end(), 0.0);
     this->galBalasVid = 0.4 * (sum / ndrange) + 0.6 * this->egzPazymys;
+}
+
+double Studentas::getFinalGradeVid() {
+    return this->galBalasVid;
+}
+
+double Studentas::getFinalGradeMed() {
+    return this->galBalasMed;
 }
 
 // Testing Rule of Five for Studentas class
