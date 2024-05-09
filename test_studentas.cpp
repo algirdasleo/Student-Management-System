@@ -105,5 +105,5 @@ TEST_CASE("Move Assignment Operator transfers ownership of attributes properly",
     REQUIRE(movedTo.getName() == "Jonas");
     REQUIRE(movedTo.getSurname() == "Jonaitis");
     REQUIRE(movedTo.getEgz() == 9);
-    REQUIRE(original.getName().empty());  // Ensure the original has been moved from
+    REQUIRE(original.getName().empty()); 
 }
