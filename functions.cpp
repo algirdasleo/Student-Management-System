@@ -7,10 +7,10 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <list>
 #include <numeric>
 #include <sstream>
 #include <string>
+#include <vector>
 
 // Defining constructors and destructors.
 
@@ -38,8 +38,7 @@ Studentas &Studentas::operator=(const Studentas &stud) {
     return *this;
 }
 
-Studentas::Studentas(Studentas &&stud) noexcept : Zmogus(std::move(stud)), ndPazymiai(std::move(stud.ndPazymiai)), egzPazymys(stud.egzPazymys), galBalasVid(stud.galBalasVid), galBalasMed(stud.galBalasMed) 
-{
+Studentas::Studentas(Studentas &&stud) noexcept : Zmogus(std::move(stud)), ndPazymiai(std::move(stud.ndPazymiai)), egzPazymys(stud.egzPazymys), galBalasVid(stud.galBalasVid), galBalasMed(stud.galBalasMed) {
     stud.egzPazymys = 0;
     stud.galBalasVid = 0;
     stud.galBalasMed = 0;
@@ -311,7 +310,7 @@ void StudentasManager::printToFile(std::string fileName) {
     studentList.clear();
 }
 
-void StudentasManager::printToFile(std::string fileName, std::list<Studentas> &neislaike) {
+void StudentasManager::printToFile(std::string fileName, std::vector<Studentas> &neislaike) {
     if (neislaike.empty()) {
         std::cout << "\nNeislaikiusiu nerasta.\n";
         return;
@@ -341,62 +340,62 @@ void StudentasManager::sortStudents(char pasirinkimas, char input) {
     auto start = std::chrono::high_resolution_clock::now();
     if (pasirinkimas == 'v') {
         if (input == 'd')
-            studentList.sort([](const Studentas &a, const Studentas &b) { return a.vardas < b.vardas; });
+            std::sort(studentList.begin(), studentList.end(), [](const Studentas &a, const Studentas &b) { return a.vardas < b.vardas; });
         else
-            studentList.sort([](const Studentas &a, const Studentas &b) { return a.vardas > b.vardas; });
+            std::sort(studentList.begin(), studentList.end(), [](const Studentas &a, const Studentas &b) { return a.vardas > b.vardas; });
     } else if (pasirinkimas == 'p') {
         if (input == 'd')
-            studentList.sort([](const Studentas &a, const Studentas &b) { return a.pavarde < b.pavarde; });
+            std::sort(studentList.begin(), studentList.end(), [](const Studentas &a, const Studentas &b) { return a.pavarde < b.pavarde; });
         else
-            studentList.sort([](const Studentas &a, const Studentas &b) { return a.pavarde > b.pavarde; });
+            std::sort(studentList.begin(), studentList.end(), [](const Studentas &a, const Studentas &b) { return a.pavarde > b.pavarde; });
     } else if (pasirinkimas == 'g') {
         if (input == 'd')
-            studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasVid < b.galBalasVid; });
+            std::sort(studentList.begin(), studentList.end(), [](const Studentas &a, const Studentas &b) { return a.galBalasVid < b.galBalasVid; });
         else
-            studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasVid > b.galBalasVid; });
+            std::sort(studentList.begin(), studentList.end(), [](const Studentas &a, const Studentas &b) { return a.galBalasVid > b.galBalasVid; });
     } else if (pasirinkimas == 'm') {
         if (input == 'd')
-            studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed < b.galBalasMed; });
+            std::sort(studentList.begin(), studentList.end(), [](const Studentas &a, const Studentas &b) { return a.galBalasMed < b.galBalasMed; });
         else
-            studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed > b.galBalasMed; });
+            std::sort(studentList.begin(), studentList.end(), [](const Studentas &a, const Studentas &b) { return a.galBalasMed > b.galBalasMed; });
     }
     auto end = std::chrono::high_resolution_clock::now();
     std::cout << "\nSurikiuota per " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
 }
 
-void StudentasManager::sortStudents(char pasirinkimas, char input, std::list<Studentas> &neislaike) {
+void StudentasManager::sortStudents(char pasirinkimas, char input, std::vector<Studentas> &neislaike) {
     auto start = std::chrono::high_resolution_clock::now();
     if (pasirinkimas == 'v') {
         if (input == 'd') {
-            studentList.sort([](const Studentas &a, const Studentas &b) { return a.vardas < b.vardas; });
-            neislaike.sort([](const Studentas &a, const Studentas &b) { return a.vardas < b.vardas; });
+            std::sort(studentList.begin(), studentList.end(), [](const Studentas &a, const Studentas &b) { return a.vardas < b.vardas; });
+            std::sort(neislaike.begin(), neislaike.end(), [](const Studentas &a, const Studentas &b) { return a.vardas < b.vardas; });
         } else {
-            studentList.sort([](const Studentas &a, const Studentas &b) { return a.vardas > b.vardas; });
-            neislaike.sort([](const Studentas &a, const Studentas &b) { return a.vardas > b.vardas; });
+            std::sort(studentList.begin(), studentList.end(), [](const Studentas &a, const Studentas &b) { return a.vardas > b.vardas; });
+            std::sort(neislaike.begin(), neislaike.end(), [](const Studentas &a, const Studentas &b) { return a.vardas > b.vardas; });
         }
     } else if (pasirinkimas == 'p') {
         if (input == 'd') {
-            studentList.sort([](const Studentas &a, const Studentas &b) { return a.pavarde < b.pavarde; });
-            neislaike.sort([](const Studentas &a, const Studentas &b) { return a.pavarde < b.pavarde; });
+            std::sort(studentList.begin(), studentList.end(), [](const Studentas &a, const Studentas &b) { return a.pavarde < b.pavarde; });
+            std::sort(neislaike.begin(), neislaike.end(), [](const Studentas &a, const Studentas &b) { return a.pavarde < b.pavarde; });
         } else {
-            studentList.sort([](const Studentas &a, const Studentas &b) { return a.pavarde > b.pavarde; });
-            neislaike.sort([](const Studentas &a, const Studentas &b) { return a.pavarde > b.pavarde; });
+            std::sort(studentList.begin(), studentList.end(), [](const Studentas &a, const Studentas &b) { return a.pavarde > b.pavarde; });
+            std::sort(neislaike.begin(), neislaike.end(), [](const Studentas &a, const Studentas &b) { return a.pavarde > b.pavarde; });
         }
     } else if (pasirinkimas == 'g') {
         if (input == 'd') {
-            studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasVid < b.galBalasVid; });
-            neislaike.sort([](const Studentas &a, const Studentas &b) { return a.galBalasVid < b.galBalasVid; });
+            std::sort(studentList.begin(), studentList.end(), [](const Studentas &a, const Studentas &b) { return a.galBalasVid < b.galBalasVid; });
+            std::sort(neislaike.begin(), neislaike.end(), [](const Studentas &a, const Studentas &b) { return a.galBalasVid < b.galBalasVid; });
         } else {
-            studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasVid > b.galBalasVid; });
-            neislaike.sort([](const Studentas &a, const Studentas &b) { return a.galBalasVid > b.galBalasVid; });
+            std::sort(studentList.begin(), studentList.end(), [](const Studentas &a, const Studentas &b) { return a.galBalasVid > b.galBalasVid; });
+            std::sort(neislaike.begin(), neislaike.end(), [](const Studentas &a, const Studentas &b) { return a.galBalasVid > b.galBalasVid; });
         }
     } else if (pasirinkimas == 'm') {
         if (input == 'd') {
-            studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed < b.galBalasMed; });
-            neislaike.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed < b.galBalasMed; });
+            std::sort(studentList.begin(), studentList.end(), [](const Studentas &a, const Studentas &b) { return a.galBalasMed < b.galBalasMed; });
+            std::sort(neislaike.begin(), neislaike.end(), [](const Studentas &a, const Studentas &b) { return a.galBalasMed < b.galBalasMed; });
         } else {
-            studentList.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed > b.galBalasMed; });
-            neislaike.sort([](const Studentas &a, const Studentas &b) { return a.galBalasMed > b.galBalasMed; });
+            std::sort(studentList.begin(), studentList.end(), [](const Studentas &a, const Studentas &b) { return a.galBalasMed > b.galBalasMed; });
+            std::sort(neislaike.begin(), neislaike.end(), [](const Studentas &a, const Studentas &b) { return a.galBalasMed > b.galBalasMed; });
         }
     }
     auto end = std::chrono::high_resolution_clock::now();
@@ -439,19 +438,19 @@ void StudentasManager::readFromFile(std::string fileName) {
     std::cout << "Duomenys nuskaityti per " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
 }
 
-void StudentasManager::sortIntoGroups(std::list<Studentas> &neislaike) {
+void StudentasManager::sortIntoGroups(std::vector<Studentas> &neislaike) {
     auto start = std::chrono::high_resolution_clock::now();
-    auto it = studentList.begin();
-    while (it != studentList.end()) {
-        if (it->galBalasVid < 5 || it->galBalasMed < 5) {
-            neislaike.splice(neislaike.end(), studentList, it++);
-        } else {
-            ++it;
-        }
-    }
+
+    auto partitionIt = std::partition(studentList.begin(), studentList.end(),
+    [](Studentas &s) { return s.getFinalGradeVid() >= 5.0; });
+    
+    neislaike.insert(neislaike.end(), std::make_move_iterator(partitionIt), std::make_move_iterator(studentList.end()));
+    studentList.erase(partitionIt, studentList.end());
+
+    auto end = std::chrono::high_resolution_clock::now();
+
     std::cout << "|- Neislaikiusiu studentu kiekis: " << neislaike.size() << "\n";
     std::cout << "|- Islaikiusiu studentu kiekis: " << studentList.size() << "\n";
-    auto end = std::chrono::high_resolution_clock::now();
     std::cout << "Studentai suskirstyti per " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
 }
 
@@ -474,7 +473,7 @@ void StudentasManager::generateRandomStudents(int count) {
     }
 }
 void StudentasManager::groupAndPrint() {
-    std::list<Studentas> neislaike;
+    std::vector<Studentas> neislaike;
     this->sortIntoGroups(neislaike);
     char pasirinkimas, rusiavimas;
     howToSort(pasirinkimas, rusiavimas);
@@ -509,15 +508,15 @@ void Studentas::addGrade(int grade) {
 void Studentas::setEgz(int grade) {
     this->egzPazymys = grade;
 }
-int Studentas::getEgz(){
+int Studentas::getEgz() {
     return this->egzPazymys;
 }
-std::list<int> Studentas::getGrades() {
+std::vector<int> Studentas::getGrades() {
     return this->ndPazymiai;
 }
 void Studentas::calculate() {
     int ndrange = distance(this->ndPazymiai.begin(), this->ndPazymiai.end());
-    this->ndPazymiai.sort();
+    sort(this->ndPazymiai.begin(), this->ndPazymiai.end());  // Sorting grades for median calculation
     auto mid = next(this->ndPazymiai.begin(), ndrange / 2);
     if (ndrange % 2 == 0) {
         auto midPrev = prev(mid, 1);
@@ -761,6 +760,6 @@ void fiveFileGenerator() {
               << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start3).count() / 1000.0 << " sekundziu.\n\n";
 }
 
-void Studentas::printInfo() const{
+void Studentas::printInfo() const {
     std::cout << "Test implementation" << std::endl;
 }

@@ -5,7 +5,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <list>
+#include <vector>
 #include <sstream>
 #include <string>
 
