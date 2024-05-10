@@ -14,9 +14,9 @@ private:
 
 public: 
     NewVector();                       // default constructor
+    ~NewVector();                      // destructor
     NewVector(const NewVector<T>&);    // copy constructor
     NewVector(NewVector<T>&&);         // move constructor
-    ~NewVector();                      // destructor
 
     NewVector<T>& operator=(const NewVector<T>&);    // copy assignment
     NewVector<T>& operator=(NewVector<T>&&);         // move assignment
@@ -28,6 +28,6 @@ public:
     T& operator[](size_t index);       // return the element at index
 };
 
-#include "NewVector.tpp"
+#include "NewVector.inl"
 
 #endif
