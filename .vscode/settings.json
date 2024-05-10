@@ -81,6 +81,13 @@
     "mutex": "cpp",
     "string_view": "cpp",
     "unordered_map": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "__tree": "cpp",
+    "memory_resource": "cpp",
+    "future": "cpp",
+    "map": "cpp",
+    "regex": "cpp",
+    "set": "cpp",
+    "stack": "cpp"
   }
 }
