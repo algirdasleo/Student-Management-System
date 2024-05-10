@@ -8,9 +8,9 @@
 template <typename T>
 class NewVector {
 private:
-    T* data;            
-    size_t capacity;
-    size_t current;
+    T* data;                           // the array that holds the elements
+    size_t capacity;                   // the number of elements the vector can hold
+    size_t current;                    // the number of elements in the vector   
 
 public: 
     NewVector();                       // default constructor
