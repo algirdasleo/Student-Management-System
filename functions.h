@@ -8,9 +8,10 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <vector>
 #include <sstream>
 #include <string>
+
+#include "NewVector.h"
 
 // Base class for name and surname
 
@@ -31,7 +32,7 @@ class Studentas;
 
 class StudentasManager {
 private:
-    std::vector<Studentas> studentList;
+    NewVector<Studentas> studentList;
     int maxNameLength, maxSurnameLength;
 
 public:
@@ -54,21 +55,21 @@ public:
     void setMaxSurnameLength(int length);
     int getMaxNameLength();
     int getMaxSurnameLength();
-    void sortIntoGroups(std::vector<Studentas> &neislaike);
+    void sortIntoGroups(NewVector<Studentas> &neislaike);
     void sortStudents(char choice1, char choice2);
-    void sortStudents(char choice1, char choice2, std::vector<Studentas> &neislaike);
+    void sortStudents(char choice1, char choice2, NewVector<Studentas> &neislaike);
     void groupAndPrint();
     void noGroupPrint();
     void printToFile();                      // Print to a default file name Rezultatas.txt
     void printToFile(std::string fileName);  // Print to a custom file name
-    void printToFile(std::string fileName, std::vector<Studentas> &neislaike);
+    void printToFile(std::string fileName, NewVector<Studentas> &neislaike);
 };
 
 // Class for student data
 
 class Studentas : public Zmogus {
 private:
-    std::vector<int> ndPazymiai;
+    NewVector<int> ndPazymiai;
     double egzPazymys, galBalasVid, galBalasMed;
 
 public:
@@ -91,7 +92,7 @@ public:
     void setSurname(std::string surname);
     std::string getSurname();
     void addGrade(int grade);
-    std::vector<int> getGrades();
+    NewVector<int> getGrades();
     void setEgz(int grade);
     int getEgz();
     double getFinalGradeVid();
