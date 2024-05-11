@@ -11,6 +11,13 @@ NewVector<T>::~NewVector() {
     delete[] dataStart;
 }
 
+// Initializer list constructor
+template <typename T>
+NewVector<T>::NewVector(std::initializer_list<T> list)
+    : dataStart(new T[list.size()]), capacity(list.size()), currentSize(list.size()) {
+    std::copy(list.begin(), list.end(), dataStart);
+}
+
 // Copy constructor
 template <typename T>
 NewVector<T>::NewVector(const NewVector<T>& old)
@@ -55,9 +62,32 @@ NewVector<T>& NewVector<T>::operator=(NewVector<T>&& old) {
     return *this;
 }
 
+// Comparison operator
+template <typename T>
+bool NewVector<T>::operator==(const NewVector<T>& other) const {
+    if (currentSize != other.currentSize)
+        return false;
+
+    for (size_t i = 0; i < currentSize; ++i) {
+        if (dataStart[i] != other.dataStart[i])
+            return false;
+    }
+
+    return true;
+}
+
 // Operator[] method
 template <typename T>
 T& NewVector<T>::operator[](size_t index) {
+    if (index >= currentSize)
+        throw std::out_of_range("Index out of range");
+
+    return dataStart[index];
+}
+
+// Operator[] method. Const version
+template <typename T>
+const T& NewVector<T>::operator[](size_t index) const {
     if (index >= currentSize)
         throw std::out_of_range("Index out of range");
 
@@ -73,9 +103,27 @@ T& NewVector<T>::front() {
     return dataStart[0];
 }
 
+// Front method. Const version
+template <typename T>
+const T& NewVector<T>::front() const {
+    if (currentSize == 0)
+        throw std::out_of_range("Vector is empty");
+
+    return dataStart[0];
+}
+
 // Back method
 template <typename T>
 T& NewVector<T>::back() {
+    if (currentSize == 0)
+        throw std::out_of_range("Vector is empty");
+
+    return dataStart[currentSize - 1];
+}
+
+// Back method. Const version
+template <typename T>
+const T& NewVector<T>::back() const {
     if (currentSize == 0)
         throw std::out_of_range("Vector is empty");
 
@@ -88,9 +136,21 @@ T* NewVector<T>::begin() {
     return dataStart;
 }
 
+// Begin method. Const version
+template <typename T>
+const T* NewVector<T>::begin() const {
+    return dataStart;
+}
+
 // End method
 template <typename T>
 T* NewVector<T>::end() {
+    return dataStart + currentSize;
+}
+
+// End method. Const version
+template <typename T>
+const T* NewVector<T>::end() const {
     return dataStart + currentSize;
 }
 
