@@ -36,7 +36,6 @@ public:
     bool empty() const;                           // check if the vector is empty
     size_t size() const;                          // return the number of elements in the vector
     size_t max_size() const;                      // return the maximum number of elements the vector can hold
-    size_t capacity() const;                      // return the number of elements the vector can hold
     void reserve(size_t new_capacity);            // increase the capacity of the vector to new_capacity
     void shrink_to_fit();                         // reduce the capacity to the number of elements in the vector
 
@@ -44,8 +43,10 @@ public:
     void clear();                                 // remove all elements from the vector
     void push_back(const T& value);               // add an element to the end of the vector
     void pop_back();                              // remove the last element from the vector
+    void erase(T* pos);                           // remove the element at pos
     void erase(T* start, T* end);                 // remove elements in the range [start, end)
     void insert(T* insert_pos, T* start, T* end); // inserts elements after insert_pos from the range [start, end)
+
 };
 
 #include "NewVector.inl"
