@@ -238,14 +238,17 @@ void NewVector<T>::erase(T* start, T* end) {
 // Insert method
 template <typename T>
 void NewVector<T>::insert(T* insert_pos, T* start, T* end) {
-    if (insert_pos < dataStart || insert_pos > dataStart + currentSize || start < dataStart || start > dataStart + currentSize || end < dataStart || end > dataStart + currentSize || start >= end)
-        throw std::out_of_range("Invalid range");
+    if (insert_pos < dataStart || insert_pos > dataStart + currentSize)
+        throw std::out_of_range("Insert position out of range");
 
-    size_t new_size = currentSize + (end - start);
-    if (new_size > capacity)
-        reserve(new_size);
+    size_t insertCount = end - start;        // Number of elements to insert
+    size_t newPos = insert_pos - dataStart;  // Position to insert in terms of index
 
-    std::copy_backward(insert_pos, dataStart + currentSize, dataStart + new_size);
-    std::copy(start, end, insert_pos);
-    currentSize = new_size;
+    if (currentSize + insertCount > capacity) {
+        reserve(std::max(capacity * 2, currentSize + insertCount));
+    }
+
+    std::copy_backward(dataStart + newPos, dataStart + currentSize, dataStart + currentSize + insertCount);
+    std::copy(start, end, dataStart + newPos);
+    currentSize += insertCount;
 }
