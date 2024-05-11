@@ -26,6 +26,22 @@ Programos meniu siūlo penkias pagrindines pasirinkimo galimybes, kiekviena iš 
 
 ---
 
+ ** NewVector klasės 5 atsitiktinių funkcijų apžvalga: (V3.0) ** 
+
+- **  **
+
+### `push_back(const T& value)`
+
+- **Description:** Adds an element to the end of the vector.
+- **Usage Example:**
+  ```cpp
+  NewVector<int> vec;
+  vec.push_back(10);
+  vec.push_back(20);
+  ```
+
+---
+
 **Testavimas (V2.0):**
 
 Programoje yra įdiegti unit testai naudojant Catch2 testų framework su kuria yra tikrinamas programos funkcionalumas.
