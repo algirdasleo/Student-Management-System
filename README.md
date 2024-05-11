@@ -25,8 +25,18 @@ Programos meniu siūlo penkias pagrindines pasirinkimo galimybes, kiekviena iš 
 - Norint išvalyti sukurtą paleisties failą, reikią parašyti komandą: `make clean`.
 
 ---
+**std::vector ir NewVector `push_back` spartos palyginimas (V3.0)**
 
-**NewVector klasės 5 atsitiktinių metodų apžvalga: (V3.0)**
+| Elementų kiekis | `std::vector` | `NewVector` |
+|-----------------|---------------|-------------|
+|100'000|0s|0s|
+|1'000'000|0.001s|0.001s|
+|10'000'000|0.025s|0.014s|
+|100'000'000|0.144s|0.123s|
+|1'000'000'000|1.57s|1.897|
+
+
+**NewVector klasės 5 atsitiktinių metodų apžvalga:**
 
 
 - **`push_back(const T& value)`**
