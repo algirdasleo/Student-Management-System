@@ -26,19 +26,60 @@ Programos meniu siūlo penkias pagrindines pasirinkimo galimybes, kiekviena iš 
 
 ---
 
- ** NewVector klasės 5 atsitiktinių funkcijų apžvalga: (V3.0) ** 
+**NewVector klasės 5 atsitiktinių metodų apžvalga: (V3.0)**
 
-- **  **
 
-### `push_back(const T& value)`
+- **`push_back(const T& value)`**
+  - **Aprašymas:** Prideda elementą į vektoriaus galą.
+  - **Pavyzdys:**
+    ```cpp
+    NewVector<int> vec; 
+    vec.push_back(10);
+    vec.push_back(20);
+    // vec = {10, 20}
+    ```
 
-- **Description:** Adds an element to the end of the vector.
-- **Usage Example:**
-  ```cpp
-  NewVector<int> vec;
-  vec.push_back(10);
-  vec.push_back(20);
-  ```
+- **`size()`**
+  - **Aprašymas:** Grąžina elementų skaičių vektoriuje.
+  - **Pavyzdys:**
+    ```cpp
+    NewVector<int> vec;
+    vec.push_back(5);
+    vec.push_back(15);
+    size_t numElements = vec.size();
+    std::cout << "Elementų skaičius vektoriuje: " << numElements << std::endl;
+    // Išves: "Elementų skaičius vektoriuje: 2"
+    ```
+
+- **`empty()`**
+  - **Aprašymas:** Tikrina, ar vektorius yra tuščias.
+  - **Pavyzdys:**
+    ```cpp
+    NewVector<int> vec;
+    bool isEmpty = vec.empty();
+    std::cout << "Vektorius yra " << (isEmpty ? "tuščias" : "ne tuščias") << std::endl;
+    // Išves: "Vektorius yra tuščias"
+    ```
+
+- **`erase(T* pos)`**
+  - **Aprašymas:** Pašalina elementą nurodytoje pozicijoje.
+  - **Pavyzdys:**
+    ```cpp
+    NewVector<int> vec;
+    vec.push_back(5);
+    vec.push_back(10);
+    vec.push_back(15);
+    vec.erase(vec.begin() + 1); // Ištrina antrą elementą
+    // vec = {5, 15}
+    ```
+
+- **`reserve(size_t new_capacity)`**
+  - **Aprašymas:** Padidina vektoriaus talpą iki nurodyto dydžio.
+  - **Pavyzdys:**
+    ```cpp
+    NewVector<int> vec;
+    vec.reserve(10); // Rezervuoja vietos 10-čiai elementų
+    ```
 
 ---
 
