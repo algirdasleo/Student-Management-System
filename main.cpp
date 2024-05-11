@@ -10,6 +10,7 @@
 #include <string>
 
 #include "functions.h"
+#include "NewVector.h"
 
 int main() {
 
