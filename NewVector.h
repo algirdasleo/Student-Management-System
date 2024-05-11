@@ -16,6 +16,7 @@ public:
     // Constructors and destructor
     NewVector();                                  // default constructor
     ~NewVector();                                 // destructor
+    NewVector(std::initializer_list<T>);          // initializer list constructor 
     NewVector(const NewVector<T>&);               // copy constructor
     NewVector(NewVector<T>&&);                    // move constructor
 
@@ -23,14 +24,22 @@ public:
     NewVector<T>& operator=(const NewVector<T>&); // copy assignment
     NewVector<T>& operator=(NewVector<T>&&);      // move assignment
     
+    // comparison operator
+    bool operator==(const NewVector<T>&) const;   // compare two vectors for equality
+    
     // Element access
-    T& operator[](size_t index);                  // return the element at index
-    T& front();                                   // return the first element  
-    T& back();                                    // return the last element
+    T& operator[](size_t index);                  // return the element at index, f.e. vec[0] = 5;
+    const T& operator[](size_t index) const;      // return the element at index, f.e. int x = vec[0];
+    T& front();                                   // return the first element, f.e. vec.front() = 5;  
+    const T& front() const;                       // return the first element, f.e. int x = vec.front();
+    T& back();                                    // return the last element, f.e. vec.back() = 5;
+    const T& back() const;                        // return the last element, f.e. int x = vec.back();
         
     // Iterators              
     T* begin();                                   // return a pointer to the first element
+    const T* begin() const;                       // return a pointer to the first element
     T* end();                                     // return a pointer to one past the last element
+    const T* end() const;                         // return a pointer to one past the last element
         
     // Capacity           
     bool empty() const;                           // check if the vector is empty
