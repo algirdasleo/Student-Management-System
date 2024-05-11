@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+#include "NewVector.h"
+
 // Defining constructors and destructors.
 
 Studentas::Studentas() : egzPazymys(0), galBalasVid(0), galBalasMed(0) {}
@@ -310,7 +312,7 @@ void StudentasManager::printToFile(std::string fileName) {
     studentList.clear();
 }
 
-void StudentasManager::printToFile(std::string fileName, std::vector<Studentas> &neislaike) {
+void StudentasManager::printToFile(std::string fileName, NewVector<Studentas> &neislaike) {
     if (neislaike.empty()) {
         std::cout << "\nNeislaikiusiu nerasta.\n";
         return;
@@ -363,7 +365,7 @@ void StudentasManager::sortStudents(char pasirinkimas, char input) {
     std::cout << "\nSurikiuota per " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
 }
 
-void StudentasManager::sortStudents(char pasirinkimas, char input, std::vector<Studentas> &neislaike) {
+void StudentasManager::sortStudents(char pasirinkimas, char input, NewVector<Studentas> &neislaike) {
     auto start = std::chrono::high_resolution_clock::now();
     if (pasirinkimas == 'v') {
         if (input == 'd') {
@@ -438,14 +440,32 @@ void StudentasManager::readFromFile(std::string fileName) {
     std::cout << "Duomenys nuskaityti per " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
 }
 
-void StudentasManager::sortIntoGroups(std::vector<Studentas> &neislaike) {
+void StudentasManager::sortIntoGroups(NewVector<Studentas> &neislaike) {
     auto start = std::chrono::high_resolution_clock::now();
 
-    auto partitionIt = std::partition(studentList.begin(), studentList.end(),
-    [](Studentas &s) { return s.getFinalGradeVid() >= 5.0; });
-    
-    neislaike.insert(neislaike.end(), std::make_move_iterator(partitionIt), std::make_move_iterator(studentList.end()));
-    studentList.erase(partitionIt, studentList.end());
+    size_t left = 0;
+    size_t right = studentList.size() - 1;
+
+    while (left <= right) {
+        while (left <= right && studentList[left].getFinalGradeVid() < 5.0) {
+            ++left;
+        }
+        while (left <= right && studentList[right].getFinalGradeVid() >= 5.0) {
+            --right;
+        }
+        if (left < right) {
+            std::swap(studentList[left], studentList[right]);
+            ++left;
+            --right;
+        }
+    }
+
+    // Move all failed students at once
+    neislaike.reserve(right + 1);
+    for (size_t i = 0; i <= right; ++i) {
+        neislaike.push_back(std::move(studentList[i]));
+    }
+    studentList.erase(studentList.begin(), studentList.begin() + right + 1);
 
     auto end = std::chrono::high_resolution_clock::now();
 
@@ -473,7 +493,7 @@ void StudentasManager::generateRandomStudents(int count) {
     }
 }
 void StudentasManager::groupAndPrint() {
-    std::vector<Studentas> neislaike;
+    NewVector<Studentas> neislaike;
     this->sortIntoGroups(neislaike);
     char pasirinkimas, rusiavimas;
     howToSort(pasirinkimas, rusiavimas);
@@ -511,20 +531,20 @@ void Studentas::setEgz(int grade) {
 int Studentas::getEgz() {
     return this->egzPazymys;
 }
-std::vector<int> Studentas::getGrades() {
+NewVector<int> Studentas::getGrades() {
     return this->ndPazymiai;
 }
 void Studentas::calculate() {
-    int ndrange = distance(this->ndPazymiai.begin(), this->ndPazymiai.end());
-    sort(this->ndPazymiai.begin(), this->ndPazymiai.end());  // Sorting grades for median calculation
-    auto mid = next(this->ndPazymiai.begin(), ndrange / 2);
+    int ndrange = std::distance(this->ndPazymiai.begin(), this->ndPazymiai.end());
+    std::sort(this->ndPazymiai.begin(), this->ndPazymiai.end());
+    auto mid = std::next(this->ndPazymiai.begin(), ndrange / 2);
     if (ndrange % 2 == 0) {
-        auto midPrev = prev(mid, 1);
+        auto midPrev = std::prev(mid, 1);
         this->galBalasMed = (*mid + *midPrev) / 2.0;
     } else {
         this->galBalasMed = *mid;
     }
-    double sum = accumulate(this->ndPazymiai.begin(), this->ndPazymiai.end(), 0.0);
+    double sum = std::accumulate(this->ndPazymiai.begin(), this->ndPazymiai.end(), 0.0);
     this->galBalasVid = 0.4 * (sum / ndrange) + 0.6 * this->egzPazymys;
 }
 
