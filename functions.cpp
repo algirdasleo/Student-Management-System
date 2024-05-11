@@ -460,11 +460,10 @@ void StudentasManager::sortIntoGroups(NewVector<Studentas> &neislaike) {
         }
     }
 
-    // Move all failed students at once
     neislaike.reserve(right + 1);
-    for (size_t i = 0; i <= right; ++i) {
+    for (size_t i = 0; i <= right; ++i)
         neislaike.push_back(std::move(studentList[i]));
-    }
+    
     studentList.erase(studentList.begin(), studentList.begin() + right + 1);
 
     auto end = std::chrono::high_resolution_clock::now();
