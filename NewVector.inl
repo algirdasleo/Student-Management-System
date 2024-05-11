@@ -112,12 +112,6 @@ size_t NewVector<T>::max_size() const {
     return capacity;
 }
 
-// Capacity method
-template <typename T>
-size_t NewVector<T>::capacity() const {
-    return capacity;
-}
-
 // Reserve method
 template <typename T>
 void NewVector<T>::reserve(size_t new_capacity) {
@@ -158,6 +152,16 @@ void NewVector<T>::pop_back() {
     if (currentSize == 0)
         throw std::out_of_range("Vector is empty");
 
+    --currentSize;
+}
+
+// Erase method
+template <typename T>
+void NewVector<T>::erase(T* pos) {
+    if (pos < dataStart || pos >= dataStart + currentSize)
+        throw std::out_of_range("Invalid position");
+
+    std::copy(pos + 1, dataStart + currentSize, pos);
     --currentSize;
 }
 
