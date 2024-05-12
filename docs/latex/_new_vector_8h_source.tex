@@ -1,0 +1,68 @@
+\doxysection{New\+Vector.\+h}
+\hypertarget{_new_vector_8h_source}{}\label{_new_vector_8h_source}\mbox{\hyperlink{_new_vector_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ NEWVECTOR\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ NEWVECTOR\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_new_vector}{NewVector}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00011\ \ \ \ \ T*\ \mbox{\hyperlink{class_new_vector_af535586f9640b5d31e9387e15ab1bbf5}{dataStart}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ pointer\ to\ the\ first\ element\ of\ the\ vector}}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_new_vector_aecca2aa53a8e2abeb67a510865843f93}{capacity}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ the\ number\ of\ elements\ the\ vector\ can\ hold}}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_new_vector_a3d1eb5a3fdd6f4f661e8df5e20ca2f59}{currentSize}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ the\ number\ of\ elements\ in\ the\ vector\ \ \ }}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{public}:\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{comment}{//\ Constructors\ and\ destructor}}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_new_vector_ab4aad4964deebda8cb15740b7e49af54}{NewVector}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ default\ constructor}}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{class_new_vector_aa58df08d353550b71b7ddb964f6ee583}{\string~NewVector}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ destructor}}
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{class_new_vector_ab4aad4964deebda8cb15740b7e49af54}{NewVector}}(std::initializer\_list<T>);\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ initializer\ list\ constructor\ }}
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{class_new_vector_ab4aad4964deebda8cb15740b7e49af54}{NewVector}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_new_vector}{NewVector<T>}}\&);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ copy\ constructor}}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{class_new_vector_ab4aad4964deebda8cb15740b7e49af54}{NewVector}}(\mbox{\hyperlink{class_new_vector}{NewVector<T>}}\&\&);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ move\ constructor}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{comment}{//\ Copy\ and\ move\ assignment\ operators}}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{class_new_vector}{NewVector<T>}}\&\ \mbox{\hyperlink{class_new_vector_a5ed1a1f22a5e5cebd58987724ea92a93}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_new_vector}{NewVector<T>}}\&);\ \textcolor{comment}{//\ copy\ assignment}}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{class_new_vector}{NewVector<T>}}\&\ \mbox{\hyperlink{class_new_vector_a5ed1a1f22a5e5cebd58987724ea92a93}{operator=}}(\mbox{\hyperlink{class_new_vector}{NewVector<T>}}\&\&);\ \ \ \ \ \ \textcolor{comment}{//\ move\ assignment}}
+\DoxyCodeLine{00026\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{comment}{//\ comparison\ operator}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_new_vector_afc3481d5080769ccb0a88d42223d255e}{operator==}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_new_vector}{NewVector<T>}}\&)\ \textcolor{keyword}{const};\ \ \ \textcolor{comment}{//\ compare\ two\ vectors\ for\ equality}}
+\DoxyCodeLine{00029\ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{//\ Element\ access}}
+\DoxyCodeLine{00031\ \ \ \ \ T\&\ \mbox{\hyperlink{class_new_vector_ab672cbc2c65a59ddb597f56e3f255952}{operator[]}}(\textcolor{keywordtype}{size\_t}\ index);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ return\ the\ element\ at\ index,\ f.e.\ vec[0]\ =\ 5;}}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{const}\ T\&\ \mbox{\hyperlink{class_new_vector_ab672cbc2c65a59ddb597f56e3f255952}{operator[]}}(\textcolor{keywordtype}{size\_t}\ index)\ \textcolor{keyword}{const};\ \ \ \ \ \ \textcolor{comment}{//\ return\ the\ element\ at\ index,\ f.e.\ int\ x\ =\ vec[0];}}
+\DoxyCodeLine{00033\ \ \ \ \ T\&\ \mbox{\hyperlink{class_new_vector_ad2c960b3843397dc4ed7df11d206cde4}{front}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ return\ the\ first\ element,\ f.e.\ vec.front()\ =\ 5;\ \ }}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{const}\ T\&\ \mbox{\hyperlink{class_new_vector_ad2c960b3843397dc4ed7df11d206cde4}{front}}()\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ return\ the\ first\ element,\ f.e.\ int\ x\ =\ vec.front();}}
+\DoxyCodeLine{00035\ \ \ \ \ T\&\ \mbox{\hyperlink{class_new_vector_aa5fb73245eb112adb76db288f21bbf5d}{back}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ return\ the\ last\ element,\ f.e.\ vec.back()\ =\ 5;}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{const}\ T\&\ \mbox{\hyperlink{class_new_vector_aa5fb73245eb112adb76db288f21bbf5d}{back}}()\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ return\ the\ last\ element,\ f.e.\ int\ x\ =\ vec.back();}}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//\ Iterators\ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00039\ \ \ \ \ T*\ \mbox{\hyperlink{class_new_vector_a70939cef47e8217c2e78e6b494026483}{begin}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ return\ a\ pointer\ to\ the\ first\ element}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{const}\ T*\ \mbox{\hyperlink{class_new_vector_a70939cef47e8217c2e78e6b494026483}{begin}}()\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ return\ a\ pointer\ to\ the\ first\ element}}
+\DoxyCodeLine{00041\ \ \ \ \ T*\ \mbox{\hyperlink{class_new_vector_a12eae267cb7341eb2cc8651c2f93247d}{end}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ return\ a\ pointer\ to\ one\ past\ the\ last\ element}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{const}\ T*\ \mbox{\hyperlink{class_new_vector_a12eae267cb7341eb2cc8651c2f93247d}{end}}()\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ return\ a\ pointer\ to\ one\ past\ the\ last\ element}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{comment}{//\ Capacity\ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_new_vector_ae05618218e30c42beded2c52ff082692}{empty}}()\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ check\ if\ the\ vector\ is\ empty}}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_new_vector_a5792125a9a3830c6d3930122f970792e}{size}}()\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ return\ the\ number\ of\ elements\ in\ the\ vector}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_new_vector_a650007e88de4d9bbb152f1da5f2a0019}{max\_size}}()\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ return\ the\ maximum\ number\ of\ elements\ the\ vector\ can\ hold}}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_new_vector_a32c3352c2b07002fb0b48cd6ab0a9044}{reserve}}(\textcolor{keywordtype}{size\_t}\ new\_capacity);\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ increase\ the\ capacity\ of\ the\ vector\ to\ new\_capacity}}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_new_vector_ae97fd96125efcebc76c91c5242b9af6e}{shrink\_to\_fit}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ reduce\ the\ capacity\ to\ the\ number\ of\ elements\ in\ the\ vector}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//\ Modifiers}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_new_vector_ac39a7ea55a26f283a4dc34d20b9853fe}{clear}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ remove\ all\ elements\ from\ the\ vector}}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_new_vector_ac90a63381e555346d6ffa566abfe021d}{push\_back}}(\textcolor{keyword}{const}\ T\&\ \mbox{\hyperlink{catch__amalgamated_8cpp_a5dcc1560b74135e065519bc3986c14b1}{value}});\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ add\ an\ element\ to\ the\ end\ of\ the\ vector}}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_new_vector_a3674cc2901a27c5cfb5adb94a69ab825}{pop\_back}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ remove\ the\ last\ element\ from\ the\ vector}}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_new_vector_a5cb82d39af7b9dec846e28101d092aa7}{erase}}(T*\ pos);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ remove\ the\ element\ at\ pos}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_new_vector_a5cb82d39af7b9dec846e28101d092aa7}{erase}}(T*\ start,\ T*\ end);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ remove\ elements\ in\ the\ range\ [start,\ end)}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_new_vector_a1468a1141aa49816a647fb503ebd7834}{insert}}(T*\ insert\_pos,\ T*\ start,\ T*\ end);\ \textcolor{comment}{//\ inserts\ elements\ after\ insert\_pos\ from\ the\ range\ [start,\ end)}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_new_vector_8inl}{NewVector.inl}}"{}}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

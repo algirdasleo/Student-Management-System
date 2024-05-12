@@ -1,0 +1,357 @@
+\chapter{Studentų Duomenų Valdymo Sistema}
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{Studentų Duomenų Valdymo Sistema@{Studentų Duomenų Valdymo Sistema}}
+\label{md__r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md0}%
+ Ši programa yra studentų duomenų valdymo sistema, kuri leidžia vartotojui įvesti studentų duomenis įvairiais būdais ir pateikti jų galutinius įvertinimus. {\bfseries{Pagrindinės programos funkcijos\+:}}
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Duomenų Įvedimas\+:}} Vartotojas gali įvesti studentų duomenis rankiniu būdu, generuoti juos atsitiktinai, arba nuskaityti iš failo.
+\item {\bfseries{Įvertinimų Skaičiavimas\+:}} Programa apskaičiuoja studentų galutinius įvertinimus pagal jų namų darbų ir egzaminų rezultatus naudojant vidurkį ar medianą.
+\item {\bfseries{Duomenų Išvedimas\+:}} Galiausiai, vartotojas gali pasirinkti duomenų rikiavimo būdą ir programa pateikia surikiuotą studentų sąrašą su jų vardais, pavardėmis ir galutiniais įvertinimais.
+\end{DoxyEnumerate}
+
+\DoxyHorRuler{0}
+
+
+Programos meniu siūlo penkias pagrindines pasirinkimo galimybes, kiekviena iš jų leidžia vartotojui įvesti arba gauti studentų duomenis skirtingais būdais\+:
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Studento duomenų įvedimas rankiniu būdu\+:}} Ši funkcija leidžia vartotojui įvesti visus studento duomenis, įskaitant vardą, pavardę, namų darbų rezultatus ir egzamino įvertinimą, rankiniu būdu.
+\item {\bfseries{Įvedimas rankiniu būdu su atsitiktiniais pažymiais\+:}} Šioje funkcijoje vartotojas įveda studento vardą ir pavardę, o programa automatiškai generuoja namų darbų ir egzamino įvertinimus.
+\item {\bfseries{Visiškai atsitiktinis studentų duomenų generavimas\+:}} Ši funkcija leidžia programai automatiškai sugeneruoti visus studento duomenis, įskaitant vardą, pavardę ir visus įvertinimus.
+\item {\bfseries{Duomenų nuskaitymas iš failo\+:}} Ši funkcija leidžia vartotojui nuskaityti studentų duomenis iš iš anksto paruošto tekstinio failo, pavyzdžiui, „kursiokai.\+txt“.
+\item {\bfseries{Baigti darbą ir rodyti rezultatus\+:}} Pasirinkus šią funkciją, programa leidžia vartotojui pasirinkti, kaip nori rikiuoti galutinius duomenis (pagal vardą, pavardę, galutinį įvertinimą ir pan.) ir pateikia galutinę ataskaitą su visais studentų įrašais, jų vardais, pavardėmis ir galutiniais įvertinimais.
+\end{DoxyEnumerate}
+
+\DoxyHorRuler{0}
+
+
+{\bfseries{Kaip diegti šią programą?}}
+
+
+\begin{DoxyItemize}
+\item Prieš paleidžiant programą, ją reikia sukompiliuoti su komanda terminale\+: {\ttfamily make build}.
+\item Norint paleisti programą, reikia parašyti komandą\+: {\ttfamily make run}.
+\item Norint išvalyti sukurtą paleisties failą, reikią parašyti komandą\+: {\ttfamily make clean}.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+ {\bfseries{std\+::vector ir \doxylink{class_new_vector}{New\+Vector} {\ttfamily push\+\_\+back} spartos palyginimas (V3.\+0)}}
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Elementų kiekis   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ {\ttfamily std\+::vector}   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ {\ttfamily \doxylink{class_new_vector}{New\+Vector}}    }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Elementų kiekis   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ {\ttfamily std\+::vector}   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ {\ttfamily \doxylink{class_new_vector}{New\+Vector}}    }\\\cline{1-3}
+\endhead
+100\textquotesingle{}000   &0s   &0s    \\\cline{1-3}
+1\textquotesingle{}000\textquotesingle{}000   &0.\+001s   &0.\+001s    \\\cline{1-3}
+10\textquotesingle{}000\textquotesingle{}000   &0.\+025s   &0.\+014s    \\\cline{1-3}
+100\textquotesingle{}000\textquotesingle{}000   &0.\+144s   &0.\+123s    \\\cline{1-3}
+1\textquotesingle{}000\textquotesingle{}000\textquotesingle{}000   &1.\+57s   &1.\+897   \\\cline{1-3}
+\end{longtabu}
+
+
+{\bfseries{Programos spartos palyginimas naudojant std\+::vector ir \doxylink{class_new_vector}{New\+Vector}}}
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{4}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Užduočių atlikimas (s)   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 100000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 1000000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 10000000    }\\\cline{1-4}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Užduočių atlikimas (s)   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 100000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 1000000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 10000000    }\\\cline{1-4}
+\endhead
+{\bfseries{std\+::vector}}   &&&\\\cline{1-4}
+Failų nuskaitymas   &0.\+106   &0.\+755   &7.\+607    \\\cline{1-4}
+Skirstymas į grupes   &0.\+006   &0.\+037   &0.\+187    \\\cline{1-4}
+Rūšiavimas didėjimo t.   &0.\+030   &0.\+152   &1.\+371    \\\cline{1-4}
+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/-\/---    \\\cline{1-4}
+{\bfseries{\doxylink{class_new_vector}{New\+Vector}}}   &&&\\\cline{1-4}
+Failų nuskaitymas   &0.\+111   &0.\+801   &8.\+522    \\\cline{1-4}
+Skirstymas į grupes   &0.\+018   &0.\+098   &0.\+675    \\\cline{1-4}
+Rūšiavimas didėjimo t.   &0.\+026   &0.\+129   &1.\+330    \\\cline{1-4}
+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/-\/---   \\\cline{1-4}
+\end{longtabu}
+
+
+{\bfseries{\doxylink{class_new_vector}{New\+Vector} klasės 5 atsitiktinių metodų apžvalga\+:}}
+
+
+\begin{DoxyItemize}
+\item \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}{\ttfamily push\+\_\+back(const T\& value)}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}
+\begin{DoxyItemize}
+\item {\bfseries{Aprašymas\+:}} Prideda elementą į vektoriaus galą.
+\item {\bfseries{Pavyzdys\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{class_new_vector}{NewVector<int>}}\ vec;\ }
+\DoxyCodeLine{vec.\mbox{\hyperlink{class_new_vector_ac90a63381e555346d6ffa566abfe021d}{push\_back}}(10);}
+\DoxyCodeLine{vec.\mbox{\hyperlink{class_new_vector_ac90a63381e555346d6ffa566abfe021d}{push\_back}}(20);}
+\DoxyCodeLine{\textcolor{comment}{//\ vec\ =\ \{10,\ 20\}}}
+
+\end{DoxyCode}
+
+\end{DoxyItemize}
+\item \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}{\ttfamily size()}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}
+\begin{DoxyItemize}
+\item {\bfseries{Aprašymas\+:}} Grąžina elementų skaičių vektoriuje.
+\item {\bfseries{Pavyzdys\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{class_new_vector}{NewVector<int>}}\ vec;}
+\DoxyCodeLine{vec.\mbox{\hyperlink{class_new_vector_ac90a63381e555346d6ffa566abfe021d}{push\_back}}(5);}
+\DoxyCodeLine{vec.\mbox{\hyperlink{class_new_vector_ac90a63381e555346d6ffa566abfe021d}{push\_back}}(15);}
+\DoxyCodeLine{\textcolor{keywordtype}{size\_t}\ numElements\ =\ vec.\mbox{\hyperlink{class_new_vector_a5792125a9a3830c6d3930122f970792e}{size}}();}
+\DoxyCodeLine{std::cout\ <<\ \textcolor{stringliteral}{"{}Elementų\ skaičius\ vektoriuje:\ "{}}\ <<\ numElements\ <<\ std::endl;}
+\DoxyCodeLine{\textcolor{comment}{//\ Išves:\ "{}Elementų\ skaičius\ vektoriuje:\ 2"{}}}
+
+\end{DoxyCode}
+
+\end{DoxyItemize}
+\item \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}{\ttfamily empty()}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}
+\begin{DoxyItemize}
+\item {\bfseries{Aprašymas\+:}} Tikrina, ar vektorius yra tuščias.
+\item {\bfseries{Pavyzdys\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{class_new_vector}{NewVector<int>}}\ vec;}
+\DoxyCodeLine{\textcolor{keywordtype}{bool}\ isEmpty\ =\ vec.\mbox{\hyperlink{class_new_vector_ae05618218e30c42beded2c52ff082692}{empty}}();}
+\DoxyCodeLine{std::cout\ <<\ \textcolor{stringliteral}{"{}Vektorius\ yra\ "{}}\ <<\ (isEmpty\ ?\ \textcolor{stringliteral}{"{}tuščias"{}}\ :\ \textcolor{stringliteral}{"{}ne\ tuščias"{}})\ <<\ std::endl;}
+\DoxyCodeLine{\textcolor{comment}{//\ Išves:\ "{}Vektorius\ yra\ tuščias"{}}}
+
+\end{DoxyCode}
+
+\end{DoxyItemize}
+\item \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}{\ttfamily erase(\+T\texorpdfstring{$\ast$}{*} pos)}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}
+\begin{DoxyItemize}
+\item {\bfseries{Aprašymas\+:}} Pašalina elementą nurodytoje pozicijoje.
+\item {\bfseries{Pavyzdys\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{class_new_vector}{NewVector<int>}}\ vec;}
+\DoxyCodeLine{vec.\mbox{\hyperlink{class_new_vector_ac90a63381e555346d6ffa566abfe021d}{push\_back}}(5);}
+\DoxyCodeLine{vec.\mbox{\hyperlink{class_new_vector_ac90a63381e555346d6ffa566abfe021d}{push\_back}}(10);}
+\DoxyCodeLine{vec.\mbox{\hyperlink{class_new_vector_ac90a63381e555346d6ffa566abfe021d}{push\_back}}(15);}
+\DoxyCodeLine{vec.\mbox{\hyperlink{class_new_vector_a5cb82d39af7b9dec846e28101d092aa7}{erase}}(vec.\mbox{\hyperlink{class_new_vector_a70939cef47e8217c2e78e6b494026483}{begin}}()\ +\ 1);\ \textcolor{comment}{//\ Ištrina\ antrą\ elementą}}
+\DoxyCodeLine{\textcolor{comment}{//\ vec\ =\ \{5,\ 15\}}}
+
+\end{DoxyCode}
+
+\end{DoxyItemize}
+\item \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}{\ttfamily reserve(size\+\_\+t new\+\_\+capacity)}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}
+\begin{DoxyItemize}
+\item {\bfseries{Aprašymas\+:}} Padidina vektoriaus talpą iki nurodyto dydžio.
+\item {\bfseries{Pavyzdys\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{class_new_vector}{NewVector<int>}}\ vec;}
+\DoxyCodeLine{vec.\mbox{\hyperlink{class_new_vector_a32c3352c2b07002fb0b48cd6ab0a9044}{reserve}}(10);\ \textcolor{comment}{//\ Rezervuoja\ vietos\ 10-\/čiai\ elementų}}
+
+\end{DoxyCode}
+
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+
+
+{\bfseries{Testavimas (V2.\+0)\+:}}
+
+Programoje yra įdiegti unit testai naudojant Catch2 testų framework su kuria yra tikrinamas programos funkcionalumas.
+
+Norėdami paleisti testus, jūs turite įvykdyti {\bfseries{šiuos žingsnius}}\+:
+
+
+\begin{DoxyItemize}
+\item Kompiliuokite testavimo failus naudojant {\ttfamily make test}, kuris sukuria testų vykdymo failą ir jį paleidžia.
+\end{DoxyItemize}
+
+{\bfseries{Testų apžvalga\+:}}
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Konstruktorių testai\+:}} Patikrina, ar objektai teisingai sukuriami naudojant konstruktorius.
+\item {\bfseries{Copy ir Move operacijų testai\+:}} Užtikrina, kad objektų kopijavimas ir perkėlimas veiktų teisingai ir duomenys nebūtų prarasti.
+\item {\bfseries{Funkcionalumo testai\+:}} Tikrina pagrindines programos funkcijas, tokias kaip studentų duomenų įvedimas, skaičiavimas ir rūšiavimas.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+
+
+{\bfseries{Pasirinktiniai duomenų įvedimo būdai (V1.\+2)\+:}}
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Rankinis duomenų įvedimas (\doxylink{class_manual_studentas_a3f2da6c53b6adb31068791f09f559ab9}{Manual\+Studentas\+::read})\+:}}
+\begin{DoxyItemize}
+\item Šis metodas leidžia vartotojui rankiniu būdu įvesti studento vardą, pavardę ir pažymius.
+\item Vartotojas taip pat gali nuspręsti, kiek namų darbų pažymių nori įvesti.
+\end{DoxyItemize}
+\item {\bfseries{Pusiau-\/automatinis duomenų įvedimas (\doxylink{class_semi_auto_studentas_a298991e45bd1809c6cbe47b3bdc1e822}{Semi\+Auto\+Studentas\+::read})\+:}}
+\begin{DoxyItemize}
+\item Vartotojas įveda studento vardą ir pavardę rankiniu būdu.
+\item Namų darbų pažymiai ir egzamino rezultatas sugeneruojami automatiškai naudojant atsitiktinius skaičius.
+\end{DoxyItemize}
+\item {\bfseries{Automatinis duomenų įvedimas (\doxylink{class_auto_studentas_a3c1ac5afeb52f4111012f0a86288266b}{Auto\+Studentas\+::read})\+:}}
+\begin{DoxyItemize}
+\item Visi studento duomenys, įskaitant vardą, pavardę ir visus pažymius, generuojami automatiškai.
+\item Vartotojas nurodo, kiek studentų duomenų nori sugeneruoti.
+\end{DoxyItemize}
+\item {\bfseries{Duomenų įvedimas iš failo (\doxylink{class_file_studentas_ae421d2b41d0fbf9d35a9905178bff05e}{File\+Studentas\+::read})\+:}}
+\begin{DoxyItemize}
+\item Šis metodas skaito studentų duomenis iš nurodyto tekstinio failo.
+\item Vartotojas turi įvesti failo pavadinimą, iš kurio bus skaitoma.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+{\bfseries{Išvesties Metodai}}
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Išvestis į ekraną\+:}}
+\begin{DoxyItemize}
+\item {\bfseries{Studentas\+Manager\+::print}} metodas išveda visų studentų duomenis tiesiogiai į konsolės langą. Išvedami duomenys\+: vardas, pavardė, galutinis balas (vidurkis ir mediana).
+\end{DoxyItemize}
+\item {\bfseries{Išvestis į failą (\doxylink{class_studentas_manager_a3302a82ff09ea1b82fc8c386e5636a16}{Studentas\+Manager\+::print\+To\+File})\+:}}
+\begin{DoxyItemize}
+\item Šis metodas išveda visų studentų duomenis į nurodytą tekstinių failą. Failo pavadinimas gali būti pasirinktas vartotojo. Jeigu jis nenurodomas, naudojamas numatytasis pavadinimas "{}rezultatai.\+txt"{}. Išvedami duomenys\+: vardas, pavardė, galutinis balas (vidurkis ir mediana), taip pat galima atskirti studentus, kurie išlaikė arba ne.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+
+
+{\bfseries{Spartos palyginimas (V1.\+1)\+:}}
+
+{\bfseries{Pasirinkau optimaliausią duomenų struktūrą darbui su studentais\+: List.}}
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Užduočių atlikimas (s)   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 1000000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 10000000    }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Užduočių atlikimas (s)   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 1000000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 10000000    }\\\cline{1-3}
+\endhead
+{\bfseries{Klasė (List)}}   &&\\\cline{1-3}
+\end{longtabu}
+\texorpdfstring{$\vert$}{|} Failų nuskaitymas \texorpdfstring{$\vert$}{|} 4.\+02 \texorpdfstring{$\vert$}{|} 37.\+653 \texorpdfstring{$\vert$}{|} \texorpdfstring{$<$}{<}= 35\% lėčiau \texorpdfstring{$\vert$}{|} Skirstymas į grupes \texorpdfstring{$\vert$}{|} 0.\+062 \texorpdfstring{$\vert$}{|} 0.\+565 \texorpdfstring{$\vert$}{|} \texorpdfstring{$<$}{<}= 15\% greičiau \texorpdfstring{$\vert$}{|} Rūšiavimas didėjimo t. \texorpdfstring{$\vert$}{|} 0.\+568 \texorpdfstring{$\vert$}{|} 6.\+94 \texorpdfstring{$\vert$}{|} \texorpdfstring{$<$}{<}= 6\% greičiau \texorpdfstring{$\vert$}{|}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---\texorpdfstring{$\vert$}{|}-\/-\/-\/-\/-\/-\/---\texorpdfstring{$\vert$}{|}-\/-\/-\/-\/-\/-\/-\/---\texorpdfstring{$\vert$}{|} \texorpdfstring{$\vert$}{|} {\bfseries{Struktūra (List)}} \texorpdfstring{$\vert$}{|} \texorpdfstring{$\vert$}{|} \texorpdfstring{$\vert$}{|} \texorpdfstring{$\vert$}{|} Failų nuskaitymas \texorpdfstring{$\vert$}{|} 2.\+916 \texorpdfstring{$\vert$}{|} 27.\+902 \texorpdfstring{$\vert$}{|} \texorpdfstring{$\vert$}{|} Skirstymas į grupes \texorpdfstring{$\vert$}{|} 0.\+074 \texorpdfstring{$\vert$}{|} 0.\+666 \texorpdfstring{$\vert$}{|} \texorpdfstring{$\vert$}{|} Rūšiavimas didėjimo t. \texorpdfstring{$\vert$}{|} 0.\+715 \texorpdfstring{$\vert$}{|} 7.\+35 \texorpdfstring{$\vert$}{|} \texorpdfstring{$\vert$}{|}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---\texorpdfstring{$\vert$}{|}-\/-\/-\/-\/-\/-\/---\texorpdfstring{$\vert$}{|}-\/-\/-\/-\/-\/-\/-\/---\texorpdfstring{$\vert$}{|}
+
+{\bfseries{Kompiliatoriaus optimizavimo lygio analizė\+:}}
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Užduočių atlikimas (s)   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 1000000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 10000000    }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Užduočių atlikimas (s)   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 1000000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 10000000    }\\\cline{1-3}
+\endhead
+01   &&\\\cline{1-3}
+Failų nuskaitymas   &3.\+767   &40.\+186    \\\cline{1-3}
+Skirstymas į grupes   &0.\+069   &0.\+7    \\\cline{1-3}
+Rūšiavimas didėjimo t.   &0.\+58   &7.\+406    \\\cline{1-3}
+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/-\/---    \\\cline{1-3}
+02   &&\\\cline{1-3}
+Failų nuskaitymas   &4.\+102   &38.\+536    \\\cline{1-3}
+Skirstymas į grupes   &0.\+062   &0.\+65    \\\cline{1-3}
+Rūšiavimas didėjimo t.   &0.\+557   &7.\+466    \\\cline{1-3}
+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/-\/---    \\\cline{1-3}
+03   &&\\\cline{1-3}
+\end{longtabu}
+\texorpdfstring{$\vert$}{|} Failų nuskaitymas \texorpdfstring{$\vert$}{|} 4.\+707 \texorpdfstring{$\vert$}{|} 37.\+686 \texorpdfstring{$\vert$}{|} \texorpdfstring{$<$}{<}= 6.\+2\% greičiau už 01 \texorpdfstring{$\vert$}{|} Skirstymas į grupes \texorpdfstring{$\vert$}{|} 0.\+067 \texorpdfstring{$\vert$}{|} 0.\+608 \texorpdfstring{$\vert$}{|} \texorpdfstring{$<$}{<}= 13\% greičiau už 01 \texorpdfstring{$\vert$}{|} Rūšiavimas didėjimo t. \texorpdfstring{$\vert$}{|} 0.\+564 \texorpdfstring{$\vert$}{|} 7.\+05 \texorpdfstring{$\vert$}{|} \texorpdfstring{$<$}{<}= 5\% greičiau už 01 \texorpdfstring{$\vert$}{|}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---\texorpdfstring{$\vert$}{|}-\/-\/-\/-\/-\/-\/---\texorpdfstring{$\vert$}{|}-\/-\/-\/-\/-\/-\/-\/---\texorpdfstring{$\vert$}{|}
+
+\DoxyHorRuler{0}
+
+
+{\bfseries{Spartos palyginimas (V1.\+0)\+:}}
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{6}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Užduočių atlikimas (s)   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 1000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 10000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 100000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 1000000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 10000000    }\\\cline{1-6}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Užduočių atlikimas (s)   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 1000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 10000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 100000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 1000000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 10000000    }\\\cline{1-6}
+\endhead
+{\bfseries{Deque}}   &&&&&\\\cline{1-6}
+Failų nuskaitymas   &0.\+02   &0.\+036   &0.\+298   &2.\+95   &10.\+732    \\\cline{1-6}
+Skirstymas į grupes   &0   &0.\+015   &0.\+167   &1.\+867   &56.\+521    \\\cline{1-6}
+Rūšiavimas didėjimo t.   &0.\+011   &0.\+053   &1.\+1   &12.\+6   &96.\+79    \\\cline{1-6}
+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/-\/---    \\\cline{1-6}
+{\bfseries{Vector}}   &&&&&\\\cline{1-6}
+Failų nuskaitymas   &0.\+01   &0.\+03   &0.\+26   &2.\+55   &25.\+99    \\\cline{1-6}
+Skirstymas į grupes   &0   &0.\+01   &0.\+035   &0.\+329   &3.\+766    \\\cline{1-6}
+Rūšiavimas didėjimo t.   &0   &0.\+083   &0.\+185   &2.\+84   &32.\+94    \\\cline{1-6}
+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/-\/---    \\\cline{1-6}
+{\bfseries{List}}   &&&&&\\\cline{1-6}
+Failų nuskaitymas   &0   &0.\+024   &0.\+278   &2.\+763   &28.\+461    \\\cline{1-6}
+Skirstymas į grupes   &0   &0.\+01   &0.\+101   &0.\+915   &18.\+026    \\\cline{1-6}
+Rūšiavimas didėjimo t.   &0   &0.\+002   &0.\+051   &0.\+569   &8.\+465    \\\cline{1-6}
+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/-\/---   \\\cline{1-6}
+\end{longtabu}
+
+
+{\bfseries{Strategijų palyginimas\+:}}
+
+
+\begin{DoxyItemize}
+\item {\bfseries{1 strategija}} -\/ Bendro studentai konteinerio rūšiavimas į du naujus to paties tipo konteinerius.
+\item {\bfseries{2 strategija}} -\/ Bendro studentų konteinerio skaidymas (rūšiavimas) panaudojant tik vieną naują konteinerį\+: "{}neišlaikę"{}.
+\item {\bfseries{3 strategija}} -\/ Bendro studentų konteinerio skaidymas, naudojant 1 ar 2 strategiją ir įtraukiant "{}efektyvius"{} darbo su konteineriais metodus.
+\end{DoxyItemize}
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{6}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Studentų rušiavimas (s)   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 1000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 10000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 100000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 1000000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 10000000    }\\\cline{1-6}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Studentų rušiavimas (s)   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 1000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 10000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 100000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 1000000   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ 10000000    }\\\cline{1-6}
+\endhead
+{\bfseries{1 strategija}}   &&&&&\\\cline{1-6}
+Deque   &0   &0.\+015   &0.\+167   &1.\+867   &56.\+521    \\\cline{1-6}
+Vector   &0   &0.\+01   &0.\+035   &0.\+329   &3.\+766    \\\cline{1-6}
+List   &0   &0.\+01   &0.\+101   &0.\+915   &18.\+026    \\\cline{1-6}
+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/-\/---    \\\cline{1-6}
+{\bfseries{2 strategija}}   &&&&&\\\cline{1-6}
+Deque   &0.\+012   &1.\+285   &139.\+783   &...   &...    \\\cline{1-6}
+Vector   &0.\+019   &1.\+64   &160.\+687   &...   &...    \\\cline{1-6}
+List   &0   &0   &0.\+052   &0.\+695   &9.\+214    \\\cline{1-6}
+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/-\/---    \\\cline{1-6}
+{\bfseries{3 strategija}}   &&&&&\\\cline{1-6}
+Deque   &0   &0   &0.\+098   &0.\+817   &31.\+702    \\\cline{1-6}
+Vector   &0   &0.\+01   &0.\+003   &0.\+125   &1.\+253    \\\cline{1-6}
+List   &0   &0   &0.\+011   &0.\+081   &1.\+072    \\\cline{1-6}
+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/---   &-\/-\/-\/-\/-\/-\/-\/---   \\\cline{1-6}
+\end{longtabu}
+
+
+\DoxyHorRuler{0}
+
+
+{\bfseries{Versijų aprašymas\+:}}
+
+
+\begin{DoxyItemize}
+\item {\bfseries{V0.\+1}} -\/ Sukurta pradinė programos versija.
+\item {\bfseries{V0.\+2}} -\/ Galima nuskaityti iš failo, galima rūšiuoti pagal duomenis.
+\item {\bfseries{V0.\+3}} -\/ Perkeliamos funkcijos į external failą, išimčių valdymas.
+\item {\bfseries{V0.\+4}} -\/ Galima kurti testavimo failus, rušiavimas į dvi grupes.
+\item {\bfseries{V1.\+1}} -\/ \doxylink{class_studentas}{Studentas} struktūros pagrindu sukurta klasė \doxylink{class_studentas}{Studentas}, modifikuotos funkcijos
+\item {\bfseries{V1.\+2}} -\/ Pridėtas "{}\+Rule of Five"{} ir įvesties, išvesties operatoriai.
+\item {\bfseries{V1.\+5}} -\/ Nauja bazinė klasė "{}\+Zmogus"{}, o klasė "{}\+Studentas"{} jos išvestinė (derived) klasė.
+\item {\bfseries{V2.\+0}} -\/ Dokumentacija naudojantis Doxygen. Unit Testing naudojantis Catch2. 
+\end{DoxyItemize}

@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['capacity_0',['capacity',['../class_new_vector.html#aecca2aa53a8e2abeb67a510865843f93',1,'NewVector']]],
+  ['capturedexpression_1',['capturedExpression',['../struct_catch_1_1_assertion_info.html#accd36744b4acaa3a691a72df0b42190f',1,'Catch::AssertionInfo']]],
+  ['classname_2',['className',['../struct_catch_1_1_test_case_info.html#a1daaddce433ef171e34bec5a4719e772',1,'Catch::TestCaseInfo']]],
+  ['clock_5fcost_3',['clock_cost',['../struct_catch_1_1_benchmark_1_1_environment.html#adf68bbccb5c7e231324f4e244593280c',1,'Catch::Benchmark::Environment']]],
+  ['clock_5fcost_5festimation_5fiterations_4',['clock_cost_estimation_iterations',['../namespace_catch_1_1_benchmark_1_1_detail.html#a971609fd1bf1dffc78fbb645d649bcae',1,'Catch::Benchmark::Detail']]],
+  ['clock_5fcost_5festimation_5ftick_5flimit_5',['clock_cost_estimation_tick_limit',['../namespace_catch_1_1_benchmark_1_1_detail.html#a1ee35c3ddb5cdf0f4ad7354240e4288d',1,'Catch::Benchmark::Detail']]],
+  ['clock_5fcost_5festimation_5ftime_6',['clock_cost_estimation_time',['../namespace_catch_1_1_benchmark_1_1_detail.html#a9b7d750760d2dbafad94a78957d85b68',1,'Catch::Benchmark::Detail']]],
+  ['clock_5fcost_5festimation_5ftime_5flimit_7',['clock_cost_estimation_time_limit',['../namespace_catch_1_1_benchmark_1_1_detail.html#a258a5fe6cc543b6ab8cceb3e175e1c1d',1,'Catch::Benchmark::Detail']]],
+  ['clock_5fresolution_8',['clock_resolution',['../struct_catch_1_1_benchmark_1_1_environment.html#ae9a6cf5625ef688e8b2739c14e427ce8',1,'Catch::Benchmark::Environment']]],
+  ['clock_5fresolution_5festimation_5ftime_9',['clock_resolution_estimation_time',['../namespace_catch_1_1_benchmark_1_1_detail.html#a805143fb513ffc616374ea01f764f87c',1,'Catch::Benchmark::Detail']]],
+  ['clockcost_10',['clockCost',['../struct_catch_1_1_benchmark_info.html#a1e5b58de921a9e88b72749cf3bd6efea',1,'Catch::BenchmarkInfo']]],
+  ['clockresolution_11',['clockResolution',['../struct_catch_1_1_benchmark_info.html#afc6fa85797067ea9af01fb0e2bc0d790',1,'Catch::BenchmarkInfo']]],
+  ['colour_12',['colour',['../catch__amalgamated_8cpp.html#a5f5de53ffd2c7aad35b1140210ffe6cf',1,'catch_amalgamated.cpp']]],
+  ['colourimpl_13',['colourImpl',['../catch__amalgamated_8cpp.html#abf522b0ef8c8b3a16c40fff2a0b69ebf',1,'catch_amalgamated.cpp']]],
+  ['colourmode_14',['colourMode',['../struct_catch_1_1_processed_reporter_spec.html#ad17b305aa863b41fadf2dc45f45a1952',1,'Catch::ProcessedReporterSpec']]],
+  ['confidence_5finterval_15',['confidence_interval',['../struct_catch_1_1_benchmark_1_1_estimate.html#ac7c0199cc99a53c3f81457b6fdb451a6',1,'Catch::Benchmark::Estimate']]],
+  ['counter_16',['counter',['../catch__amalgamated_8cpp.html#ac449e05964ab2319a33c1718c5ad485b',1,'catch_amalgamated.cpp']]],
+  ['currentcontext_17',['currentContext',['../class_catch_1_1_context.html#ac4ba79b6c2667f0c54dee09ae9b0a6d6',1,'Catch::Context']]],
+  ['currentsize_18',['currentSize',['../class_new_vector.html#a3d1eb5a3fdd6f4f661e8df5e20ca2f59',1,'NewVector']]],
+  ['customoptions_19',['customOptions',['../struct_catch_1_1_processed_reporter_spec.html#aaaeead5abd0ff72b8a1837b23243336a',1,'Catch::ProcessedReporterSpec']]]
+];
