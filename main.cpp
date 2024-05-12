@@ -131,3 +131,40 @@ int main() {
               << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() / 1000.0 << " sekundziu.\n";
     return 0;
 }
+
+// Compare std::vector and NewVector performance
+/* int main() {
+    // Pradėti v1 užpildymo laiko matavimą
+    auto start = std::chrono::high_resolution_clock::now();
+    unsigned int sz = 100000000;  // 100000, 1000000, 10000000, 100000000
+    std::vector<int> v1;
+    int count = 0;
+    for (int i = 1; i <= sz; i++){
+        v1.push_back(i);
+        if (v1.size() == v1.capacity())
+            count++;
+    }
+    std::cout << "std::vector capacity reached " << count << " times.\n";
+
+    // Baigti v1 užpildymo laiko matavimą
+    auto end = std::chrono::high_resolution_clock::now();
+    std::cout << "std::vector užpildymas užtruko "
+              << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() / 1000.0 << " sekundžių.\n";
+
+    // Pradėti v2 užpildymo laiko matavimą
+    start = std::chrono::high_resolution_clock::now();
+    NewVector<int> v2;
+    count = 0;
+    for (int i = 1; i <= sz; i++){
+        v2.push_back(i);
+        if (v2.size() == v2.max_size())
+            count++;
+    }
+    std::cout << "NewVector capacity reached " << count << " times.\n";
+
+    // Baigti v2 užpildymo laiko matavimą
+    end = std::chrono::high_resolution_clock::now();
+    std::cout << "NewVector užpildymas užtruko "
+              << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() / 1000.0 << " sekundžių.\n";
+}
+*/
