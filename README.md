@@ -35,6 +35,20 @@ Programos meniu siūlo penkias pagrindines pasirinkimo galimybes, kiekviena iš 
 |100'000'000|0.144s|0.123s|
 |1'000'000'000|1.57s|1.897|
 
+**Programos spartos palyginimas naudojant std::vector ir NewVector**
+
+| Užduočių atlikimas (s) | 100000  | 1000000  | 10000000 |
+|------------------------|---------|----------|----------|
+| **std::vector**        |         |          |          |
+| Failų nuskaitymas      |  0.106  |  0.755   | 7.607    |
+| Skirstymas į grupes    |  0.006  |  0.037   | 0.187    |
+| Rūšiavimas didėjimo t. |  0.030  |  0.152   | 1.371    |
+|------------------------|---------|----------|----------|
+| **NewVector**          |         |          |          |
+| Failų nuskaitymas      |  0.111  |  0.801   | 8.522    |
+| Skirstymas į grupes    |  0.018  |  0.098   | 0.675    |
+| Rūšiavimas didėjimo t. |  0.026  |  0.129   | 1.330    |
+|------------------------|---------|----------|----------|
 
 **NewVector klasės 5 atsitiktinių metodų apžvalga:**
 
@@ -146,12 +160,12 @@ Norėdami paleisti testus, jūs turite įvykdyti **šiuos žingsnius**:
 
 | Užduočių atlikimas (s) | 1000000 | 10000000 |
 |------------------------|---------|----------|
-| Klasė (List)           |         |          |
+| **Klasė (List)**       |         |          |
 | Failų nuskaitymas      |  4.02   |  37.653  | <= 35% lėčiau
 | Skirstymas į grupes    |  0.062  |  0.565   | <= 15% greičiau
 | Rūšiavimas didėjimo t. |  0.568  |  6.94    | <= 6% greičiau
 |------------------------|---------|----------|
-| Struktūra (List)       |         |          |
+| **Struktūra (List)**   |         |          |
 | Failų nuskaitymas      |  2.916  |  27.902  |
 | Skirstymas į grupes    |  0.074  |  0.666   |
 | Rūšiavimas didėjimo t. |  0.715  |  7.35    |
