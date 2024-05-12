@@ -39,12 +39,12 @@ Programos meniu siūlo penkias pagrindines pasirinkimo galimybes, kiekviena iš 
 
 | Užduočių atlikimas (s) | 100000  | 1000000  | 10000000 |
 |------------------------|---------|----------|----------|
-| **std::vector**        |         |          |          |
+| **`std::vector`**      |         |          |          |
 | Failų nuskaitymas      |  0.106  |  0.755   | 7.607    |
 | Skirstymas į grupes    |  0.006  |  0.037   | 0.187    |
 | Rūšiavimas didėjimo t. |  0.030  |  0.152   | 1.371    |
 |------------------------|---------|----------|----------|
-| **NewVector**          |         |          |          |
+| **`NewVector`**        |         |          |          |
 | Failų nuskaitymas      |  0.111  |  0.801   | 8.522    |
 | Skirstymas į grupes    |  0.018  |  0.098   | 0.675    |
 | Rūšiavimas didėjimo t. |  0.026  |  0.129   | 1.330    |
