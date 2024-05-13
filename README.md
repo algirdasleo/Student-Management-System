@@ -8,21 +8,22 @@
 
 ---
 
-Programos meniu siūlo penkias pagrindines pasirinkimo galimybes, kiekviena iš jų leidžia vartotojui įvesti arba gauti studentų duomenis skirtingais būdais:
+Programos meniu siūlo šešias pagrindines pasirinkimo galimybes, kiekviena iš jų leidžia vartotojui įvesti arba gauti studentų duomenis skirtingais būdais:
 
 1. **Studento duomenų įvedimas rankiniu būdu:** Ši funkcija leidžia vartotojui įvesti visus studento duomenis, įskaitant vardą, pavardę, namų darbų rezultatus ir egzamino įvertinimą, rankiniu būdu.
 2. **Įvedimas rankiniu būdu su atsitiktiniais pažymiais:** Šioje funkcijoje vartotojas įveda studento vardą ir pavardę, o programa automatiškai generuoja namų darbų ir egzamino įvertinimus.
 3. **Visiškai atsitiktinis studentų duomenų generavimas:** Ši funkcija leidžia programai automatiškai sugeneruoti visus studento duomenis, įskaitant vardą, pavardę ir visus įvertinimus.
 4. **Duomenų nuskaitymas iš failo:** Ši funkcija leidžia vartotojui nuskaityti studentų duomenis iš iš anksto paruošto tekstinio failo, pavyzdžiui, „kursiokai.txt“.
-5. **Baigti darbą ir rodyti rezultatus:** Pasirinkus šią funkciją, programa leidžia vartotojui pasirinkti, kaip nori rikiuoti galutinius duomenis (pagal vardą, pavardę, galutinį įvertinimą ir pan.) ir pateikia galutinę ataskaitą su visais studentų įrašais, jų vardais, pavardėmis ir galutiniais įvertinimais.
+5. **Duomenų failų kūrimas:** Ši funkcija leidžia vartotojui sukurti įvairaus dydžio (0-10000000 studentų) duomenų failus, kuriuos vėliau galima nuskaityti ir apdoroti.
+6. **Baigti darbą ir rodyti rezultatus:** Pasirinkus šią funkciją, programa leidžia vartotojui pasirinkti, kaip nori rikiuoti galutinius duomenis (pagal vardą, pavardę, galutinį įvertinimą ir pan.) ir pateikia galutinę ataskaitą su visais studentų įrašais, jų vardais, pavardėmis ir galutiniais įvertinimais.
 
 ---
 
 **Kaip diegti šią programą?**
 
-- Prieš paleidžiant programą, ją reikia sukompiliuoti su komanda terminale: `make build`.
-- Norint paleisti programą, reikia parašyti komandą: `make run`.
-- Norint išvalyti sukurtą paleisties failą, reikią parašyti komandą: `make clean`.
+- Pirmiausia reikia atsisiųsti ir įdiegti **`Setup.exe`**.
+- Norint paleisti programą reikia paspausti ant darbalaukyje sukurtos programos arba jei pasirinkote nesukurti darbalaukyje programos nuorodos, reikės nueiti į ProgramFiles/VU/Algirdas-Poskus kur rasite **`run.exe`**.
+- Paleiskite programą **su admistratoriaus teisėmis** ir galėsite naudotis programa.
 
 ---
 **std::vector ir NewVector `push_back` spartos palyginimas (V3.0)**
