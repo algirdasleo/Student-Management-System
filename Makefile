@@ -1,7 +1,7 @@
 CC=g++ 					# compiler to use
 TARGET=run 				# name of the executable
 CFLAGS=-O3 				# optimization level
-CPPFLAGS=-std=c++11 	# c++ version
+CPPFLAGS=-std=c++11 			# c++ version
 TEST_FILES_STUDENTAS=test_studentas.cpp catch_amalgamated.cpp functions.cpp
 TEST_FILES_NEWVECTOR=test_newvector.cpp catch_amalgamated.cpp
 
