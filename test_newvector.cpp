@@ -102,21 +102,20 @@ TEST_CASE("NewVector modifiers", "[NewVector]") {
     }
 
     SECTION("Erase elements") {
-        vec.erase(vec.begin() + 1);  // Erase `2`
+        vec.erase(vec.begin() + 1); 
         REQUIRE(vec.size() == 2);
         REQUIRE(vec[1] == 3);
     }
 
     SECTION("Insert elements") {
         int arr[] = {7, 8};
-        auto insertPos = vec.begin() + 1;  // Insert after the first element.
+        auto insertPos = vec.begin() + 1; 
 
-        // Using the insert function to add elements from `arr` into `vec`
         vec.insert(insertPos, arr, arr + 2);
 
-        REQUIRE(vec.size() == 5);  // Expect size to be original size + 2 elements inserted.
-        REQUIRE(vec[1] == 7);      // First inserted element should be at index 1.
-        REQUIRE(vec[2] == 8);      // Second inserted element should be at index 2.
+        REQUIRE(vec.size() == 5); 
+        REQUIRE(vec[1] == 7);  
+        REQUIRE(vec[2] == 8);   
     }
 }
 
@@ -131,7 +130,7 @@ TEST_CASE("NewVector copy and move semantics", "[NewVector]") {
     SECTION("Move constructor") {
         NewVector<int> moved = std::move(original);
         REQUIRE(moved.size() == 3);
-        REQUIRE(original.size() == 0);  // N.B.: Assuming moved-from state is empty
+        REQUIRE(original.size() == 0);
     }
 
     SECTION("Copy assignment") {
@@ -144,6 +143,6 @@ TEST_CASE("NewVector copy and move semantics", "[NewVector]") {
         NewVector<int> moved;
         moved = std::move(original);
         REQUIRE(moved.size() == 3);
-        REQUIRE(original.size() == 0);  // N.B.: Assuming moved-from state is empty
+        REQUIRE(original.size() == 0); 
     }
 }
