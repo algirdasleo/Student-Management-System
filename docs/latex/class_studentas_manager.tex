@@ -1,0 +1,214 @@
+\doxysection{Studentas\+Manager Class Reference}
+\hypertarget{class_studentas_manager}{}\label{class_studentas_manager}\index{StudentasManager@{StudentasManager}}
+
+
+{\ttfamily \#include $<$functions.\+h$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_studentas_manager_1_1_output_helper}{Output\+Helper}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_studentas_manager_ab4247d8bae7dd8a25a103748397cfa4b}{Studentas\+Manager}} ()
+\item 
+\mbox{\hyperlink{class_studentas_manager_a1e51f67338fe1e94a315fbf07f254f92}{\texorpdfstring{$\sim$}{\string~}\+Studentas\+Manager}} ()
+\item 
+size\+\_\+t \mbox{\hyperlink{class_studentas_manager_a4c00b0f9a3dbc66fa38d1dd0f9e22a6d}{get\+Student\+List\+Size}} ()
+\item 
+void \mbox{\hyperlink{class_studentas_manager_ac876cefb9af374b999f7988b56c7468d}{add\+Student}} (\mbox{\hyperlink{class_studentas}{Studentas}} \&student)
+\item 
+void \mbox{\hyperlink{class_studentas_manager_ac248908af715efe4b3b529c5a3d68f9b}{generate\+Random\+Students}} (int count)
+\item 
+void \mbox{\hyperlink{class_studentas_manager_a0ca49df0ec3e325fb587d47e6c327041}{read\+From\+File}} (std\+::string file\+Name)
+\item 
+void \mbox{\hyperlink{class_studentas_manager_a882fe79b69557c758c4cebb179194f5f}{set\+Max\+Name\+Length}} (int length)
+\item 
+void \mbox{\hyperlink{class_studentas_manager_a8489e3b6407aa46064b13a4d028fdde8}{set\+Max\+Surname\+Length}} (int length)
+\item 
+int \mbox{\hyperlink{class_studentas_manager_ae72e4ff199b1d3aa3f243acefbd61212}{get\+Max\+Name\+Length}} ()
+\item 
+int \mbox{\hyperlink{class_studentas_manager_af0dea192924dc291a54cfd7b602a6c96}{get\+Max\+Surname\+Length}} ()
+\item 
+void \mbox{\hyperlink{class_studentas_manager_a45cd71e1843b596c306e7eff5433d03f}{sort\+Into\+Groups}} (\mbox{\hyperlink{class_new_vector}{New\+Vector}}$<$ \mbox{\hyperlink{class_studentas}{Studentas}} $>$ \&neislaike)
+\item 
+void \mbox{\hyperlink{class_studentas_manager_a542772777db09262101beed8edd282d6}{sort\+Students}} (char choice1, char choice2)
+\item 
+void \mbox{\hyperlink{class_studentas_manager_a0916d51a07da636059595b40ee325c92}{sort\+Students}} (char choice1, char choice2, \mbox{\hyperlink{class_new_vector}{New\+Vector}}$<$ \mbox{\hyperlink{class_studentas}{Studentas}} $>$ \&neislaike)
+\item 
+void \mbox{\hyperlink{class_studentas_manager_a4b56ca0f5b05db5e4711a544efbf424a}{group\+And\+Print}} ()
+\item 
+void \mbox{\hyperlink{class_studentas_manager_a1016e184bc712f4a4014f8f6a6100cae}{no\+Group\+Print}} ()
+\item 
+void \mbox{\hyperlink{class_studentas_manager_a3302a82ff09ea1b82fc8c386e5636a16}{print\+To\+File}} ()
+\item 
+void \mbox{\hyperlink{class_studentas_manager_a5684a0ce65d657b731897e5263558783}{print\+To\+File}} (std\+::string file\+Name)
+\item 
+void \mbox{\hyperlink{class_studentas_manager_a6d992e2b1ea4dd59b1424f3ce962232a}{print\+To\+File}} (std\+::string file\+Name, \mbox{\hyperlink{class_new_vector}{New\+Vector}}$<$ \mbox{\hyperlink{class_studentas}{Studentas}} $>$ \&neislaike)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_new_vector}{New\+Vector}}$<$ \mbox{\hyperlink{class_studentas}{Studentas}} $>$ \mbox{\hyperlink{class_studentas_manager_a8df619ed2de9c08dd965a48c342322a2}{student\+List}}
+\item 
+int \mbox{\hyperlink{class_studentas_manager_abb1c67a2e3a5fd116515bb8f16f16ab6}{max\+Name\+Length}}
+\item 
+int \mbox{\hyperlink{class_studentas_manager_a0c26c3f909b5ce191dfa7f5d4efe8411}{max\+Surname\+Length}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \mbox{\hyperlink{class_studentas_manager_a6640f9aa77fcf510887a318495a28904}{operator$<$$<$}} (std\+::ostream \&out, const \mbox{\hyperlink{struct_studentas_manager_1_1_output_helper}{Output\+Helper}} \&helper)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_studentas_manager_ab4247d8bae7dd8a25a103748397cfa4b}\label{class_studentas_manager_ab4247d8bae7dd8a25a103748397cfa4b} 
+\index{StudentasManager@{StudentasManager}!StudentasManager@{StudentasManager}}
+\index{StudentasManager@{StudentasManager}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{StudentasManager()}{StudentasManager()}}
+{\footnotesize\ttfamily Studentas\+Manager\+::\+Studentas\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{class_studentas_manager_a1e51f67338fe1e94a315fbf07f254f92}\label{class_studentas_manager_a1e51f67338fe1e94a315fbf07f254f92} 
+\index{StudentasManager@{StudentasManager}!````~StudentasManager@{\texorpdfstring{$\sim$}{\string~}StudentasManager}}
+\index{````~StudentasManager@{\texorpdfstring{$\sim$}{\string~}StudentasManager}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}StudentasManager()}{\string~StudentasManager()}}
+{\footnotesize\ttfamily Studentas\+Manager\+::\texorpdfstring{$\sim$}{\string~}\+Studentas\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_studentas_manager_ac876cefb9af374b999f7988b56c7468d}\label{class_studentas_manager_ac876cefb9af374b999f7988b56c7468d} 
+\index{StudentasManager@{StudentasManager}!addStudent@{addStudent}}
+\index{addStudent@{addStudent}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{addStudent()}{addStudent()}}
+{\footnotesize\ttfamily void Studentas\+Manager\+::add\+Student (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_studentas}{Studentas}} \&}]{student }\end{DoxyParamCaption})}
+
+\Hypertarget{class_studentas_manager_ac248908af715efe4b3b529c5a3d68f9b}\label{class_studentas_manager_ac248908af715efe4b3b529c5a3d68f9b} 
+\index{StudentasManager@{StudentasManager}!generateRandomStudents@{generateRandomStudents}}
+\index{generateRandomStudents@{generateRandomStudents}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{generateRandomStudents()}{generateRandomStudents()}}
+{\footnotesize\ttfamily void Studentas\+Manager\+::generate\+Random\+Students (\begin{DoxyParamCaption}\item[{int}]{count }\end{DoxyParamCaption})}
+
+\Hypertarget{class_studentas_manager_ae72e4ff199b1d3aa3f243acefbd61212}\label{class_studentas_manager_ae72e4ff199b1d3aa3f243acefbd61212} 
+\index{StudentasManager@{StudentasManager}!getMaxNameLength@{getMaxNameLength}}
+\index{getMaxNameLength@{getMaxNameLength}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{getMaxNameLength()}{getMaxNameLength()}}
+{\footnotesize\ttfamily int Studentas\+Manager\+::get\+Max\+Name\+Length (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{class_studentas_manager_af0dea192924dc291a54cfd7b602a6c96}\label{class_studentas_manager_af0dea192924dc291a54cfd7b602a6c96} 
+\index{StudentasManager@{StudentasManager}!getMaxSurnameLength@{getMaxSurnameLength}}
+\index{getMaxSurnameLength@{getMaxSurnameLength}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{getMaxSurnameLength()}{getMaxSurnameLength()}}
+{\footnotesize\ttfamily int Studentas\+Manager\+::get\+Max\+Surname\+Length (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{class_studentas_manager_a4c00b0f9a3dbc66fa38d1dd0f9e22a6d}\label{class_studentas_manager_a4c00b0f9a3dbc66fa38d1dd0f9e22a6d} 
+\index{StudentasManager@{StudentasManager}!getStudentListSize@{getStudentListSize}}
+\index{getStudentListSize@{getStudentListSize}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{getStudentListSize()}{getStudentListSize()}}
+{\footnotesize\ttfamily size\+\_\+t Studentas\+Manager\+::get\+Student\+List\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{class_studentas_manager_a4b56ca0f5b05db5e4711a544efbf424a}\label{class_studentas_manager_a4b56ca0f5b05db5e4711a544efbf424a} 
+\index{StudentasManager@{StudentasManager}!groupAndPrint@{groupAndPrint}}
+\index{groupAndPrint@{groupAndPrint}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{groupAndPrint()}{groupAndPrint()}}
+{\footnotesize\ttfamily void Studentas\+Manager\+::group\+And\+Print (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{class_studentas_manager_a1016e184bc712f4a4014f8f6a6100cae}\label{class_studentas_manager_a1016e184bc712f4a4014f8f6a6100cae} 
+\index{StudentasManager@{StudentasManager}!noGroupPrint@{noGroupPrint}}
+\index{noGroupPrint@{noGroupPrint}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{noGroupPrint()}{noGroupPrint()}}
+{\footnotesize\ttfamily void Studentas\+Manager\+::no\+Group\+Print (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{class_studentas_manager_a3302a82ff09ea1b82fc8c386e5636a16}\label{class_studentas_manager_a3302a82ff09ea1b82fc8c386e5636a16} 
+\index{StudentasManager@{StudentasManager}!printToFile@{printToFile}}
+\index{printToFile@{printToFile}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{printToFile()}{printToFile()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void Studentas\+Manager\+::print\+To\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{class_studentas_manager_a5684a0ce65d657b731897e5263558783}\label{class_studentas_manager_a5684a0ce65d657b731897e5263558783} 
+\index{StudentasManager@{StudentasManager}!printToFile@{printToFile}}
+\index{printToFile@{printToFile}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{printToFile()}{printToFile()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void Studentas\+Manager\+::print\+To\+File (\begin{DoxyParamCaption}\item[{std\+::string}]{file\+Name }\end{DoxyParamCaption})}
+
+\Hypertarget{class_studentas_manager_a6d992e2b1ea4dd59b1424f3ce962232a}\label{class_studentas_manager_a6d992e2b1ea4dd59b1424f3ce962232a} 
+\index{StudentasManager@{StudentasManager}!printToFile@{printToFile}}
+\index{printToFile@{printToFile}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{printToFile()}{printToFile()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void Studentas\+Manager\+::print\+To\+File (\begin{DoxyParamCaption}\item[{std\+::string}]{file\+Name,  }\item[{\mbox{\hyperlink{class_new_vector}{New\+Vector}}$<$ \mbox{\hyperlink{class_studentas}{Studentas}} $>$ \&}]{neislaike }\end{DoxyParamCaption})}
+
+\Hypertarget{class_studentas_manager_a0ca49df0ec3e325fb587d47e6c327041}\label{class_studentas_manager_a0ca49df0ec3e325fb587d47e6c327041} 
+\index{StudentasManager@{StudentasManager}!readFromFile@{readFromFile}}
+\index{readFromFile@{readFromFile}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{readFromFile()}{readFromFile()}}
+{\footnotesize\ttfamily void Studentas\+Manager\+::read\+From\+File (\begin{DoxyParamCaption}\item[{std\+::string}]{file\+Name }\end{DoxyParamCaption})}
+
+\Hypertarget{class_studentas_manager_a882fe79b69557c758c4cebb179194f5f}\label{class_studentas_manager_a882fe79b69557c758c4cebb179194f5f} 
+\index{StudentasManager@{StudentasManager}!setMaxNameLength@{setMaxNameLength}}
+\index{setMaxNameLength@{setMaxNameLength}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{setMaxNameLength()}{setMaxNameLength()}}
+{\footnotesize\ttfamily void Studentas\+Manager\+::set\+Max\+Name\+Length (\begin{DoxyParamCaption}\item[{int}]{length }\end{DoxyParamCaption})}
+
+\Hypertarget{class_studentas_manager_a8489e3b6407aa46064b13a4d028fdde8}\label{class_studentas_manager_a8489e3b6407aa46064b13a4d028fdde8} 
+\index{StudentasManager@{StudentasManager}!setMaxSurnameLength@{setMaxSurnameLength}}
+\index{setMaxSurnameLength@{setMaxSurnameLength}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{setMaxSurnameLength()}{setMaxSurnameLength()}}
+{\footnotesize\ttfamily void Studentas\+Manager\+::set\+Max\+Surname\+Length (\begin{DoxyParamCaption}\item[{int}]{length }\end{DoxyParamCaption})}
+
+\Hypertarget{class_studentas_manager_a45cd71e1843b596c306e7eff5433d03f}\label{class_studentas_manager_a45cd71e1843b596c306e7eff5433d03f} 
+\index{StudentasManager@{StudentasManager}!sortIntoGroups@{sortIntoGroups}}
+\index{sortIntoGroups@{sortIntoGroups}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{sortIntoGroups()}{sortIntoGroups()}}
+{\footnotesize\ttfamily void Studentas\+Manager\+::sort\+Into\+Groups (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_new_vector}{New\+Vector}}$<$ \mbox{\hyperlink{class_studentas}{Studentas}} $>$ \&}]{neislaike }\end{DoxyParamCaption})}
+
+\Hypertarget{class_studentas_manager_a542772777db09262101beed8edd282d6}\label{class_studentas_manager_a542772777db09262101beed8edd282d6} 
+\index{StudentasManager@{StudentasManager}!sortStudents@{sortStudents}}
+\index{sortStudents@{sortStudents}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{sortStudents()}{sortStudents()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Studentas\+Manager\+::sort\+Students (\begin{DoxyParamCaption}\item[{char}]{choice1,  }\item[{char}]{choice2 }\end{DoxyParamCaption})}
+
+\Hypertarget{class_studentas_manager_a0916d51a07da636059595b40ee325c92}\label{class_studentas_manager_a0916d51a07da636059595b40ee325c92} 
+\index{StudentasManager@{StudentasManager}!sortStudents@{sortStudents}}
+\index{sortStudents@{sortStudents}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{sortStudents()}{sortStudents()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Studentas\+Manager\+::sort\+Students (\begin{DoxyParamCaption}\item[{char}]{choice1,  }\item[{char}]{choice2,  }\item[{\mbox{\hyperlink{class_new_vector}{New\+Vector}}$<$ \mbox{\hyperlink{class_studentas}{Studentas}} $>$ \&}]{neislaike }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{class_studentas_manager_a6640f9aa77fcf510887a318495a28904}\label{class_studentas_manager_a6640f9aa77fcf510887a318495a28904} 
+\index{StudentasManager@{StudentasManager}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily std\+::ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out,  }\item[{const \mbox{\hyperlink{struct_studentas_manager_1_1_output_helper}{Output\+Helper}} \&}]{helper }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_studentas_manager_abb1c67a2e3a5fd116515bb8f16f16ab6}\label{class_studentas_manager_abb1c67a2e3a5fd116515bb8f16f16ab6} 
+\index{StudentasManager@{StudentasManager}!maxNameLength@{maxNameLength}}
+\index{maxNameLength@{maxNameLength}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{maxNameLength}{maxNameLength}}
+{\footnotesize\ttfamily int Studentas\+Manager\+::max\+Name\+Length\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_studentas_manager_a0c26c3f909b5ce191dfa7f5d4efe8411}\label{class_studentas_manager_a0c26c3f909b5ce191dfa7f5d4efe8411} 
+\index{StudentasManager@{StudentasManager}!maxSurnameLength@{maxSurnameLength}}
+\index{maxSurnameLength@{maxSurnameLength}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{maxSurnameLength}{maxSurnameLength}}
+{\footnotesize\ttfamily int Studentas\+Manager\+::max\+Surname\+Length\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_studentas_manager_a8df619ed2de9c08dd965a48c342322a2}\label{class_studentas_manager_a8df619ed2de9c08dd965a48c342322a2} 
+\index{StudentasManager@{StudentasManager}!studentList@{studentList}}
+\index{studentList@{studentList}!StudentasManager@{StudentasManager}}
+\doxysubsubsection{\texorpdfstring{studentList}{studentList}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_new_vector}{New\+Vector}}$<$\mbox{\hyperlink{class_studentas}{Studentas}}$>$ Studentas\+Manager\+::student\+List\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{functions_8h}{functions.\+h}}\item 
+\mbox{\hyperlink{functions_8cpp}{functions.\+cpp}}\end{DoxyCompactItemize}
