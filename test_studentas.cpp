@@ -33,7 +33,6 @@ TEST_CASE("Studentas Constructor and Property Tests", "Studentas") {
     }
 }
 
-// Test for Copy Constructor
 TEST_CASE("Copy Constructor properly copies all attributes", "[Studentas]") {
     Studentas original;
     original.setName("Jonas");
@@ -52,7 +51,6 @@ TEST_CASE("Copy Constructor properly copies all attributes", "[Studentas]") {
     REQUIRE(copyConstructed.getGrades() == original.getGrades());
 }
 
-// Test for Move Constructor
 TEST_CASE("Move Constructor transfers ownership of attributes properly", "[Studentas]") {
     Studentas original;
     original.setName("Jonas");
@@ -66,11 +64,10 @@ TEST_CASE("Move Constructor transfers ownership of attributes properly", "[Stude
     REQUIRE(movedTo.getName() == "Jonas");
     REQUIRE(movedTo.getSurname() == "Jonaitis");
     REQUIRE(movedTo.getEgz() == 9);
-    REQUIRE(original.getName().empty());     // or another appropriate check
-    REQUIRE(original.getSurname().empty());  // Check moved-from state if needed
+    REQUIRE(original.getName().empty());    
+    REQUIRE(original.getSurname().empty());  
 }
 
-// Test for Copy Assignment Operator
 TEST_CASE("Copy Assignment Operator copies all attributes", "[Studentas]") {
     Studentas original;
     original.setName("Jonas");
@@ -90,7 +87,6 @@ TEST_CASE("Copy Assignment Operator copies all attributes", "[Studentas]") {
     REQUIRE(assigned.getGrades() == original.getGrades());
 }
 
-// Test for Move Assignment Operator
 TEST_CASE("Move Assignment Operator transfers ownership of attributes properly", "[Studentas]") {
     Studentas original;
     original.setName("Jonas");
